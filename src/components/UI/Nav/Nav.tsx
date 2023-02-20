@@ -10,10 +10,13 @@ import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 
 export default function Nav(): JSX.Element {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box sx={{ height: '10vh' }}>
+      <AppBar sx={{ borderBottom: '1px solid grey' }}>
         <Toolbar>
-          <MonitorHeartIcon sx={{ mr: 2 }} />
+          <MonitorHeartIcon
+            fontSize="large"
+            sx={{ mr: 2 }}
+          />
           <Typography
             variant="h6"
             component="div"

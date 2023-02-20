@@ -1,18 +1,28 @@
-# Getting Started with Create React App
+# HEALTH MONITORING DASHBOARD
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+Welcome to the Health Monitoring Dashboard front-end repository. The dashboard is designed to provide an overview of key health metrics for individuals such as sleep quality, exercise and nutrition, hydration and so on.
+The user interface is designed to be simple and intuitive, with a clean layout and easy-to-understand visualizations. Users can easily navigate through different health metrics and view trends over time.
+
+Under the hood, the dashboard is built using React and is designed to be responsive so it can be used on from desktops to mobile phones.
+
+## How to install it ?
+
+Copy and paste in your terminal:
+
+```sh
+git clone git@github.com:O-clock-Lara/projet-07-health-monitor-dashboard-front.git
+npm install
+```
+
+## How to start the development environment ?
+
+`npm start`
+
+Autoreload is enabled if you make any changes and errors are linted in the console.
 
 ## Available Scripts
 
 In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
 ### `npm test`
 
@@ -38,9 +48,3 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).

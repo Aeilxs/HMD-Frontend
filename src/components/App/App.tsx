@@ -5,7 +5,7 @@ import { Container, CssBaseline, Paper } from '@mui/material';
 import { themeDark } from '../theme/theme';
 // import { Route, Routes } from 'react-router-dom';
 
-function App() {
+function App(): JSX.Element {
   return (
     <ThemeProvider theme={themeDark}>
       <CssBaseline />

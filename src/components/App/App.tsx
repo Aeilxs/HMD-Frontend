@@ -1,17 +1,17 @@
 import React from 'react';
 import { ThemeProvider } from '@emotion/react';
-import { CssBaseline } from '@mui/material';
+import { Container, CssBaseline, Paper } from '@mui/material';
 
 import { themeDark } from '../theme/theme';
 
 function App() {
   return (
-    <>
-      <ThemeProvider theme={themeDark}>
-        <CssBaseline />
-        <div>initial commit</div>
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={themeDark}>
+      <CssBaseline />
+      <Container>
+        <Paper elevation={1}>{/* composants here */}</Paper>
+      </Container>
+    </ThemeProvider>
   );
 }
 

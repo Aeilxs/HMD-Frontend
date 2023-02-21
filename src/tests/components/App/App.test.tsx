@@ -11,8 +11,8 @@ describe('App components test suites', () => {
         <App />
       </Provider>
     );
-    const header = screen.getByText('HMD');
-    expect(header).toBeInTheDocument();
+    const nav = screen.getByText('HMD');
+    expect(nav).toBeInTheDocument();
   });
 
   it('should render footer', () => {

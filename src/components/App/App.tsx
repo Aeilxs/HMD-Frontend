@@ -25,7 +25,7 @@ function App(): JSX.Element {
             element={<Home />}
           />
            <Route
-            path="/authenfication"
+            path="/authentification"
             element={<AuthPage />}
           />
         </Routes>

@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom';
 import { Fingerprint, PersonAdd } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
+
 import Slider from "./Slider/Slider";
 import img1 from '../../assets/img1.jpg'
 import img2 from '../../assets/img2.png'
@@ -19,8 +21,10 @@ const Home = () => {
             </Box>
             <Slider images={images} />
             <Box sx={{display:"flex", justifyContent:"center", m:5}}>
-                <Button sx={{mx:2}} variant="contained"><PersonAdd />Sign up</Button>
-                <Button sx={{mx:2}} variant="contained"><Fingerprint />Login</Button>
+                <Link to={'/authentification'}>
+                    <Button sx={{mx:2}} variant="contained"><PersonAdd />Sign up</Button>
+                    <Button sx={{mx:2}} variant="contained"><Fingerprint />Login</Button>
+                </Link>
             </Box>
         </Box>
     )

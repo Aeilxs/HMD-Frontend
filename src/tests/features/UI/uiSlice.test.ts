@@ -3,6 +3,7 @@ import uiReducer, { UIState, toggleTheme } from '../../../features/UI/uiSlice';
 describe('UI reducer test suites', () => {
   const initialState: UIState = {
     isDark: true,
+    isDrawerOpen: false,
   };
 
   it('should handle initial state', () => {

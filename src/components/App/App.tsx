@@ -10,6 +10,7 @@ import Footer from '../UI/Footer/Footer';
 import { useAppSelector } from '../../redux/hooks';
 import { selectTheme } from '../../features/UI/uiSlice';
 import Home from '../Home/Home';
+import Drawer from '../UI/Drawer/Drawer';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
@@ -17,6 +18,7 @@ function App(): JSX.Element {
     <ThemeProvider theme={isDark ? themeDark : themeLight}>
       <CssBaseline />
       <Nav />
+      <Drawer />
       <Container sx={{ minHeight: '100vh' }}>
         <Routes>
           <Route

@@ -9,6 +9,7 @@ describe('UI reducer test suites', () => {
   it('should handle initial state', () => {
     expect(uiReducer(undefined, { type: 'unknown' })).toEqual({
       isDark: true,
+      isDrawerOpen: false,
     });
   });
 

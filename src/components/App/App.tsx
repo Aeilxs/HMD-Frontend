@@ -1,15 +1,19 @@
 import React from 'react';
+// import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { Container, CssBaseline, Paper } from '@mui/material';
+import { themeDark, themeLight } from '../theme/theme';
 
-import { themeDark } from '../theme/theme';
 import Nav from '../UI/Nav/Nav';
 import Footer from '../UI/Footer/Footer';
-// import { Route, Routes } from 'react-router-dom';
+
+import { useAppSelector } from '../../redux/hooks';
+import { selectTheme } from '../../features/UI/uiSlice';
 
 function App(): JSX.Element {
+  const isDark = useAppSelector(selectTheme);
   return (
-    <ThemeProvider theme={themeDark}>
+    <ThemeProvider theme={isDark ? themeDark : themeLight}>
       <CssBaseline />
       <Nav />
       <Container sx={{ minHeight: '100vh' }}>

@@ -25,6 +25,8 @@ export const UISlice = createSlice({
 });
 
 export const { toggleTheme, toggleDrawer } = UISlice.actions;
+
 export const selectTheme = (state: RootState) => state.ui.isDark;
 export const selectDrawerState = (state: RootState) => state.ui.isDrawerOpen;
+
 export default UISlice.reducer;

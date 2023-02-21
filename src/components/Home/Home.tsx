@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Fingerprint, PersonAdd } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
@@ -26,7 +27,7 @@ const Home = () => {
             <Box sx={{display:"flex", justifyContent:"center", m:5}}>
                 <Link to={'/authentification'}>
                     <Button sx={{mx:2}} variant="contained" onClick={() => dispatch(toggleForm())}><PersonAdd />Sign up</Button>
-                    <Button sx={{mx:2}} variant="contained"><Fingerprint />Login</Button>
+                    <Button sx={{mx:2}} variant="contained" onClick={() => dispatch(toggleForm())}><Fingerprint />Login</Button>
                 </Link>
             </Box>
         </Box>

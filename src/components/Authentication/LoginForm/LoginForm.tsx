@@ -6,6 +6,9 @@ const LoginForm = () => {
     event.preventDefault()
     // envoyer au backend
   };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value)
+  }
     return (
       <Paper sx={{margin: '0 auto', width:"100%" }}>
         <form onSubmit={handleSubmit}>
@@ -21,7 +24,7 @@ const LoginForm = () => {
               variant="standard"
               type="email"
               value=""
-              onChange={}
+              onChange={handleChange}
             />
               <TextField
               sx={{py:2}}
@@ -29,7 +32,7 @@ const LoginForm = () => {
               variant="standard"
               type="password"
               value=""
-              onChange={}
+              onChange={handleChange}
             />
             </FormGroup>
             <Button type="submit" variant="contained" endIcon={<SendIcon />}>

@@ -10,6 +10,7 @@ import Footer from '../UI/Footer/Footer';
 import { useAppSelector } from '../../redux/hooks';
 import { selectTheme } from '../../features/UI/uiSlice';
 import Home from '../Home/Home';
+import AuthPage from '../Authentication/AuthenticationPage';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
@@ -22,6 +23,10 @@ function App(): JSX.Element {
           <Route
             path="/"
             element={<Home />}
+          />
+           <Route
+            path="/authenfication"
+            element={<AuthPage />}
           />
         </Routes>
       </Container>

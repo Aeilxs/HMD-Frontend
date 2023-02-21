@@ -88,7 +88,7 @@ const RegistrationForm = () =>  {
             </RadioGroup>
             </FormControl>
           </FormGroup>
-          <Button sx={{mt:3}} type="submit" variant="contained" endIcon={<SendIcon />}>
+          <Button sx={{backgroundColor:"#7bc1b7", mt:3, '&:hover': {backgroundColor: "#6aa49c"} }} type="submit" variant="contained" endIcon={<SendIcon />}>
             Submit
           </Button>
         </FormControl>

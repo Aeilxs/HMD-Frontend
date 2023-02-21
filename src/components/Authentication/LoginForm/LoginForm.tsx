@@ -46,7 +46,7 @@ const LoginForm = () => {
               onChange={handlePasswordChange}
             />
             </FormGroup>
-            <Button type="submit" variant="contained" endIcon={<SendIcon />}>
+            <Button sx={{backgroundColor:"#7bc1b7", '&:hover': {backgroundColor: "#6aa49c"}}} type="submit" variant="contained" endIcon={<SendIcon />}>
               Submit
             </Button>
           </FormControl>

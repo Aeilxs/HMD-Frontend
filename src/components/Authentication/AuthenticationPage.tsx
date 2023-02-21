@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button } from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 import LoginForm from './LoginForm/LoginForm';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -10,26 +10,30 @@ const AuthPage = () => {
   const hasAccount = useAppSelector(state => state.ui.hasAccount);
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
-      <Box sx={{ width: '50%', backgroundColor: '#ffcccc', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Paper elevation={5} sx={{ width: '50%', backgroundColor: '#7bc1b7', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {hasAccount ? (
-          <Box>
-            <h1>Nouveau membre ?</h1>
-            <Button variant='contained' onClick={() => dispatch(toggleForm())}>Inscrivez vous</Button>
+            <Box sx={{textAlign:"center", padding:"1.5em"}}>
+                <Typography variant="h1" sx={{fontSize:'3em', mb:5}}>
+                    Nouveau membre ?
+                </Typography>
+                <Button sx={{backgroundColor:"#f79829", '&:hover' : {backgroundColor: "#dd7a08"}}} variant='contained' onClick={() => dispatch(toggleForm())}>Inscrivez vous</Button>
           </Box>
         ) : (
           <RegistrationForm />
         )}
-      </Box>
-      <Box sx={{ width: '50%', backgroundColor: '#ffcccc', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      </Paper>
+      <Paper elevation={5} sx={{ width: '50%', backgroundColor: '#7bc1b7', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {hasAccount ? (
           <LoginForm />
         ) : (
-            <Box>
-                <h1>Vous avez déjà un compte ?</h1>
-                <Button variant='contained' onClick={() => dispatch(toggleForm())}> Connectez-vous</Button>
+            <Box sx={{textAlign:"center", padding:"1.5em"}}>
+                <Typography variant="h1" sx={{fontSize:'3em', mb:5}}>
+                    Vous avez déjà un compte ?
+                </Typography>
+                <Button sx={{backgroundColor:"#f79829", '&:hover' : {backgroundColor: "#dd7a08"}}} variant='contained' onClick={() => dispatch(toggleForm())}> Connectez-vous</Button>
             </Box>
         )}
-      </Box>
+      </Paper>
     </Box>
   );
 };

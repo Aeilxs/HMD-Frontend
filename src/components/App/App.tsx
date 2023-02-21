@@ -10,6 +10,7 @@ import Footer from '../UI/Footer/Footer';
 import { useAppSelector } from '../../redux/hooks';
 import { selectTheme } from '../../features/UI/uiSlice';
 import Home from '../Home/Home';
+import AuthPage from '../Authentication/AuthenticationPage';
 
 import Drawer from '../UI/Drawer/Drawer';
 import NotFound from '../404/NotFound';
@@ -26,6 +27,11 @@ function App(): JSX.Element {
           <Route
             path="/"
             element={<Home />}
+          />
+
+           <Route
+            path="/authentification"
+            element={<AuthPage />}
           />
           <Route
             path="*"

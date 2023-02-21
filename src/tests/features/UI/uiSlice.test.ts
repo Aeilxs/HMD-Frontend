@@ -3,12 +3,15 @@ import uiReducer, { UIState, toggleTheme } from '../../../features/UI/uiSlice';
 describe('UI reducer test suites', () => {
   const initialState: UIState = {
     isDark: true,
+    isRegistered: true,
     isDrawerOpen: false,
+
   };
 
   it('should handle initial state', () => {
     expect(uiReducer(undefined, { type: 'unknown' })).toEqual({
       isDark: true,
+      isRegistered: true,
       isDrawerOpen: false,
     });
   });

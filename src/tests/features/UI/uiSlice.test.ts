@@ -3,13 +3,13 @@ import uiReducer, { UIState, toggleTheme } from '../../../features/UI/uiSlice';
 describe('UI reducer test suites', () => {
   const initialState: UIState = {
     isDark: true,
-    hasAccount: true,
+    isRegistered: true,
   };
 
   it('should handle initial state', () => {
     expect(uiReducer(undefined, { type: 'unknown' })).toEqual({
       isDark: true,
-      hasAccount: true,
+      isRegistered: true,
     });
   });
 

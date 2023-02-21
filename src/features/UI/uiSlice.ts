@@ -3,12 +3,12 @@ import { RootState } from '../../redux/store';
 
 export interface UIState {
   isDark: boolean;
-  hasAccount: boolean;
+  isRegistered: boolean;
 }
 
 const initialState: UIState = {
   isDark: true,
-  hasAccount: true,
+  isRegistered: true,
 };
 
 export const UISlice = createSlice({
@@ -19,12 +19,12 @@ export const UISlice = createSlice({
       state.isDark = !state.isDark;
     },
     toggleForm: (state) => {
-      state.hasAccount = !state.hasAccount;
+      state.isRegistered = !state.isRegistered;
     },
   },
 });
 
 export const { toggleTheme, toggleForm } = UISlice.actions;
 export const selectTheme = (state: RootState) => state.ui.isDark;
-export const selectForm = (state: RootState) => state.ui.hasAccount;
+export const selectForm = (state: RootState) => state.ui.isRegistered;
 export default UISlice.reducer;

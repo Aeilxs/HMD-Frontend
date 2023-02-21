@@ -3,10 +3,12 @@ import { RootState } from '../../redux/store';
 
 export interface UIState {
   isDark: boolean;
+  isDrawerOpen: boolean;
 }
 
 const initialState: UIState = {
   isDark: true,
+  isDrawerOpen: false,
 };
 
 export const UISlice = createSlice({
@@ -16,9 +18,13 @@ export const UISlice = createSlice({
     toggleTheme: (state) => {
       state.isDark = !state.isDark;
     },
+    toggleDrawer: (state) => {
+      state.isDrawerOpen = !state.isDrawerOpen;
+    },
   },
 });
 
-export const { toggleTheme } = UISlice.actions;
+export const { toggleTheme, toggleDrawer } = UISlice.actions;
 export const selectTheme = (state: RootState) => state.ui.isDark;
+export const selectDrawerState = (state: RootState) => state.ui.isDrawerOpen;
 export default UISlice.reducer;

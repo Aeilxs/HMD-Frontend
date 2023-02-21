@@ -20,7 +20,6 @@ export const UISlice = createSlice({
     toggleTheme: (state) => {
       state.isDark = !state.isDark;
     },
-
     toggleForm: (state) => {
       state.isRegistered = !state.isRegistered;
     },
@@ -29,7 +28,6 @@ export const UISlice = createSlice({
     },
   },
 });
-
 
 export const { toggleTheme, toggleDrawer, toggleForm } = UISlice.actions;
 

@@ -1,4 +1,9 @@
-import uiReducer, { UIState, toggleTheme } from '../../../features/UI/uiSlice';
+import uiReducer, {
+  UIState,
+  toggleTheme,
+  toggleForm,
+  toggleDrawer,
+} from '../../../features/UI/uiSlice';
 
 describe('UI reducer test suites', () => {
   const initialState: UIState = {
@@ -18,5 +23,15 @@ describe('UI reducer test suites', () => {
   it('should handle toggle theme', () => {
     const actual = uiReducer(initialState, toggleTheme());
     expect(actual.isDark).toBe(false);
+  });
+
+  it('should handle toggle form', () => {
+    const actual = uiReducer(initialState, toggleForm());
+    expect(actual.isRegistered).toBe(false);
+  });
+
+  it('should handle toggle drawer', () => {
+    const actual = uiReducer(initialState, toggleDrawer());
+    expect(actual.isDrawerOpen).toBe(true);
   });
 });

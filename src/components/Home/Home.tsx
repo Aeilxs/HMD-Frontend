@@ -6,6 +6,7 @@ import Slider from './Slider/Slider';
 import img1 from '../../assets/img1.jpg';
 import img2 from '../../assets/img2.png';
 import img3 from '../../assets/img3.png';
+
 import { useAppDispatch } from '../../redux/hooks';
 import { toggleForm } from '../../features/UI/uiSlice';
 

@@ -2,13 +2,12 @@ import { Box, Button } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useEffect, useState } from 'react';
-import './slider.scss';
 
 type SliderProps = {
   images: string[];
 };
 
-const Slider = ({ images }: SliderProps) => {
+function Slider ({ images }: SliderProps) {
   const [currentImage, setCurrentImage] = useState<number>(0);
 
   const handleNextSlide = () => {

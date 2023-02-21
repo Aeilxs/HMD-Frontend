@@ -5,7 +5,6 @@ describe('UI reducer test suites', () => {
     isDark: true,
     isRegistered: true,
     isDrawerOpen: false,
-
   };
 
   it('should handle initial state', () => {

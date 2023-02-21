@@ -1,4 +1,3 @@
-import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { Container, CssBaseline } from '@mui/material';
@@ -29,7 +28,7 @@ function App(): JSX.Element {
             element={<Home />}
           />
 
-           <Route
+          <Route
             path="/authentification"
             element={<AuthPage />}
           />

@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { selectTheme, toggleTheme } from '../../../features/UI/uiSlice';
 import { DarkMode } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { selectIsLogged } from '../../../features/UI/userSlice';
+import { selectIsLogged } from '../../../features/user/userSlice';
 
 export default function Nav(): JSX.Element {
   const isDark = useAppSelector(selectTheme);

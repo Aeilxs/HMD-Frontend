@@ -2,17 +2,19 @@ import { useState } from 'react';
 import { Box, Button } from "@mui/material";
 import LoginForm from './LoginForm/LoginForm';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { toggleForm } from '../../features/UI/uiSlice';
 
 const AuthPage = () => {
-  const [hasAccount, setHasAccount] = useState(true);
-
+    const dispatch = useAppDispatch();
+  const hasAccount = useAppSelector(state => state.ui.hasAccount);
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
       <Box sx={{ width: '50%', backgroundColor: '#ffcccc', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {hasAccount ? (
           <Box>
             <h1>Nouveau membre ?</h1>
-            <Button variant='contained' onClick={() => setHasAccount(!hasAccount)}>Inscrivez vous</Button>
+            <Button variant='contained' onClick={() => dispatch(toggleForm())}>Inscrivez vous</Button>
           </Box>
         ) : (
           <RegistrationForm />
@@ -24,7 +26,7 @@ const AuthPage = () => {
         ) : (
             <Box>
                 <h1>Vous avez déjà un compte ?</h1>
-                <Button variant='contained' onClick={() => setHasAccount(!hasAccount)}> Connectez-vous</Button>
+                <Button variant='contained' onClick={() => dispatch(toggleForm())}> Connectez-vous</Button>
             </Box>
         )}
       </Box>

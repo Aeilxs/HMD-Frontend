@@ -6,9 +6,12 @@ import Slider from "./Slider/Slider";
 import img1 from '../../assets/img1.jpg'
 import img2 from '../../assets/img2.png'
 import img3 from '../../assets/img3.png'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { toggleForm } from '../../features/UI/uiSlice';
 
 const Home = () => {
     const images = [img1, img2, img3]
+    const dispatch = useAppDispatch();
     return (
         <Box sx={{my:4}}>
             <Box sx={{textAlign:"center"}}>
@@ -22,7 +25,7 @@ const Home = () => {
             <Slider images={images} />
             <Box sx={{display:"flex", justifyContent:"center", m:5}}>
                 <Link to={'/authentification'}>
-                    <Button sx={{mx:2}} variant="contained"><PersonAdd />Sign up</Button>
+                    <Button sx={{mx:2}} variant="contained" onClick={() => dispatch(toggleForm())}><PersonAdd />Sign up</Button>
                     <Button sx={{mx:2}} variant="contained"><Fingerprint />Login</Button>
                 </Link>
             </Box>

@@ -13,6 +13,7 @@ import { selectTheme } from '../../features/UI/uiSlice';
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
   return (
+
     <ThemeProvider theme={isDark ? themeDark : themeLight}>
       <CssBaseline />
       <Nav />

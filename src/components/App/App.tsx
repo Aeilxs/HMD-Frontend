@@ -1,9 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { Container, CssBaseline } from '@mui/material';
-
 import { themeDark, themeLight } from '../theme/theme';
-import Slider from '../Home/Slider/Slider';
 import Home from '../Home/Home';
 
 function App() {

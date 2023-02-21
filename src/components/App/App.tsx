@@ -14,7 +14,6 @@ import Home from '../Home/Home';
 import Drawer from '../UI/Drawer/Drawer';
 import NotFound from '../404/NotFound';
 
-
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
   return (

@@ -4,7 +4,7 @@ import RegistrationForm from './RegistrationForm/RegistrationForm';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { toggleForm } from '../../features/UI/uiSlice';
 
-const AuthPage = () => {
+function AuthPage() {
   const dispatch = useAppDispatch();
   const isRegistered = useAppSelector((state) => state.ui.isRegistered);
   return (

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Fingerprint, PersonAdd } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
 
@@ -6,12 +6,19 @@ import Slider from './Slider/Slider';
 import img1 from '../../assets/img1.jpg';
 import img2 from '../../assets/img2.png';
 import img3 from '../../assets/img3.png';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+
+import { useAppDispatch } from '../../redux/hooks';
 import { toggleForm } from '../../features/UI/uiSlice';
 
-const Home = () => {
+function Home() {
   const images = [img1, img2, img3];
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const handleClick = () => {
+    dispatch(toggleForm());
+    navigate('/authentification');
+  }
   return (
     <Box sx={{ my: 4 }}>
       <Box sx={{ textAlign: 'center' }}>
@@ -33,24 +40,22 @@ const Home = () => {
       </Box>
       <Slider images={images} />
       <Box sx={{ display: 'flex', justifyContent: 'center', m: 5 }}>
-        <Link to={'/authentification'}>
-          <Button
-            sx={{ mx: 2 }}
-            variant="contained"
-            onClick={() => dispatch(toggleForm())}
-          >
-            <PersonAdd />
-            Sign up
-          </Button>
-          <Button
-            sx={{ mx: 2 }}
-            variant="contained"
-            onClick={() => dispatch(toggleForm())}
-          >
-            <Fingerprint />
-            Login
-          </Button>
-        </Link>
+        <Button
+          sx={{ mx: 2 }}
+          variant="contained"
+          onClick={handleClick}
+        >
+          <PersonAdd />
+          Sign up
+        </Button>
+        <Button
+          sx={{ mx: 2 }}
+          variant="contained"
+          onClick={handleClick}
+        >
+          <Fingerprint />
+          Login
+        </Button>
       </Box>
     </Box>
   );

@@ -8,7 +8,7 @@ export interface UIState {
 
 const initialState: UIState = {
   isDark: true,
-  isDrawerOpen: true,
+  isDrawerOpen: false,
 };
 
 export const UISlice = createSlice({

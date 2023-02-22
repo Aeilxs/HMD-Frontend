@@ -12,37 +12,22 @@ import {
   Typography,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import {
-  setFirstname,
-  setLastname,
-  setEmail,
-  setPassword,
-  setGender,
-} from '../../../features/registration/registrationSlice';
+import { setValue, setGender } from '../../../features/UI/uiSlice';
 
-function RegistrationForm () {
+function RegistrationForm() {
   const dispatch = useAppDispatch();
-  const firstname = useAppSelector((state) => state.registration.firstname);
-  const lastname = useAppSelector((state) => state.registration.lastname);
-  const email = useAppSelector((state) => state.registration.email);
-  const password = useAppSelector((state) => state.registration.password);
-  const gender = useAppSelector((state) => state.registration.gender);
+  const firstname = useAppSelector((state) => state.ui.firstname);
+  const lastname = useAppSelector((state) => state.ui.lastname);
+  const email = useAppSelector((state) => state.ui.email);
+  const password = useAppSelector((state) => state.ui.password);
+  const gender = useAppSelector((state) => state.ui.gender);
 
-  const handleFirstnameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setFirstname(event.target.value));
-  };
-  const handleLastnameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setLastname(event.target.value));
-  };
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setEmail(event.target.value));
-  };
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setPassword(event.target.value));
-  };
-  const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value === 'Femme' || event.target.value === 'Homme')
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    if (event.target.value === 'Femme' || event.target.value === 'Homme') {
       dispatch(setGender(event.target.value));
+    }
+    dispatch(setValue({ name, value }));
   };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -69,53 +54,51 @@ function RegistrationForm () {
           <FormGroup>
             <TextField
               sx={{ py: 2 }}
-              label="firstname"
-              placeholder="entrez votre prénom"
+              label="Prenom"
+              name="firstname"
+              placeholder="Entrez votre prénom"
               variant="standard"
               type="text"
               value={firstname}
-              onChange={handleFirstnameChange}
+              onChange={handleChange}
             />
             <TextField
               sx={{ py: 2 }}
-              label="lastname"
-              placeholder="entrez votre nom"
+              label="Nom"
+              name="lastname"
+              placeholder="Entrez votre nom"
               variant="standard"
               type="text"
               value={lastname}
-              onChange={handleLastnameChange}
+              onChange={handleChange}
             />
             <TextField
               sx={{ py: 2 }}
-              label="email"
-              placeholder="entrez votre email"
+              label="Email"
+              name="email"
+              placeholder="Entrez votre email"
               variant="standard"
               type="email"
               value={email}
-              onChange={handleEmailChange}
+              onChange={handleChange}
             />
             <TextField
               sx={{ py: 2 }}
-              label="password"
-              placeholder=""
+              label="Mot de passe"
+              name="password"
+              placeholder="Entrez un mot de passe"
               variant="standard"
               type="password"
               value={password}
-              onChange={handlePasswordChange}
+              onChange={handleChange}
             />
             <FormControl>
-              <FormLabel
-                id="demo-radio-buttons-group-label"
-                sx={{ textAlign: 'start' }}
-              >
-                Gender
-              </FormLabel>
+              <FormLabel sx={{ textAlign: 'start' }}>Genre</FormLabel>
               <RadioGroup
                 row
-                aria-labelledby="demo-radio-buttons-group-label"
                 value={gender}
-                onChange={handleGenderChange}
-                name="radio-buttons-group"
+                onChange={handleChange}
+                name="gender"
               >
                 <FormControlLabel
                   value="Femme"
@@ -136,11 +119,11 @@ function RegistrationForm () {
             variant="contained"
             endIcon={<SendIcon />}
           >
-            Submit
+            Envoyer
           </Button>
         </FormControl>
       </form>
     </Paper>
   );
-};
+}
 export default RegistrationForm;

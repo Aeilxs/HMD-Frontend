@@ -2,19 +2,18 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { Button, FormControl, FormGroup, Paper, TextField, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
-import { setEmail, setPassword } from '../../../features/login/loginSlice';
+import { setValue } from '../../../features/UI/uiSlice';
 
 function LoginForm() {
   const dispatch = useAppDispatch();
-  const email = useAppSelector((state) => state.login.email);
-  const password = useAppSelector((state) => state.login.password);
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setEmail(event.target.value));
+  const email = useAppSelector((state) => state.ui.email);
+  const password = useAppSelector((state) => state.ui.password);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    dispatch(setValue({ name, value }));
   };
 
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setPassword(event.target.value));
-  };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // envoyer au backend ?
@@ -42,20 +41,23 @@ function LoginForm() {
           <FormGroup>
             <TextField
               sx={{ py: 2 }}
-              label="email"
-              placeholder="entrez votre email"
+              label="Email"
+              name="email"
+              placeholder="Entrez votre email"
               variant="standard"
               type="email"
               value={email}
-              onChange={handleEmailChange}
+              onChange={handleChange}
             />
             <TextField
               sx={{ py: 2 }}
-              label="password"
+              label="Mot de passe"
+              name="password"
+              placeholder="Entrez votre mot de passe"
               variant="standard"
               type="password"
               value={password}
-              onChange={handlePasswordChange}
+              onChange={handleChange}
             />
           </FormGroup>
           <Button
@@ -64,7 +66,7 @@ function LoginForm() {
             variant="contained"
             endIcon={<SendIcon />}
           >
-            Submit
+            Envoyer
           </Button>
         </FormControl>
       </form>

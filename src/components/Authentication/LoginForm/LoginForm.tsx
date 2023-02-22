@@ -1,10 +1,10 @@
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { Button, FormControl, FormGroup, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, FormControl, FormGroup, TextField, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
 import { setValue } from '../../../features/UI/uiSlice';
 
-function LoginForm () {
+function LoginForm() {
   const dispatch = useAppDispatch();
   const email = useAppSelector((state) => state.ui.email);
   const password = useAppSelector((state) => state.ui.password);
@@ -69,5 +69,5 @@ function LoginForm () {
         </FormControl>
       </form>
   );
-};
+}
 export default LoginForm;

@@ -15,7 +15,7 @@ export interface UIState {
 const initialState: UIState = {
   isDark: true,
   isRegistered: true,
-  isDrawerOpen: false,
+  isDrawerOpen: true,
   firstname: '',
   lastname: '',
   email: '',
@@ -36,16 +36,16 @@ export const UISlice = createSlice({
     toggleDrawer: (state) => {
       state.isDrawerOpen = !state.isDrawerOpen;
     },
-    setValue: (state, action: PayloadAction<{ value: string, name: string }>) => {
+    setValue: (state, action: PayloadAction<{ value: string; name: string }>) => {
       const { value, name } = action.payload;
       return {
         ...state,
         [name]: value,
       };
     },
-      setGender: (state, action: PayloadAction<'Homme' | 'Femme'>) => {
-        state.gender = action.payload;
-      },
+    setGender: (state, action: PayloadAction<'Homme' | 'Femme'>) => {
+      state.gender = action.payload;
+    },
   },
 });
 

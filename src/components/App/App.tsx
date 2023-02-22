@@ -3,17 +3,24 @@ import { ThemeProvider } from '@emotion/react';
 import { Container, CssBaseline } from '@mui/material';
 import { themeDark, themeLight } from '../theme/theme';
 
-import Nav from '../UI/Nav/Nav';
-import Footer from '../UI/Footer/Footer';
-
 import { useAppSelector } from '../../redux/hooks';
 import { selectTheme } from '../../features/UI/uiSlice';
-import Home from '../Home/Home';
-import AuthPage from '../Authentication/AuthenticationPage';
 
 import Drawer from '../UI/Drawer/Drawer';
-import NotFound from '../404/NotFound';
 import CustomScrollBar from '../UI/CustomScrollBar/CustomScrollBar';
+import Footer from '../UI/Footer/Footer';
+import Nav from '../UI/Nav/Nav';
+import NotFound from '../404/NotFound';
+
+import AuthPage from '../Authentication/AuthenticationPage';
+import Home from '../views/Home/Home';
+import ProfilePage from '../views/ProfilePage/ProfilePage';
+import SportPage from '../views/SportPage/SportPage';
+import FoodPage from '../views/FoodPage/FoodPage';
+import DrugPage from '../views/DrugPage/DrugPage';
+import SmokePage from '../views/SmokePage/SmokePage';
+import SleepPage from '../views/SleepPage/SleepPage';
+import HydrationPage from '../views/HydrationPage/HydrationPage';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
@@ -26,12 +33,45 @@ function App(): JSX.Element {
         <Routes>
           <Route
             path="/"
-            element={<Home />}
+            element={
+              <Container>
+                <Home />
+              </Container>
+            }
           />
           <Route
             path="/authentification"
             element={<AuthPage />}
           />
+          <Route
+            path="/profil"
+            element={<ProfilePage />}
+          />
+          <Route
+            path="/sport"
+            element={<SportPage />}
+          />
+          <Route
+            path="/alimentation"
+            element={<FoodPage />}
+          />
+          <Route
+            path="/medicaments"
+            element={<DrugPage />}
+          />
+          <Route
+            path="/tabagisme"
+            element={<SmokePage />}
+          />
+          <Route
+            path="/sleep"
+            element={<SleepPage />}
+          />
+          <Route
+            path="/hydratation"
+            element={<HydrationPage />}
+          />
+
           <Route
             path="*"
             element={

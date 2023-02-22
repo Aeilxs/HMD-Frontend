@@ -5,13 +5,13 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
-  Paper,
   Radio,
   RadioGroup,
   TextField,
   Typography,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+
 import { setValue, setGender } from '../../../features/UI/uiSlice';
 
 function RegistrationForm() {

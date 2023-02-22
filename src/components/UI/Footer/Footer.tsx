@@ -1,17 +1,15 @@
 import * as React from 'react';
-import { IconButton, Typography } from '@mui/material';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
+import { IconButton, Typography, Box, Paper } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 export default function Footer(): JSX.Element {
   return (
-    <Box sx={{ borderTop: '1px solid grey' }}>
-      <AppBar
-        sx={{ p: 2 }}
-        position="static"
+    <Paper elevation={5}>
+      <Box
+        component="footer"
+        sx={{ p: 2, borderTop: '1px solid grey', height: '12vh' }}
       >
         <Typography align="center">Nos réseaux</Typography>
         <Box
@@ -22,10 +20,7 @@ export default function Footer(): JSX.Element {
             justifyContent: 'space-evenly',
           }}
         >
-          <IconButton
-            onClick={() => window.open('https://www.facebook.com/')}
-            sx={{ width: 'fit-content' }}
-          >
+          <IconButton onClick={() => window.open('https://www.facebook.com/')}>
             <FacebookIcon fontSize="large" />
           </IconButton>
           <IconButton
@@ -45,7 +40,7 @@ export default function Footer(): JSX.Element {
             <LinkedInIcon fontSize="large" />
           </IconButton>
         </Box>
-      </AppBar>
-    </Box>
+      </Box>
+    </Paper>
   );
 }

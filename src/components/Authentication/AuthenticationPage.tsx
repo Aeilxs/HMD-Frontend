@@ -72,6 +72,6 @@ function AuthPage() {
       </Paper>
     </Box>
   );
-};
+}
 
 export default AuthPage;

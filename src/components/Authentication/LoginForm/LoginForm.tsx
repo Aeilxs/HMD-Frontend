@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { Button, FormControl, FormGroup, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, FormControl, FormGroup, Paper, TextField, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
 import { setValue } from '../../../features/UI/uiSlice';
@@ -20,7 +20,7 @@ function LoginForm() {
     console.log(email, password);
   };
   return (
-    <Paper sx={{ margin: '0 auto', width: '100%' }}>
+    <Paper sx={{ margin: '0 auto', width: '100%'}}>
       <form onSubmit={handleSubmit}>
         <FormControl
           sx={{

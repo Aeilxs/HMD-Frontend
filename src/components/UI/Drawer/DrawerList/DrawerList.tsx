@@ -2,7 +2,7 @@ import * as React from 'react';
 import List from '@mui/material/List';
 
 import { Box } from '@mui/system';
-import DrawerListItem from '../DrawerListItem';
+import DrawerListItem from '../DrawerListItem/DrawerListItem';
 
 export default function DrawerList(): JSX.Element {
   return (

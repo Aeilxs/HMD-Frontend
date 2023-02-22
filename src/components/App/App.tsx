@@ -12,7 +12,6 @@ import Footer from '../UI/Footer/Footer';
 import Nav from '../UI/Nav/Nav';
 import NotFound from '../404/NotFound';
 
-import AuthPage from '../Authentication/AuthenticationPage';
 import Home from '../views/Home/Home';
 import ProfilePage from '../views/ProfilePage/ProfilePage';
 import SportPage from '../views/SportPage/SportPage';
@@ -21,6 +20,7 @@ import DrugPage from '../views/DrugPage/DrugPage';
 import SmokePage from '../views/SmokePage/SmokePage';
 import SleepPage from '../views/SleepPage/SleepPage';
 import HydrationPage from '../views/HydrationPage/HydrationPage';
+import AuthPage from '../views/Authentication/AuthenticationPage';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);

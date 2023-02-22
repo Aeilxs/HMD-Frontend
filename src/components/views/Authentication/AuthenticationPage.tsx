@@ -1,28 +1,33 @@
-
+import { useAppSelector } from '../../../redux/hooks';
 import { Box, Paper } from '@mui/material';
 import LoginForm from './LoginForm/LoginForm';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
-import { useAppSelector } from '../../redux/hooks';
 import AuthFormToggle from './AuthFormToggle';
 
 function AuthPage() {
   const isRegistered = useAppSelector((state) => state.ui.isRegistered);
   return (
-    <Box sx={{ display: 'flex', flexDirection: { xs:'column', sm: 'column', md: 'row' }, height: '100%' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', sm: 'column', md: 'row' },
+        height: '100%',
+      }}
+    >
       <Paper
         elevation={5}
         sx={{
-          width: { xs:'100%', sm: '100%', md: '50%' },
+          width: { xs: '100%', sm: '100%', md: '50%' },
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
         {isRegistered ? (
-           <AuthFormToggle
-           text=" Nouveau membre ?"
-           buttonText="Inscrivez vous"
-           />
+          <AuthFormToggle
+            text=" Nouveau membre ?"
+            buttonText="Inscrivez vous"
+          />
         ) : (
           <RegistrationForm />
         )}
@@ -30,19 +35,19 @@ function AuthPage() {
       <Paper
         elevation={5}
         sx={{
-          width: { xs:'100%', sm: '100%', md: '50%' },
+          width: { xs: '100%', sm: '100%', md: '50%' },
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          height:'100%'
+          height: '100%',
         }}
       >
         {isRegistered ? (
           <LoginForm />
         ) : (
           <AuthFormToggle
-          text="Vous avez déjà un compte ?"
-          buttonText=" Connectez-vous"
+            text="Vous avez déjà un compte ?"
+            buttonText=" Connectez-vous"
           />
         )}
       </Paper>
@@ -51,4 +56,3 @@ function AuthPage() {
 }
 
 export default AuthPage;
-

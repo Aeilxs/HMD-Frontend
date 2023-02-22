@@ -33,7 +33,8 @@ function RegistrationForm() {
     event.preventDefault();
   };
   return (
-    <Paper sx={{ margin: '0 auto', width: '100%' }}>
+<Paper sx={{ margin: '0 auto', width: '100%'
+}}>
       <form onSubmit={handleSubmit}>
         <FormControl
           sx={{

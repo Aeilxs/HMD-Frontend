@@ -76,4 +76,11 @@ describe('UI reducer test suites', () => {
     const expectedState = { ...initialState, password: 'johnSecurePassword' };
     expect(newState).toEqual(expectedState);
   });
+
+  it('should handle change gender with setGender action', () => {
+    const test = uiReducer(initialState, setGender('Homme'));
+    expect(test.gender).toBe('Homme');
+    const test2 = uiReducer(initialState, setGender('Femme'));
+    expect(test2.gender).toBe('Femme');
+  });
 });

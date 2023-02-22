@@ -21,20 +21,37 @@ function App(): JSX.Element {
       <CssBaseline />
       <Nav />
       <Drawer />
-      <Container sx={{ minHeight: '100vh' }}>
+      <Container
+        disableGutters
+        maxWidth={false}
+        sx={{
+          height: '82vh',
+          overflowY: 'scroll',
+          '::-webkit-scrollbar': {
+            width: '0.4em',
+          },
+          '::-webkit-scrollbar-thumb': {
+            backgroundColor: '#BDBDBD',
+            borderRadius: '20px',
+          },
+        }}
+      >
         <Routes>
           <Route
             path="/"
             element={<Home />}
           />
-
           <Route
             path="/authentification"
             element={<AuthPage />}
           />
           <Route
             path="*"
-            element={<NotFound />}
+            element={
+              <Container>
+                <NotFound />
+              </Container>
+            }
           />
         </Routes>
       </Container>

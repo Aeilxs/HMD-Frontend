@@ -4,7 +4,7 @@ import SendIcon from '@mui/icons-material/Send';
 
 import { setEmail, setPassword } from '../../../features/login/loginSlice';
 
-function LoginForm () {
+function LoginForm() {
   const dispatch = useAppDispatch();
   const email = useAppSelector((state) => state.login.email);
   const password = useAppSelector((state) => state.login.password);
@@ -70,5 +70,5 @@ function LoginForm () {
       </form>
     </Paper>
   );
-};
+}
 export default LoginForm;

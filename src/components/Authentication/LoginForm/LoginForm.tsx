@@ -20,12 +20,10 @@ function LoginForm () {
     console.log(email, password);
   };
   return (
-    <Paper sx={{ margin: '0 auto', width: '100%' }}>
       <form onSubmit={handleSubmit}>
         <FormControl
           sx={{
             width: '100%',
-            height: '100vh',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -70,7 +68,6 @@ function LoginForm () {
           </Button>
         </FormControl>
       </form>
-    </Paper>
   );
 };
 export default LoginForm;

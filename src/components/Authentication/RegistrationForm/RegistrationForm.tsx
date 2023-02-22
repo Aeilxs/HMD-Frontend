@@ -33,16 +33,15 @@ function RegistrationForm() {
     event.preventDefault();
   };
   return (
-    <Paper sx={{ margin: '0 auto', width: '100%' }}>
       <form onSubmit={handleSubmit}>
         <FormControl
           sx={{
             width: '100%',
-            height: '100vh',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
+            py:{ xs:3, sm: 3, md: 0 }
           }}
         >
           <Typography
@@ -123,7 +122,6 @@ function RegistrationForm() {
           </Button>
         </FormControl>
       </form>
-    </Paper>
   );
 }
 export default RegistrationForm;

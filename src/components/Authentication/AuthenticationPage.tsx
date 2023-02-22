@@ -1,25 +1,28 @@
-import { Box, Container, Paper } from '@mui/material';
+
+import { Box, Paper } from '@mui/material';
 import LoginForm from './LoginForm/LoginForm';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
 import { useAppSelector } from '../../redux/hooks';
-import AuthToggleMessage from './AuthToggleMessage';
+import AuthFormToggle from './AuthFormToggle';
 
 function AuthPage() {
   const isRegistered = useAppSelector((state) => state.ui.isRegistered);
   return (
-    <Container sx={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
+    <Box sx={{ display: 'flex', flexDirection: { xs:'column', sm: 'column', md: 'row' }, height: '100%' }}>
       <Paper
         elevation={5}
         sx={{
-          width: '50%',
-          backgroundColor: '#7bc1b7',
+          width: { xs:'100%', sm: '100%', md: '50%' },
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
         {isRegistered ? (
-           <AuthToggleMessage text="Nouveau membre ?" buttonText="Inscrivez-vous"/>
+           <AuthFormToggle
+           text=" Nouveau membre ?"
+           buttonText="Inscrivez vous"
+           />
         ) : (
           <RegistrationForm />
         )}
@@ -27,21 +30,25 @@ function AuthPage() {
       <Paper
         elevation={5}
         sx={{
-          width: '50%',
-          backgroundColor: '#7bc1b7',
+          width: { xs:'100%', sm: '100%', md: '50%' },
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          height:'100%'
         }}
       >
         {isRegistered ? (
           <LoginForm />
         ) : (
-         <AuthToggleMessage text="Vous avez déjà un compte ?" buttonText="Connectez-vous"/>
+          <AuthFormToggle
+          text="Vous avez déjà un compte ?"
+          buttonText=" Connectez-vous"
+          />
         )}
       </Paper>
-    </Container>
+    </Box>
   );
 }
 
 export default AuthPage;
+

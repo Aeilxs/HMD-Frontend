@@ -3,12 +3,12 @@ import { Fingerprint, PersonAdd } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
 
 import Slider from './Slider/Slider';
-import img1 from '../../assets/img1.jpg';
-import img2 from '../../assets/img2.png';
-import img3 from '../../assets/img3.png';
+import img1 from '../../../assets/img1.jpg';
+import img2 from '../../../assets/img2.png';
+import img3 from '../../../assets/img3.png';
 
-import { useAppDispatch } from '../../redux/hooks';
-import { toggleForm } from '../../features/UI/uiSlice';
+import { useAppDispatch } from '../../../redux/hooks';
+import { toggleForm } from '../../../features/UI/uiSlice';
 
 function Home() {
   const images = [img1, img2, img3];
@@ -18,7 +18,7 @@ function Home() {
   const handleClick = () => {
     dispatch(toggleForm());
     navigate('/authentification');
-  }
+  };
   return (
     <Box sx={{ my: 4 }}>
       <Box sx={{ textAlign: 'center' }}>
@@ -59,6 +59,6 @@ function Home() {
       </Box>
     </Box>
   );
-};
+}
 
 export default Home;

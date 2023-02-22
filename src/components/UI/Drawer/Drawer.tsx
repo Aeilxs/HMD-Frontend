@@ -3,7 +3,7 @@ import { IconButton, SwipeableDrawer } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { selectDrawerState, toggleDrawer } from '../../../features/UI/uiSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import DrawerList from './DrawerList/DrawerListItem/DrawerList';
+import DrawerList from './DrawerList/DrawerList';
 import { selectIsLogged } from '../../../features/user/userSlice';
 
 export default function Drawer(): JSX.Element {

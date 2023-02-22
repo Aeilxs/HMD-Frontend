@@ -13,6 +13,7 @@ import AuthPage from '../Authentication/AuthenticationPage';
 
 import Drawer from '../UI/Drawer/Drawer';
 import NotFound from '../404/NotFound';
+import CustomScrollBar from '../UI/CustomScrollBar/CustomScrollBar';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
@@ -21,21 +22,7 @@ function App(): JSX.Element {
       <CssBaseline />
       <Nav />
       <Drawer />
-      <Container
-        disableGutters
-        maxWidth={false}
-        sx={{
-          height: '82vh',
-          overflowY: 'scroll',
-          '::-webkit-scrollbar': {
-            width: '0.4em',
-          },
-          '::-webkit-scrollbar-thumb': {
-            backgroundColor: '#BDBDBD',
-            borderRadius: '20px',
-          },
-        }}
-      >
+      <CustomScrollBar>
         <Routes>
           <Route
             path="/"
@@ -54,7 +41,7 @@ function App(): JSX.Element {
             }
           />
         </Routes>
-      </Container>
+      </CustomScrollBar>
       <Footer />
     </ThemeProvider>
   );

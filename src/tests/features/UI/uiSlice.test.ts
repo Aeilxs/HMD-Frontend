@@ -10,6 +10,11 @@ describe('UI reducer test suites', () => {
     isDark: true,
     isRegistered: true,
     isDrawerOpen: false,
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    gender: 'Homme',
   };
 
   it('should handle initial state', () => {

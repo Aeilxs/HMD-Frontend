@@ -11,7 +11,7 @@ export default function DurationSport(): JSX.Element {
       type="number"
       value={duration}
       onChange={(event) => dispatch(setDuration(Number(event.target.value)))}
-      label="Temps de l'activité"
+      label="Durée de l'activité"
       variant="standard"
       sx={{ py: 3, mt: 3 }}
     />

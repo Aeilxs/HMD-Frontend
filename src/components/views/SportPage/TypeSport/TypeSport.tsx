@@ -17,7 +17,7 @@ export default function TypeSport(): JSX.Element {
   const activities = ['course', 'marche', 'natation', 'velo', 'exercices'];
   return (
     <FormControl>
-      <FormLabel id="radio-group">Type</FormLabel>
+      <FormLabel id="radio-group">Type de l'activité</FormLabel>
       <RadioGroup
         row
         aria-labelledby="radio-group"

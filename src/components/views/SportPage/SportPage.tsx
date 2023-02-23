@@ -26,7 +26,7 @@ export default function SportPage(): JSX.Element {
       <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', mx: 'auto', my: 2 }}>
         <FormGroup sx={{ display: 'flex', flexDirection: 'column' }}>
           <FormLabel component="legend">Activités</FormLabel>
-          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+          <Box sx={{ display: 'flex', flexDirection: ['column', 'row'] }}>
             {activities.map((activity) => (
               <FormControlLabel
                 key={activity}

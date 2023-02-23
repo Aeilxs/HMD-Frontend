@@ -3,12 +3,14 @@ import uiReducer, {
   toggleTheme,
   toggleForm,
   toggleDrawer,
+  setValue,
+  setGender,
 } from '../../../features/UI/uiSlice';
 
 describe('UI reducer test suites', () => {
   const initialState: UIState = {
     isDark: true,
-    isRegistered: true,
+    isRegistered: false,
     isDrawerOpen: false,
     firstname: '',
     lastname: '',
@@ -18,10 +20,15 @@ describe('UI reducer test suites', () => {
   };
 
   it('should handle initial state', () => {
-    expect(uiReducer(undefined, { type: 'unknown' })).toEqual({
+    expect(uiReducer(initialState, { type: 'unknown' })).toEqual({
       isDark: true,
-      isRegistered: true,
+      isRegistered: false,
       isDrawerOpen: false,
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+      gender: 'Homme',
     });
   });
 
@@ -32,11 +39,48 @@ describe('UI reducer test suites', () => {
 
   it('should handle toggle form', () => {
     const actual = uiReducer(initialState, toggleForm());
-    expect(actual.isRegistered).toBe(false);
+    expect(actual.isRegistered).toBe(true);
   });
 
   it('should handle toggle drawer', () => {
     const actual = uiReducer(initialState, toggleDrawer());
     expect(actual.isDrawerOpen).toBe(true);
+  });
+
+  it('should handle change event on first firstname textfield', () => {
+    const newState = uiReducer(initialState, setValue({ value: 'john', name: 'firstname' }));
+    const expectedState = { ...initialState, firstname: 'john' };
+    expect(newState).toEqual(expectedState);
+  });
+
+  it('should handle change event on first name textfield', () => {
+    const newState = uiReducer(initialState, setValue({ value: 'doe', name: 'name' }));
+    const expectedState = { ...initialState, name: 'doe' };
+    expect(newState).toEqual(expectedState);
+  });
+
+  it('should handle change event on first email textfield', () => {
+    const newState = uiReducer(
+      initialState,
+      setValue({ value: 'john.doe@gmail.com', name: 'email' })
+    );
+    const expectedState = { ...initialState, email: 'john.doe@gmail.com' };
+    expect(newState).toEqual(expectedState);
+  });
+
+  it('should handle change event on first password textfield', () => {
+    const newState = uiReducer(
+      initialState,
+      setValue({ value: 'johnSecurePassword', name: 'password' })
+    );
+    const expectedState = { ...initialState, password: 'johnSecurePassword' };
+    expect(newState).toEqual(expectedState);
+  });
+
+  it('should handle change gender with setGender action', () => {
+    const test = uiReducer(initialState, setGender('Homme'));
+    expect(test.gender).toBe('Homme');
+    const test2 = uiReducer(initialState, setGender('Femme'));
+    expect(test2.gender).toBe('Femme');
   });
 });

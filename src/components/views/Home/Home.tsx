@@ -10,8 +10,22 @@ import img3 from '../../../assets/img3.png';
 import { useAppDispatch } from '../../../redux/hooks';
 import { toggleForm } from '../../../features/UI/uiSlice';
 
+
 function Home() {
-  const images = [img1, img2, img3];
+  const images = [
+    {
+      name:img1,
+      alt:'img1',
+    },
+    {
+      name:img2,
+      alt:'img2',
+    },
+    {
+      name:img3,
+      alt:'img3',
+    }
+  ];
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 

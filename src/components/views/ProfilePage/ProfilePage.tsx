@@ -1,8 +1,12 @@
-import { Container, TextField, Typography } from '@mui/material';
+import { Button, Container, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import { selectDateOfBirth, setDateOfBirth } from '../../../features/user/userSlice';
+import { useAppSelector } from '../../../redux/hooks';
+import CustomDatePicker from '../../UI/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../UI/MessageBox/MessageBox';
 
 export default function ProfilePage(): JSX.Element {
+  const dateOfBirth = useAppSelector(selectDateOfBirth);
   return (
     <Container>
       <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}>
@@ -30,8 +34,13 @@ export default function ProfilePage(): JSX.Element {
               variant="outlined"
               sx={{ mb: 1 }}
             />
-            {/* Remplacer par custom Date picker */}
-            <TextField label="replaceme" />
+            <CustomDatePicker
+              value={dateOfBirth}
+              actionCreator={setDateOfBirth}
+            />
+            <Box sx={{ m: 'auto', mt: 2 }}>
+              <Button variant="contained">Envoyer</Button>
+            </Box>
           </Box>
           <Box sx={{ width: '50%' }}>
             <MessageBox

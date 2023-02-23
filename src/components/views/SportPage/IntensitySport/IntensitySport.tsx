@@ -10,7 +10,7 @@ export default function IntensitySport(): JSX.Element {
   const intensity = useAppSelector(selectIntensity);
   const intensityLevels = ['Faible', 'Modérée', 'Élevée'];
   return (
-    <FormControl sx={{ mt: 3 }}>
+    <FormControl sx={{ my: 3 }}>
       <InputLabel>Intensité</InputLabel>
       <Select
         label="Intensité"

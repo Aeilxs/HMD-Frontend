@@ -18,7 +18,7 @@ export default function CustomDatePicker({
     <LocalizationProvider
       dateAdapter={AdapterDayjs}
       adapterLocale="fr"
-    >
+      >
       <DatePicker
         label="Date"
         value={value}

@@ -2,20 +2,13 @@ import {
   Box,
   Button,
   Container,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Checkbox,
-  FormLabel,
 } from '@mui/material';
 import MessageBox from '../../UI/MessageBox/MessageBox';
+import DurationSport from './DurationSport/DurationSport';
+import IntensitySport from './IntensitySport/IntensitySport';
+import TypeSport from './TypeSport/TypeSport';
 
 export default function SportPage(): JSX.Element {
-  const activities = ['course', 'marche', 'natation', 'velo', 'exercices'];
   return (
     <Container>
       <MessageBox
@@ -24,34 +17,10 @@ export default function SportPage(): JSX.Element {
         width={100}
       />
       <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', mx: 'auto', my: 2 }}>
-        <FormGroup sx={{ display: 'flex', flexDirection: 'column' }}>
-          <FormLabel component="legend">Activités</FormLabel>
-          <Box sx={{ display: 'flex', flexDirection: ['column', 'row'] }}>
-            {activities.map((activity) => (
-              <FormControlLabel
-                key={activity}
-                control={<Checkbox />}
-                label={activity}
-                sx={{ p: 0.2 }}
-              />
-            ))}
-          </Box>
-        </FormGroup>
-        <TextField
-          type="number"
-          label="Temps de l'activité"
-          variant="standard"
-          sx={{ py: 3, mt: 3 }}
-        />
-        <FormControl sx={{ mt: 3 }}>
-          <InputLabel>Intensité</InputLabel>
-          <Select label="Intensité">
-            <MenuItem value={10}>Faible</MenuItem>
-            <MenuItem value={20}>Modérée</MenuItem>
-            <MenuItem value={30}>Élevée</MenuItem>
-          </Select>
-        </FormControl>
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: '2em' }}>
+        <TypeSport />
+        <DurationSport />
+        <IntensitySport />
+        <Box sx={{ m: 'auto', mt:2 }}>
           <Button variant="contained">Envoyer</Button>
         </Box>
       </Box>

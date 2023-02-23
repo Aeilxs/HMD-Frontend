@@ -20,9 +20,7 @@ export default function CustomDatePicker({
       <DatePicker
         label="Date"
         value={value}
-        onChange={(event) => {
-          actionCreator(event);
-        }}
+        onChange={(event) => actionCreator(event)}
         renderInput={(params) => <TextField {...params} />}
       />
     </LocalizationProvider>

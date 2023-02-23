@@ -1,12 +1,9 @@
-import {
-  Box,
-  Button,
-  Container,
-} from '@mui/material';
 import MessageBox from '../../UI/MessageBox/MessageBox';
 import DurationSport from './DurationSport/DurationSport';
 import IntensitySport from './IntensitySport/IntensitySport';
 import TypeSport from './TypeSport/TypeSport';
+
+import { Box, Button, Container } from '@mui/material';
 
 export default function SportPage(): JSX.Element {
   return (
@@ -20,7 +17,7 @@ export default function SportPage(): JSX.Element {
         <TypeSport />
         <DurationSport />
         <IntensitySport />
-        <Box sx={{ m: 'auto', mt:2 }}>
+        <Box sx={{ m: 'auto', mt: 2 }}>
           <Button variant="contained">Envoyer</Button>
         </Box>
       </Box>

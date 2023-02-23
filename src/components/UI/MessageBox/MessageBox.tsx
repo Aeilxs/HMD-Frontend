@@ -16,8 +16,8 @@ return (
             expandIcon={<ExpandMore />}
             aria-controls="panel1a-content"
             >
-            <Typography variant='h3' sx={{fontSize:"2em", p:1}}>
-                <Info sx={{pr:1}} />
+            <Typography variant='h3' sx={{fontSize:"2em", p:1, display:'flex'}}>
+                <Info fontSize='large' sx={{mr:1}} />
                 {title}
             </Typography>
             </AccordionSummary>

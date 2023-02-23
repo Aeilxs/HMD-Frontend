@@ -17,9 +17,12 @@ function MessageBox({ title, content, width }: MessageProps) {
       >
         <Typography
           variant="h3"
-          sx={{ fontSize: '2em', p: 1 }}
+          sx={{ fontSize: '2em', p: 1, display: 'flex' }}
         >
-          <Info sx={{ pr: 1 }} />
+          <Info
+            fontSize="large"
+            sx={{ mr: 1 }}
+          />
           {title}
         </Typography>
       </AccordionSummary>

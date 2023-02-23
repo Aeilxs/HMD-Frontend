@@ -10,7 +10,7 @@ function AuthPage() {
     <Box
       sx={{
         display: 'flex',
-        flexDirection: { xs: 'column', sm: 'column', md: 'row' },
+        flexDirection: ['column','row'] ,
         height: '100%',
       }}
     >

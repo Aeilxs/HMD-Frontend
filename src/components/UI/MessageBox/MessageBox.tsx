@@ -27,7 +27,7 @@ function MessageBox({ title, content, width }: MessageProps) {
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography>{content}</Typography>
+        <Typography sx={{ textAlign: 'justify', p: 1 }}>{content}</Typography>
       </AccordionDetails>
     </Accordion>
   );

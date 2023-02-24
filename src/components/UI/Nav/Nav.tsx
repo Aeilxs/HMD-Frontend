@@ -62,7 +62,12 @@ export default function Nav(): JSX.Element {
               >
                 Déconnexion
               </Button>
-              <Avatar sx={{ mr: 1 }}>A</Avatar>
+              <Avatar
+                onClick={() => navigate('/profil')}
+                sx={{ mr: 1, cursor: 'pointer' }}
+              >
+                A
+              </Avatar>
             </>
           )}
           <IconButton onClick={() => dispatch(toggleTheme())}>

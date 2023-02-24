@@ -11,7 +11,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  isLogged: true,
+  isLogged: false,
   dateOfBirth: null,
   age: 0,
   weight: '',

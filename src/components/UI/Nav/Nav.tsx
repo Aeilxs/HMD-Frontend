@@ -5,9 +5,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import MenuIcon from '@mui/icons-material/Menu';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { selectTheme, toggleTheme } from '../../../features/UI/uiSlice';
+import { selectTheme, toggleDrawer, toggleTheme } from '../../../features/UI/uiSlice';
 import { DarkMode } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { selectIsLogged } from '../../../features/user/userSlice';
@@ -17,7 +18,6 @@ export default function Nav(): JSX.Element {
   const isLogged = useAppSelector(selectIsLogged);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
   return (
     <Box sx={{ display: 'block' }}>
       <AppBar
@@ -26,10 +26,14 @@ export default function Nav(): JSX.Element {
           borderBottom: '1px solid grey',
           flexDirection: 'row',
           display: 'flex',
+          alignItems: 'center',
           height: '6vh',
           p: 1,
         }}
       >
+        <IconButton onClick={() => dispatch(toggleDrawer())}>
+          <MenuIcon />
+        </IconButton>
         <Box
           onClick={() => navigate('/')}
           sx={{ display: 'flex', cursor: 'pointer' }}

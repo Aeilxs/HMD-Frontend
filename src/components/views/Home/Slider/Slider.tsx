@@ -32,21 +32,21 @@ function Slider({ images }: SliderProps) {
         <Box sx={{ m: 'auto', display: 'flex', alignItems: 'center' }}>
           <Button
             variant="text"
-            sx={{ height: 'fit-content' }}
             onClick={() => setCurrentImage((currentImage + 1) % images.length)}
           >
             <ArrowBackIosNew />
           </Button>
-          <Box
-            component="img"
-            src={images[currentImage].name}
-            alt={images[currentImage].alt}
-            sx={{ width: '500px', height: '500px' }}
-            className="active"
-          />
+          <Box sx={{ height: ['200px', '400px'] }}>
+            <Box
+              component="img"
+              src={images[currentImage].name}
+              alt={images[currentImage].alt}
+              sx={{ width: '100%', height: '100%' }}
+              className="active"
+            />
+          </Box>
           <Button
             variant="text"
-            sx={{}}
             onClick={() => setCurrentImage((currentImage - 1 + images.length) % images.length)}
           >
             <ArrowForwardIos />

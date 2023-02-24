@@ -10,21 +10,20 @@ import img3 from '../../../assets/img3.png';
 import { useAppDispatch } from '../../../redux/hooks';
 import { toggleForm } from '../../../features/UI/uiSlice';
 
-
 function Home() {
   const images = [
     {
-      name:img1,
-      alt:'img1',
+      name: img1,
+      alt: 'img1',
     },
     {
-      name:img2,
-      alt:'img2',
+      name: img2,
+      alt: 'img2',
     },
     {
-      name:img3,
-      alt:'img3',
-    }
+      name: img3,
+      alt: 'img3',
+    },
   ];
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -55,7 +54,7 @@ function Home() {
       <Slider images={images} />
       <Box sx={{ display: 'flex', justifyContent: 'center', m: 5 }}>
         <Button
-          sx={{ mx: 2 }}
+          sx={{ mx: 1 }}
           variant="contained"
           onClick={handleClick}
         >
@@ -63,7 +62,7 @@ function Home() {
           Sign up
         </Button>
         <Button
-          sx={{ mx: 2 }}
+          sx={{ mx: 1 }}
           variant="contained"
           onClick={handleClick}
         >

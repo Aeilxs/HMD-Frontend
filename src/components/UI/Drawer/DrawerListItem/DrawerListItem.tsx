@@ -13,20 +13,26 @@ import SmokingRoomsIcon from '@mui/icons-material/SmokingRooms';
 import SportsHandballIcon from '@mui/icons-material/SportsHandball';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { toggleDrawer } from '../../../../features/UI/uiSlice';
+import { useNavigate } from 'react-router-dom';
 
 interface DrawerListItemProps {
   label: string;
+  link: string;
   icon: 'food' | 'sleep' | 'exercises' | 'hydration' | 'smoke' | 'drugs';
 }
 
 /**
  * icons : 'food' | 'sleep' | 'exercises' | 'hydration' | 'smoke' | 'drugs'
  */
-export default function DrawerListItem({ label, icon }: DrawerListItemProps): JSX.Element {
+export default function DrawerListItem({ label, icon, link }: DrawerListItemProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   return (
     <ListItem
-      onClick={() => dispatch(toggleDrawer())}
+      onClick={() => {
+        dispatch(toggleDrawer());
+        navigate(link);
+      }}
       disablePadding
     >
       <ListItemButton>

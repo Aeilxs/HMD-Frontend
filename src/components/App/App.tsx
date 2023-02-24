@@ -64,7 +64,7 @@ function App(): JSX.Element {
             element={<SmokePage />}
           />
           <Route
-            path="/sleep"
+            path="/sommeil"
             element={<SleepPage />}
           />
           <Route

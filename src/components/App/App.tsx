@@ -24,6 +24,7 @@ import AuthPage from '../views/Authentication/AuthenticationPage';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
+
   return (
     <ThemeProvider theme={isDark ? themeDark : themeLight}>
       <CssBaseline />

@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../redux/store';
+import { calcAge } from '../../utils/math';
 
 export interface UserState {
   isLogged: boolean;
-  dateOfBirth: string;
+  dateOfBirth: string | null;
   age: number;
   weight: number | '';
   height: number | '';
@@ -11,7 +12,7 @@ export interface UserState {
 
 const initialState: UserState = {
   isLogged: true,
-  dateOfBirth: 'Wed, 16 Jul 1998 22:00:00 GMT',
+  dateOfBirth: null,
   age: 0,
   weight: '',
   height: '',
@@ -22,7 +23,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setDateOfBirth: (state, action: PayloadAction<string>) => {
-      return { ...state, dateOfBirth: action.payload };
+      return { ...state, dateOfBirth: action.payload, age: calcAge(action.payload) };
     },
     setWeight: (state, action: PayloadAction<number>) => {
       return { ...state, weight: action.payload };

@@ -10,26 +10,32 @@ export default function DrawerList(): JSX.Element {
       <List>
         <DrawerListItem
           label="Alimentation"
+          link="/alimentation"
           icon="food"
         />
         <DrawerListItem
           label="Sommeil"
+          link="/sommeil"
           icon="sleep"
         />
         <DrawerListItem
           label="Activité physique"
+          link="/sport"
           icon="exercises"
         />
         <DrawerListItem
           label="Hydratation"
+          link="/hydratation"
           icon="hydration"
         />
         <DrawerListItem
           label="Tabagisme"
+          link="/tabagisme"
           icon="smoke"
         />
         <DrawerListItem
           label="Traitement médical"
+          link="/medicaments"
           icon="drugs"
         />
       </List>

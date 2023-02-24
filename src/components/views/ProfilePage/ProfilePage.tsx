@@ -42,7 +42,6 @@ export default function ProfilePage(): JSX.Element {
         <TextField
           onChange={(event) => dispatch(setWeight(Number(event.target.value)))}
           value={weight}
-          id="outlined-basic"
           label="Poids (kg)"
           type="number"
           variant="outlined"
@@ -51,7 +50,6 @@ export default function ProfilePage(): JSX.Element {
         <TextField
           onChange={(event) => dispatch(setHeight(Number(event.target.value)))}
           value={height}
-          id="outlined-basic"
           label="Taille (cm)"
           type="number"
           variant="outlined"

@@ -51,15 +51,16 @@ export default function Nav(): JSX.Element {
             HMD
           </Typography>
         </Box>
-        <Box sx={{ ml: 'auto', display: 'flex' }}>
+        <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
           {isLogged && (
             <>
               <Button
                 sx={{ mr: 2 }}
+                size="small"
                 color="inherit"
                 variant="outlined"
               >
-                LOGOUT
+                Déconnexion
               </Button>
               <Avatar sx={{ mr: 1 }}>A</Avatar>
             </>

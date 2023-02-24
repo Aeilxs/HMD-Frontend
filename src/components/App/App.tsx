@@ -28,8 +28,8 @@ function App(): JSX.Element {
     <ThemeProvider theme={isDark ? themeDark : themeLight}>
       <CssBaseline />
       <Nav />
-      <Drawer />
       <CustomScrollBar>
+        <Drawer />
         <Routes>
           <Route
             path="/"

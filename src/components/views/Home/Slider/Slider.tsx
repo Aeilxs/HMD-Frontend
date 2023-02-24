@@ -1,6 +1,7 @@
 import { Box, Button } from '@mui/material';
-import {ArrowBackIosNew, ArrowForwardIos } from '@mui/icons-material';
+import { ArrowBackIosNew, ArrowForwardIos } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
+import { Container } from '@mui/system';
 
 interface Image {
   name: string;
@@ -11,7 +12,7 @@ type SliderProps = {
   images: Image[];
 };
 
-function Slider ({ images }: SliderProps) {
+function Slider({ images }: SliderProps) {
   const [currentImage, setCurrentImage] = useState<number>(0);
 
   useEffect(() => {
@@ -22,38 +23,37 @@ function Slider ({ images }: SliderProps) {
   }, [currentImage, images]);
 
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        display: 'flex',
-        justifyContent: 'space-between',
-        boxSizing: 'border-box',
-        width: '100%',
-      }}
-    >
-      <Button
-        variant="text"
-        sx={{ position: 'absolute', top: '50%', left: '0', borderRadius: 0 }}
-        onClick={() => setCurrentImage((currentImage + 1) % images.length)}
+    <Container>
+      <Box
+        sx={{
+          display: 'flex',
+        }}
       >
-        <ArrowBackIosNew />
-      </Button>
-      <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-        <img
-          src={images[currentImage].name}
-           alt={images[currentImage].alt}
-          style={{ height: '400px' }}
-          className="active"
-        />
+        <Box sx={{ m: 'auto', display: 'flex', alignItems: 'center' }}>
+          <Button
+            variant="text"
+            sx={{ height: 'fit-content' }}
+            onClick={() => setCurrentImage((currentImage + 1) % images.length)}
+          >
+            <ArrowBackIosNew />
+          </Button>
+          <Box
+            component="img"
+            src={images[currentImage].name}
+            alt={images[currentImage].alt}
+            sx={{ width: '500px', height: '500px' }}
+            className="active"
+          />
+          <Button
+            variant="text"
+            sx={{}}
+            onClick={() => setCurrentImage((currentImage - 1 + images.length) % images.length)}
+          >
+            <ArrowForwardIos />
+          </Button>
+        </Box>
       </Box>
-      <Button
-        variant="text"
-        sx={{ position: 'absolute', top: '50%', right: '0', borderRadius: 0 }}
-        onClick={() => setCurrentImage((currentImage - 1 + images.length) % images.length)}
-      >
-        <ArrowForwardIos />
-      </Button>
-    </Box>
+    </Container>
   );
-};
+}
 export default Slider;

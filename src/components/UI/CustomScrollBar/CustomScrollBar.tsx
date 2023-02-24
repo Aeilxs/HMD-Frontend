@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
 
 interface CustomScrollBarProps {
-  children: JSX.Element;
+  children: JSX.Element[];
 }
 
 function CustomScrollBar({ children }: CustomScrollBarProps): JSX.Element {

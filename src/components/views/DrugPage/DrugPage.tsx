@@ -21,13 +21,13 @@ export default function DrugPage(): JSX.Element {
   const quantity = useAppSelector(selectQuantity);
 
   return (
-    <Container>
+    <Container sx={{ mt: 2 }}>
       <MessageBox
         title="En savoir plus"
         content="lorem lorem lorem lorem lorem lorem lorem"
         width={100}
       />
-      <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', mx: 'auto', my: 2 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', mx: 'auto', my: 2 }}>
         <CustomDatePicker
           value={date}
           actionCreator={setDate}

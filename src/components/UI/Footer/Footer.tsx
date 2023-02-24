@@ -1,15 +1,37 @@
-import * as React from 'react';
-import { IconButton, Typography, Box, Paper } from '@mui/material';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { Typography, Box, Paper } from '@mui/material';
+import { useAppSelector } from '../../../redux/hooks';
+import { selectTheme } from '../../../features/UI/uiSlice';
+import { themeLight } from '../../theme/theme';
+import FooterIcon from './FooterIcon/FooterIcon';
 
 export default function Footer(): JSX.Element {
+  const isDark = useAppSelector(selectTheme);
+  const socials = [
+    {
+      network: 'facebook',
+      link: 'https://www.facebook.com/',
+    },
+    {
+      network: 'github',
+      link: 'https://github.com/O-clock-Lara/projet-07-health-monitor-dashboard-front',
+    },
+    {
+      network: 'linkedin',
+      link: 'https://www.linkedin.com/',
+    },
+  ];
+
   return (
     <Paper elevation={5}>
       <Box
         component="footer"
-        sx={{ p: 2, borderTop: '1px solid grey', height: '12vh' }}
+        sx={{
+          p: 2,
+          borderTop: '1px solid grey',
+          height: '12vh',
+          color: 'white',
+          backgroundColor: `${isDark ? '' : themeLight.palette.primary.main}`,
+        }}
       >
         <Typography align="center">Nos réseaux</Typography>
         <Box
@@ -20,25 +42,13 @@ export default function Footer(): JSX.Element {
             justifyContent: 'space-evenly',
           }}
         >
-          <IconButton onClick={() => window.open('https://www.facebook.com/')}>
-            <FacebookIcon fontSize="large" />
-          </IconButton>
-          <IconButton
-            onClick={() =>
-              window.open(
-                'https://github.com/O-clock-Lara/projet-07-health-monitor-dashboard-front'
-              )
-            }
-            sx={{ width: 'fit-content' }}
-          >
-            <GitHubIcon fontSize="large" />
-          </IconButton>
-          <IconButton
-            onClick={() => window.open('https://www.linkedin.com/')}
-            sx={{ width: 'fit-content' }}
-          >
-            <LinkedInIcon fontSize="large" />
-          </IconButton>
+          {socials.map((element) => (
+            <FooterIcon
+              key={element.network}
+              name={element.network}
+              link={element.link}
+            />
+          ))}
         </Box>
       </Box>
     </Paper>

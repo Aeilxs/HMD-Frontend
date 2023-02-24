@@ -1,14 +1,15 @@
-import {
-  Box,
-  Button,
-  Container,
-} from '@mui/material';
 import MessageBox from '../../UI/MessageBox/MessageBox';
 import DurationSport from './DurationSport/DurationSport';
 import IntensitySport from './IntensitySport/IntensitySport';
 import TypeSport from './TypeSport/TypeSport';
 
+import { Box, Button, Container } from '@mui/material';
+import { useAppSelector } from '../../../redux/hooks';
+import { selectDate, setDate } from '../../../features/dashboard/sportSlice';
+import CustomDatePicker from '../../UI/CustomDatePicker/CustomDatePicker';
+
 export default function SportPage(): JSX.Element {
+ const date = useAppSelector(selectDate)
   return (
     <Container>
       <MessageBox
@@ -20,7 +21,12 @@ export default function SportPage(): JSX.Element {
         <TypeSport />
         <DurationSport />
         <IntensitySport />
-        <Box sx={{ m: 'auto', mt:2 }}>
+        <CustomDatePicker
+              value={date}
+              actionCreator={setDate}
+            />
+
+        <Box sx={{ m: 'auto', mt: 2 }}>
           <Button variant="contained">Envoyer</Button>
         </Box>
       </Box>

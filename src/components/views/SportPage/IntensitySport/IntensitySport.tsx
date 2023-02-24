@@ -1,18 +1,31 @@
-import {
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
-  } from '@mui/material';
-  export default function IntensitySport(): JSX.Element {
-    return (
-          <FormControl sx={{ mt: 3 }}>
-            <InputLabel>Intensité</InputLabel>
-            <Select label="Intensité">
-              <MenuItem value={10}>Faible</MenuItem>
-              <MenuItem value={20}>Modérée</MenuItem>
-              <MenuItem value={30}>Élevée</MenuItem>
-            </Select>
-          </FormControl>
-    );
-  }
+import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
+import { selectIntensity, setIntensity } from '../../../../features/dashboard/sportSlice';
+
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+
+type Intensity = 'Faible' | 'Modérée' | 'Élevée';
+
+export default function IntensitySport(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const intensity = useAppSelector(selectIntensity);
+  const intensityLevels = ['Faible', 'Modérée', 'Élevée'];
+  return (
+    <FormControl sx={{ my: 3 }}>
+      <InputLabel>Intensité</InputLabel>
+      <Select
+        label="Intensité"
+        value={intensity}
+        onChange={(event) => dispatch(setIntensity(event.target.value as Intensity))}
+      >
+        {intensityLevels.map((intensity) => (
+          <MenuItem
+            key={intensity}
+            value={intensity}
+          >
+            {intensity}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
+}

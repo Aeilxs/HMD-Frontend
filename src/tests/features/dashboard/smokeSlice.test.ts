@@ -1,4 +1,4 @@
-import smokeReducer, { SmokeState } from '../../../features/dashboard/smokeSlice';
+import smokeReducer, { SmokeState } from '../../../reducers/dashboard/smokeSlice';
 
 describe('smoke reducer test suite', () => {
   const initialState: SmokeState = {

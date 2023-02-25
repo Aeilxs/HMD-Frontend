@@ -1,4 +1,4 @@
-import userReducer, { UserState } from '../../features/user/userSlice';
+import userReducer, { UserState } from '../../reducers/user/userSlice';
 
 describe('user reducer test suite', () => {
   const initialState: UserState = {

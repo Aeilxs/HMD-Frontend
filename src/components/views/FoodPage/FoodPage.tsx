@@ -11,6 +11,8 @@ import FoodSelector from './FoodSelector/FoodSelector';
 import QuantitySelector from './QuantitySelector/QuantitySelector';
 
 import { Box, Container, Button, Typography, CircularProgress } from '@mui/material';
+import MessageBox from '../../UI/MessageBox/MessageBox';
+import CustomDatePicker from '../../UI/CustomDatePicker/CustomDatePicker';
 
 export default function FoodPage(): JSX.Element {
   const foods = useAppSelector(selectFoods);
@@ -48,24 +50,30 @@ export default function FoodPage(): JSX.Element {
       >
         Alimentation
       </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            margin: 'auto',
-            width: '50%',
-            p: '1em',
-            boxSizing: 'border-box',
-          }}
-        >
-          <CategorySelector aliments={aliments} />
-          {isLoading && <CircularProgress sx={{ m: 'auto' }} />}
-          {!isLoading && foods.length > 0 && <FoodSelector foods={uniqueFoods} />}
-          {selectedFood && <QuantitySelector/>}
-        </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '2em' }}>
-          <Button variant="contained">Envoyer</Button>
-        </Box>
+      <MessageBox
+        title="Lorem ipsum"
+        content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Non quibusdam, deleniti ipsa repudiandae neque, autem quidem, voluptates corporis numquam eius ducimus expedita voluptatum! Dolor sapiente odio provident iste voluptatem! Asperiores."
+        width={100}
+      />
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          margin: 'auto',
+          width: '50%',
+          p: '1em',
+          boxSizing: 'border-box',
+        }}
+      >
+        <CategorySelector aliments={aliments} />
+        {isLoading && <CircularProgress sx={{ m: 'auto' }} />}
+        {!isLoading && foods.length > 0 && <FoodSelector foods={uniqueFoods} />}
+        {selectedFood && <QuantitySelector />}
+      </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '2em' }}>
+        <Button variant="contained">Envoyer</Button>
+      </Box>
     </Container>
   );
 }

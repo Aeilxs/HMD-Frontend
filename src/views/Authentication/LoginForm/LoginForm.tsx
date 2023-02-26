@@ -1,26 +1,24 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { setValue } from '../../../reducers/UI/uiSlice';
+import { selectEmail, selectPassword, setValue } from '../../../reducers/UI/uiSlice';
 
-import { Button, FormControl, FormGroup, TextField, Typography } from '@mui/material';
+import { Box, Button, FormControl, FormGroup, TextField, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
 function LoginForm() {
   const dispatch = useAppDispatch();
-  const email = useAppSelector((state) => state.ui.email);
-  const password = useAppSelector((state) => state.ui.password);
+  const email = useAppSelector(selectEmail);
+  const password = useAppSelector(selectPassword);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     dispatch(setValue({ name, value }));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // envoyer au backend ?
-    console.log(email, password);
-  };
   return (
-    <form onSubmit={handleSubmit}>
+    <Box component="form" onSubmit={(event) => {
+      event.preventDefault();
+      console.log(email, password);
+    } }>
       <FormControl
         sx={{
           width: '100%',
@@ -67,7 +65,7 @@ function LoginForm() {
           Envoyer
         </Button>
       </FormControl>
-    </form>
+    </Box>
   );
 }
 export default LoginForm;

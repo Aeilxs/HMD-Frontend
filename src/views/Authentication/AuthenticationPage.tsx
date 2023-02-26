@@ -1,8 +1,10 @@
 import { useAppSelector } from '../../store/hooks';
-import { Box, Paper } from '@mui/material';
+
 import LoginForm from './LoginForm/LoginForm';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
 import AuthFormToggle from './AuthFormToggle';
+
+import { Box, Paper } from '@mui/material';
 
 function AuthPage() {
   const isRegistered = useAppSelector((state) => state.ui.isRegistered);

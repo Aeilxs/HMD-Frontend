@@ -1,7 +1,9 @@
-import { setGender, setValue } from '../../../reducers/UI/uiSlice';
+import { selectEmail, selectFirstname, selectGender, selectLastname, selectPassword, setGender, setValue } from '../../../reducers/UI/uiSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+
 import SendIcon from '@mui/icons-material/Send';
 import {
+  Box,
   Button,
   FormControl,
   FormControlLabel,
@@ -15,11 +17,11 @@ import {
 
 function RegistrationForm() {
   const dispatch = useAppDispatch();
-  const firstname = useAppSelector((state) => state.ui.firstname);
-  const lastname = useAppSelector((state) => state.ui.lastname);
-  const email = useAppSelector((state) => state.ui.email);
-  const password = useAppSelector((state) => state.ui.password);
-  const gender = useAppSelector((state) => state.ui.gender);
+  const firstname = useAppSelector(selectFirstname);
+  const lastname = useAppSelector(selectLastname);
+  const email = useAppSelector(selectEmail);
+  const password = useAppSelector(selectPassword);
+  const gender = useAppSelector(selectGender);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -28,11 +30,11 @@ function RegistrationForm() {
     }
     dispatch(setValue({ name, value }));
   };
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
+
   return (
-    <form onSubmit={handleSubmit}>
+    <Box component="form" onSubmit={(event) => {
+      event.preventDefault();
+    }}>
       <FormControl
         sx={{
           width: '100%',
@@ -120,7 +122,7 @@ function RegistrationForm() {
           Envoyer
         </Button>
       </FormControl>
-    </form>
+    </Box>
   );
 }
 export default RegistrationForm;

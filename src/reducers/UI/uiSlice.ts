@@ -28,10 +28,10 @@ export const UISlice = createSlice({
   initialState,
   reducers: {
     toggleTheme: (state) => {
-      state.isDark = !state.isDark;
+      return {...state,  isDark: !state.isDark}
     },
-    toggleForm: (state) => {
-      state.isRegistered = !state.isRegistered;
+    toggleForm: (state, action: PayloadAction<boolean>) => {
+      return {...state,  isRegistered: action.payload}
     },
     toggleDrawer: (state) => {
       state.isDrawerOpen = !state.isDrawerOpen;
@@ -54,5 +54,10 @@ export const { toggleTheme, toggleDrawer, toggleForm, setValue, setGender } = UI
 export const selectTheme = (state: RootState) => state.ui.isDark;
 export const selectDrawerState = (state: RootState) => state.ui.isDrawerOpen;
 export const selectForm = (state: RootState) => state.ui.isRegistered;
+export const selectFirstname= (state: RootState) => state.ui.firstname;
+export const selectLastname= (state: RootState) => state.ui.lastname;
+export const selectEmail= (state: RootState) => state.ui.email;
+export const selectPassword= (state: RootState) => state.ui.password;
+export const selectGender= (state: RootState) => state.ui.gender;
 
 export default UISlice.reducer;

@@ -38,7 +38,7 @@ describe('UI reducer test suites', () => {
   });
 
   it('should handle toggle form', () => {
-    const actual = uiReducer(initialState, toggleForm());
+    const actual = uiReducer(initialState, toggleForm(false));
     expect(actual.isRegistered).toBe(true);
   });
 

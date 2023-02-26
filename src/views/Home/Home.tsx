@@ -28,10 +28,6 @@ function Home() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const handleClick = () => {
-    dispatch(toggleForm());
-    navigate('/authentification');
-  };
   return (
     <Box sx={{ my: 4 }}>
       <Box sx={{ textAlign: 'center' }}>
@@ -56,7 +52,10 @@ function Home() {
         <Button
           sx={{ mx: 1 }}
           variant="contained"
-          onClick={handleClick}
+          onClick={() => {
+            dispatch(toggleForm(false));
+            navigate('/authentification');
+          }}
         >
           <PersonAdd />
           Sign up
@@ -64,7 +63,10 @@ function Home() {
         <Button
           sx={{ mx: 1 }}
           variant="contained"
-          onClick={handleClick}
+          onClick={() => {
+            dispatch(toggleForm(true));
+            navigate('/authentification');
+          }}
         >
           <Fingerprint />
           Login

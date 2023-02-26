@@ -18,6 +18,7 @@ export interface Food {
   }
 
 interface FoodSlice {
+  date: string | null;
   category: string | null;
   foods: Food[];
   isLoading:boolean;
@@ -26,6 +27,7 @@ interface FoodSlice {
 }
 
 const initialState: FoodSlice = {
+  date: null,
   category: null,
   foods:[],
   isLoading:false,
@@ -52,6 +54,9 @@ export const FoodSlice = createSlice({
   name: 'food',
   initialState,
   reducers: {
+    setDate: (state, action: PayloadAction<string>) => {
+      return { ...state, date: action.payload };
+    },
     setCategory: (state, action: PayloadAction<string>) => {
         return {...state, category:action.payload, selectedFood: null, quantity:''}
     },
@@ -73,8 +78,9 @@ export const FoodSlice = createSlice({
   },
 });
 
-export const { setCategory,setIsLoading, setSelectedFood,setQuantity } = FoodSlice.actions;
+export const { setDate, setCategory,setIsLoading, setSelectedFood,setQuantity } = FoodSlice.actions;
 
+export const selectDate = (state: RootState) => state.food.date;
 export const selectCategory = (state: RootState) => state.food.category;
 export const selectFoods = (state: RootState) => state.food.foods;
 export const selectIsLoading = (state: RootState) => state.food.isLoading;

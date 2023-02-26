@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from '../../../components/App/App';
+import App from '../../../App/App';
 import { Provider } from 'react-redux';
-import { store } from '../../../redux/store';
+import { store } from '../../../store/store';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from '@remix-run/router';
 

@@ -5,7 +5,7 @@ import uiReducer, {
   toggleDrawer,
   setValue,
   setGender,
-} from '../../../features/UI/uiSlice';
+} from '../../../reducers/UI/uiSlice';
 
 describe('UI reducer test suites', () => {
   const initialState: UIState = {

@@ -10,7 +10,7 @@ import { Autocomplete, TextField } from '@mui/material';
 interface CategoryProps {
   aliments: string[];
 }
-export default function Category({ aliments }: CategoryProps): JSX.Element {
+export default function CategorySelector({ aliments }: CategoryProps): JSX.Element {
   const dispatch = useAppDispatch();
   const category = useAppSelector(selectCategory);
   return (

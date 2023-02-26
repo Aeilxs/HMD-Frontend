@@ -2,6 +2,15 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../../redux/store';
 
+interface Nutriments {
+  "energy-kcal": number
+}
+interface ApiProps {
+    id: string;
+    product_name_fr: string;
+    nutriments:Nutriments;
+}
+
 export interface Food {
     key: string;
     name: string;
@@ -26,11 +35,12 @@ const initialState: FoodSlice = {
 // https://redux-toolkit.js.org/api/createAsyncThunk#providing-a-custom-dispatch-function
 export const fetchCategories = createAsyncThunk(
     'alimentation/fetchCategories',
-    async (category:string, {dispatch}) => {
-        dispatch(setIsLoading(true))
+    async (categoryName:string, {dispatch}) => {
+      const category = categoryName.toLowerCase().replace(/\s+/g, "-");
+      dispatch(setIsLoading(true))
       const response = await axios.get(`https://fr.openfoodfacts.org/categorie/${category}.json`);
       dispatch(setIsLoading(false))
-      return response.data.products.map((product: any) => ({
+      return response.data.products.map((product: ApiProps) => ({
         key: product.id,
         name: product.product_name_fr,
         calories: product["nutriments"]["energy-kcal"],

@@ -6,9 +6,9 @@ import {
   selectSelectedFood,
 } from '../../../features/dashboard/foodSlice';
 
-import Category from './Category/Category';
-import FoodSelect from './Food/Food';
-import QuantitySelect from './Quantity/Quantity';
+import CategorySelector from './CategorySelector/CategorySelector';
+import FoodSelector from './FoodSelector/FoodSelector';
+import QuantitySelector from './QuantitySelector/QuantitySelector';
 
 import { Box, Container, Button, Typography, CircularProgress } from '@mui/material';
 
@@ -48,7 +48,6 @@ export default function FoodPage(): JSX.Element {
       >
         Alimentation
       </Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
         <Box
           sx={{
             display: 'flex',
@@ -59,15 +58,14 @@ export default function FoodPage(): JSX.Element {
             boxSizing: 'border-box',
           }}
         >
-          <Category aliments={aliments} />
+          <CategorySelector aliments={aliments} />
           {isLoading && <CircularProgress sx={{ m: 'auto' }} />}
-          {!isLoading && foods.length > 0 && <FoodSelect foods={uniqueFoods} />}
-          {selectedFood !== null && <QuantitySelect />}
+          {!isLoading && foods.length > 0 && <FoodSelector foods={uniqueFoods} />}
+          {selectedFood && <QuantitySelector/>}
         </Box>
-      </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '2em' }}>
-        <Button variant="contained">Envoyer</Button>
-      </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '2em' }}>
+          <Button variant="contained">Envoyer</Button>
+        </Box>
     </Container>
   );
 }

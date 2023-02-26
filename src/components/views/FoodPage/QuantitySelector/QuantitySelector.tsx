@@ -3,7 +3,7 @@ import { selectQuantity, setQuantity } from '../../../../features/dashboard/food
 
 import { TextField } from '@mui/material';
 
-export default function Quantity(): JSX.Element {
+export default function QuantitySelector(): JSX.Element {
   const dispatch = useAppDispatch();
   const quantity = useAppSelector(selectQuantity);
   return (

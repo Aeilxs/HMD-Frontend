@@ -11,7 +11,7 @@ interface FoodProps {
   foods: Food[];
 }
 
-export default function FoodSelect({ foods }: FoodProps): JSX.Element {
+export default function FoodSelector({ foods }: FoodProps): JSX.Element {
   const dispatch = useAppDispatch();
   const selectedFood = useAppSelector(selectSelectedFood);
   return (

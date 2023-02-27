@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 
 export interface User {
@@ -19,7 +18,7 @@ export interface UIState {
 
 const initialState: UIState = {
   isDark: true,
-  isRegistered: true,
+  isRegistered: false,
   isDrawerOpen: true,
   user: {
     firstname: "",
@@ -29,14 +28,6 @@ const initialState: UIState = {
     gender: "Homme",
   },
 };
-
-// export const registrerUser = createAsyncThunk(
-//   'ui/registrerUser',
-//   async (user: User) => {
-//     const response = await axios.post(`http://localhost:8080/api/user`, user);
-//     return response.data;
-//   }
-// );
 
 export const UISlice = createSlice({
   name: "ui",
@@ -49,7 +40,7 @@ export const UISlice = createSlice({
       return { ...state, isRegistered: action.payload };
     },
     toggleDrawer: (state) => {
-      state.isDrawerOpen = !state.isDrawerOpen;
+      return { ...state, isDrawerOpen: !state.isDrawerOpen };
     },
     setValue: (
       state,
@@ -74,15 +65,6 @@ export const UISlice = createSlice({
       };
     },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(registrerUser.fulfilled, (state, action) => {
-  //       return {...state,  isRegistered: true}
-  //     })
-  //     .addCase(registrerUser.rejected, (state, action) => {
-  //       // en cas d'erreur
-  //     })
-  // },
 });
 
 export const { toggleTheme, toggleDrawer, toggleForm, setValue, setGender } =

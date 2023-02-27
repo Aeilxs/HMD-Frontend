@@ -1,17 +1,19 @@
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 import {
   fetchProducts,
   selectCategory,
   setCategory,
-} from '../../../reducers/dashboard/foodSlice';
+} from "../../../reducers/dashboard/foodSlice";
 
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, TextField } from "@mui/material";
 
 interface CategoryProps {
   aliments: string[];
 }
-export default function CategorySelector({ aliments }: CategoryProps): JSX.Element {
+export default function CategorySelector({
+  aliments,
+}: CategoryProps): JSX.Element {
   const dispatch = useAppDispatch();
   const category = useAppSelector(selectCategory);
   return (
@@ -31,10 +33,7 @@ export default function CategorySelector({ aliments }: CategoryProps): JSX.Eleme
       // Propriété "isOptionEqualToValue" pour comparer l'option sélectionnée avec les options disponibles en utilisant la valeur
       isOptionEqualToValue={(option, value) => option === value}
       renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Choisissez une catégorie"
-        />
+        <TextField {...params} label="Choisissez une catégorie" />
       )}
     />
   );

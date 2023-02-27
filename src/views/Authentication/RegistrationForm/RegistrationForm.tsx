@@ -1,4 +1,4 @@
-import { selectEmail, selectFirstname, selectGender, selectLastname, selectPassword, setGender, setValue } from '../../../reducers/UI/uiSlice';
+import {selectUser, setGender, setValue } from '../../../reducers/UI/uiSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import SendIcon from '@mui/icons-material/Send';
@@ -17,11 +17,7 @@ import {
 
 function RegistrationForm() {
   const dispatch = useAppDispatch();
-  const firstname = useAppSelector(selectFirstname);
-  const lastname = useAppSelector(selectLastname);
-  const email = useAppSelector(selectEmail);
-  const password = useAppSelector(selectPassword);
-  const gender = useAppSelector(selectGender);
+  const user = useAppSelector(selectUser)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -59,7 +55,7 @@ function RegistrationForm() {
             placeholder="Entrez votre prénom"
             variant="standard"
             type="text"
-            value={firstname}
+            value={user.firstname}
             onChange={handleChange}
           />
           <TextField
@@ -69,7 +65,7 @@ function RegistrationForm() {
             placeholder="Entrez votre nom"
             variant="standard"
             type="text"
-            value={lastname}
+            value={user.lastname}
             onChange={handleChange}
           />
           <TextField
@@ -79,7 +75,7 @@ function RegistrationForm() {
             placeholder="Entrez votre email"
             variant="standard"
             type="email"
-            value={email}
+            value={user.email}
             onChange={handleChange}
           />
           <TextField
@@ -89,14 +85,14 @@ function RegistrationForm() {
             placeholder="Entrez un mot de passe"
             variant="standard"
             type="password"
-            value={password}
+            value={user.password}
             onChange={handleChange}
           />
           <FormControl>
             <FormLabel sx={{ textAlign: 'start' }}>Genre</FormLabel>
             <RadioGroup
               row
-              value={gender}
+              value={user.gender}
               onChange={handleChange}
               name="gender"
             >

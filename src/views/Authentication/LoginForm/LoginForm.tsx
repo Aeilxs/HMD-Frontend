@@ -1,14 +1,12 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { selectEmail, selectPassword, setValue } from '../../../reducers/UI/uiSlice';
+import {selectUser, setValue } from '../../../reducers/UI/uiSlice';
 
 import { Box, Button, FormControl, FormGroup, TextField, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
 function LoginForm() {
   const dispatch = useAppDispatch();
-  const email = useAppSelector(selectEmail);
-  const password = useAppSelector(selectPassword);
-
+  const user = useAppSelector(selectUser)
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     dispatch(setValue({ name, value }));
@@ -17,7 +15,7 @@ function LoginForm() {
   return (
     <Box component="form" onSubmit={(event) => {
       event.preventDefault();
-      console.log(email, password);
+      console.log(user.email, user.password);
     } }>
       <FormControl
         sx={{
@@ -42,7 +40,7 @@ function LoginForm() {
             placeholder="Entrez votre email"
             variant="standard"
             type="email"
-            value={email}
+            value={user.email}
             onChange={handleChange}
           />
           <TextField
@@ -52,7 +50,7 @@ function LoginForm() {
             placeholder="Entrez votre mot de passe"
             variant="standard"
             type="password"
-            value={password}
+            value={user.password}
             onChange={handleChange}
           />
         </FormGroup>

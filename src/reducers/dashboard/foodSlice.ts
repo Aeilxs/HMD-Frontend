@@ -17,7 +17,7 @@ export interface Food {
     calories:number;
   }
 
-interface FoodSlice {
+interface FoodState {
   date: string | null;
   category: string | null;
   foods: Food[];
@@ -26,7 +26,7 @@ interface FoodSlice {
   quantity:number | '';
 }
 
-const initialState: FoodSlice = {
+const initialState: FoodState = {
   date: null,
   category: null,
   foods:[],
@@ -35,8 +35,8 @@ const initialState: FoodSlice = {
   quantity:''
 };
 // https://redux-toolkit.js.org/api/createAsyncThunk#providing-a-custom-dispatch-function
-export const fetchCategories = createAsyncThunk(
-    'alimentation/fetchCategories',
+export const fetchProducts = createAsyncThunk(
+    'food/fetchProducts',
     async (categoryName:string, {dispatch}) => {
       const category = categoryName.toLowerCase().replace(/\s+/g, "-");
       dispatch(setIsLoading(true))
@@ -72,7 +72,7 @@ export const FoodSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCategories.fulfilled, (state, action) => {
+      .addCase(fetchProducts.fulfilled, (state, action) => {
         state.foods = action.payload;
       })
   },

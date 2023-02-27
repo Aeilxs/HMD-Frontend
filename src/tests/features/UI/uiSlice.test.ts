@@ -12,11 +12,13 @@ describe('UI reducer test suites', () => {
     isDark: true,
     isRegistered: false,
     isDrawerOpen: false,
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    gender: 'Homme',
+    user: {
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+      gender: 'Homme',
+    },
   };
 
   it('should handle initial state', () => {
@@ -24,11 +26,13 @@ describe('UI reducer test suites', () => {
       isDark: true,
       isRegistered: false,
       isDrawerOpen: false,
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-      gender: 'Homme',
+      user: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        gender: 'Homme',
+      },
     });
   });
 
@@ -79,8 +83,8 @@ describe('UI reducer test suites', () => {
 
   it('should handle change gender with setGender action', () => {
     const test = uiReducer(initialState, setGender('Homme'));
-    expect(test.gender).toBe('Homme');
+    expect(test.user.gender).toBe('Homme');
     const test2 = uiReducer(initialState, setGender('Femme'));
-    expect(test2.gender).toBe('Femme');
+    expect(test2.user.gender).toBe('Femme');
   });
 });

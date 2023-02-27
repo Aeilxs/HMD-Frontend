@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import {
-  fetchCategories,
+  fetchProducts,
   selectCategory,
   setCategory,
 } from '../../../reducers/dashboard/foodSlice';
@@ -25,7 +25,7 @@ export default function CategorySelector({ aliments }: CategoryProps): JSX.Eleme
       onChange={(event, value) => {
         if (value) {
           dispatch(setCategory(value));
-          dispatch(fetchCategories(value));
+          dispatch(fetchProducts(value));
         }
       }}
       // Propriété "isOptionEqualToValue" pour comparer l'option sélectionnée avec les options disponibles en utilisant la valeur

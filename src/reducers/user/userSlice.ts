@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { RootState } from '../../store/store';
 import { calcAge } from '../../utils/math';
 
@@ -18,6 +19,14 @@ const initialState: UserState = {
   height: '',
 };
 
+export const fetchUserData = createAsyncThunk(
+  'user/fetchUserData',
+  async () => {
+    const response = await axios.get('http://localhost:8080/api/users/{id}')
+    return response.data
+  }
+)
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -31,6 +40,16 @@ export const userSlice = createSlice({
     setHeight: (state, action: PayloadAction<number>) => {
       return { ...state, height: action.payload };
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUserData.fulfilled, (state, action) => {
+        const { dateOfBirth, weight, height } = action.payload;
+        return { ...state, dateOfBirth, weight, height, age: calcAge(dateOfBirth), isLogged: true };
+      })
+      .addCase(fetchUserData.rejected, (state, action) => {
+        // en cas d'erreur
+      })
   },
 });
 

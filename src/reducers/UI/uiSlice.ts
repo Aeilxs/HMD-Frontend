@@ -1,10 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { RootState } from '../../store/store';
 
-export interface UIState {
-  isDark: boolean;
-  isRegistered: boolean;
-  isDrawerOpen: boolean;
+export interface User {
   firstname: string;
   lastname: string;
   email: string;
@@ -12,16 +10,33 @@ export interface UIState {
   gender: 'Homme' | 'Femme';
 }
 
+export interface UIState {
+  isDark: boolean;
+  isRegistered: boolean;
+  isDrawerOpen: boolean;
+  user: User;
+}
+
 const initialState: UIState = {
   isDark: true,
   isRegistered: true,
   isDrawerOpen: true,
-  firstname: '',
-  lastname: '',
-  email: '',
-  password: '',
-  gender: 'Homme',
+  user: {
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    gender: 'Homme',
+  },
 };
+
+// export const registrerUser = createAsyncThunk(
+//   'ui/registrerUser',
+//   async (user: User) => {
+//     const response = await axios.post(`http://localhost:8080/api/user`, user);
+//     return response.data;
+//   }
+// );
 
 export const UISlice = createSlice({
   name: 'ui',
@@ -40,13 +55,27 @@ export const UISlice = createSlice({
       const { value, name } = action.payload;
       return {
         ...state,
-        [name]: value,
+        user :{
+          ...state.user,
+          [name]: value,
+        }
       };
     },
     setGender: (state, action: PayloadAction<'Homme' | 'Femme'>) => {
-      state.gender = action.payload;
+      return {...state,  user: {
+        ...state.user, gender:action.payload
+      }}
     },
   },
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addCase(registrerUser.fulfilled, (state, action) => {
+  //       return {...state,  isRegistered: true}
+  //     })
+  //     .addCase(registrerUser.rejected, (state, action) => {
+  //       // en cas d'erreur
+  //     })
+  // },
 });
 
 export const { toggleTheme, toggleDrawer, toggleForm, setValue, setGender } = UISlice.actions;
@@ -54,10 +83,7 @@ export const { toggleTheme, toggleDrawer, toggleForm, setValue, setGender } = UI
 export const selectTheme = (state: RootState) => state.ui.isDark;
 export const selectDrawerState = (state: RootState) => state.ui.isDrawerOpen;
 export const selectForm = (state: RootState) => state.ui.isRegistered;
-export const selectFirstname= (state: RootState) => state.ui.firstname;
-export const selectLastname= (state: RootState) => state.ui.lastname;
-export const selectEmail= (state: RootState) => state.ui.email;
-export const selectPassword= (state: RootState) => state.ui.password;
-export const selectGender= (state: RootState) => state.ui.gender;
+export const selectUser= (state: RootState) => state.ui.user;
+
 
 export default UISlice.reducer;

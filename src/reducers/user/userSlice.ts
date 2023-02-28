@@ -1,38 +1,39 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { RootState } from '../../store/store';
-import { calcAge } from '../../utils/math';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../../store/store";
+import { calcAge } from "../../utils/math";
+import { drugState } from "../dashboard/drugSlice";
+import { fetchDrugs, registerLoginUser } from "./userMiddleware";
 
 export interface UserState {
   isLogged: boolean;
   dateOfBirth: string | null;
   age: number;
-  weight: number | '';
-  height: number | '';
+  weight: number | "";
+  height: number | "";
+  token: string;
+  drugs: drugState[];
 }
 
 const initialState: UserState = {
   isLogged: false,
   dateOfBirth: null,
   age: 0,
-  weight: '',
-  height: '',
+  weight: "",
+  height: "",
+  token: "",
+  drugs: [],
 };
 
-export const fetchUserData = createAsyncThunk(
-  'user/fetchUserData',
-  async () => {
-    const response = await axios.get('http://localhost:8080/api/users/{id}')
-    return response.data
-  }
-)
-
 export const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     setDateOfBirth: (state, action: PayloadAction<string>) => {
-      return { ...state, dateOfBirth: action.payload, age: calcAge(action.payload) };
+      return {
+        ...state,
+        dateOfBirth: action.payload,
+        age: calcAge(action.payload),
+      };
     },
     setWeight: (state, action: PayloadAction<number>) => {
       return { ...state, weight: action.payload };
@@ -43,13 +44,18 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUserData.fulfilled, (state, action) => {
-        const { dateOfBirth, weight, height } = action.payload;
-        return { ...state, dateOfBirth, weight, height, age: calcAge(dateOfBirth), isLogged: true };
+      .addCase(registerLoginUser.fulfilled, (state, action) => {
+        console.log("ok");
+        console.log(action.payload);
+        return { ...state, isLogged: true, token: action.payload };
       })
-      .addCase(fetchUserData.rejected, (state, action) => {
+      .addCase(registerLoginUser.rejected, (state, action) => {
+        console.error("non");
         // en cas d'erreur
       })
+      .addCase(fetchDrugs.fulfilled, (state, action) => {
+        return { ...state, drugs: action.payload };
+      });
   },
 });
 

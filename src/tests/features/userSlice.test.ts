@@ -1,21 +1,23 @@
-import userReducer, { UserState } from '../../reducers/user/userSlice';
+import userReducer, { UserState } from "../../reducers/user/userSlice";
 
-describe('user reducer test suite', () => {
+describe("user reducer test suite", () => {
   const initialState: UserState = {
     isLogged: false,
-    dateOfBirth: '',
+    dateOfBirth: "",
     age: 0,
     height: 0,
     weight: 0,
+    token: "",
   };
 
-  it('should handle initial state', () => {
-    expect(userReducer(initialState, { type: 'unknown' })).toEqual({
+  it("should handle initial state", () => {
+    expect(userReducer(initialState, { type: "unknown" })).toEqual({
       isLogged: false,
-      dateOfBirth: '',
+      dateOfBirth: "",
       age: 0,
       height: 0,
       weight: 0,
+      token: "",
     });
   });
 });

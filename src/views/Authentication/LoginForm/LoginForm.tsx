@@ -1,35 +1,43 @@
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import {selectUser, setValue } from '../../../reducers/UI/uiSlice';
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { selectUser, setValue } from "../../../reducers/UI/uiSlice";
+import { registerLoginUser } from "../../../reducers/user/userMiddleware";
 
-import { Box, Button, FormControl, FormGroup, TextField, Typography } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormGroup,
+  TextField,
+  Typography,
+} from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 
 function LoginForm() {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser)
+  const user = useAppSelector(selectUser);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     dispatch(setValue({ name, value }));
   };
 
   return (
-    <Box component="form" onSubmit={(event) => {
-      event.preventDefault();
-      console.log(user.email, user.password);
-    } }>
+    <Box
+      component="form"
+      onSubmit={(event) => {
+        event.preventDefault();
+        dispatch(registerLoginUser());
+      }}
+    >
       <FormControl
         sx={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        <Typography
-          variant="h1"
-          sx={{ fontSize: '3em', mb: 5 }}
-        >
+        <Typography variant="h1" sx={{ fontSize: "3em", mb: 5 }}>
           Formulaire de connexion
         </Typography>
         <FormGroup>
@@ -55,7 +63,10 @@ function LoginForm() {
           />
         </FormGroup>
         <Button
-          sx={{ backgroundColor: '#7bc1b7', '&:hover': { backgroundColor: '#6aa49c' } }}
+          sx={{
+            backgroundColor: "#7bc1b7",
+            "&:hover": { backgroundColor: "#6aa49c" },
+          }}
           type="submit"
           variant="contained"
           endIcon={<SendIcon />}

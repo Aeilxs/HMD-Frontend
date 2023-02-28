@@ -5,9 +5,13 @@ import RegistrationForm from './RegistrationForm/RegistrationForm';
 import AuthFormToggle from './AuthFormToggle';
 
 import { Box, Paper } from '@mui/material';
+import { selectAuthErrors } from '../../reducers/UI/uiSlice';
 
 function AuthPage() {
   const isRegistered = useAppSelector((state) => state.ui.isRegistered);
+  const errors = useAppSelector(selectAuthErrors);
+  const { login: loginError, registration: registrationError } = errors;
+
   return (
     <Box
       sx={{
@@ -31,7 +35,7 @@ function AuthPage() {
             buttonText="Inscrivez vous"
           />
         ) : (
-          <RegistrationForm />
+          <RegistrationForm error={registrationError} />
         )}
       </Paper>
       <Paper
@@ -45,7 +49,7 @@ function AuthPage() {
         }}
       >
         {isRegistered ? (
-          <LoginForm />
+          <LoginForm error={loginError} />
         ) : (
           <AuthFormToggle
             text="Vous avez déjà un compte ?"

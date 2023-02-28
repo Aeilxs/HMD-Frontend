@@ -1,4 +1,4 @@
-import {selectUser, setGender, setValue } from '../../../reducers/UI/uiSlice';
+import { selectUser, setGender, setValue } from '../../../reducers/UI/uiSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import SendIcon from '@mui/icons-material/Send';
@@ -15,9 +15,13 @@ import {
   Typography,
 } from '@mui/material';
 
-function RegistrationForm() {
+interface RegistrationFormProps {
+  error: boolean;
+}
+
+function RegistrationForm({ error }: RegistrationFormProps) {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser)
+  const user = useAppSelector(selectUser);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -28,9 +32,12 @@ function RegistrationForm() {
   };
 
   return (
-    <Box component="form" onSubmit={(event) => {
-      event.preventDefault();
-    }}>
+    <Box
+      component="form"
+      onSubmit={(event) => {
+        event.preventDefault();
+      }}
+    >
       <FormControl
         sx={{
           width: '100%',
@@ -49,6 +56,7 @@ function RegistrationForm() {
         </Typography>
         <FormGroup>
           <TextField
+            error={error}
             sx={{ py: 2 }}
             label="Prenom"
             name="firstname"
@@ -59,6 +67,7 @@ function RegistrationForm() {
             onChange={handleChange}
           />
           <TextField
+            error={error}
             sx={{ py: 2 }}
             label="Nom"
             name="lastname"
@@ -69,6 +78,7 @@ function RegistrationForm() {
             onChange={handleChange}
           />
           <TextField
+            error={error}
             sx={{ py: 2 }}
             label="Email"
             name="email"
@@ -79,6 +89,7 @@ function RegistrationForm() {
             onChange={handleChange}
           />
           <TextField
+            error={error}
             sx={{ py: 2 }}
             label="Mot de passe"
             name="password"

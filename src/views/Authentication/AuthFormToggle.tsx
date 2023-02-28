@@ -9,7 +9,7 @@ interface AuthFormToggleProps {
 }
 function AuthFormToggle({ text, buttonText }: AuthFormToggleProps) {
   const dispatch = useAppDispatch();
-  const isRegistered = useAppSelector(selectForm)
+  const isRegistered = useAppSelector(selectForm);
   return (
     <Container
       sx={{

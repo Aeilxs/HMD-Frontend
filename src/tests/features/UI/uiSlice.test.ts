@@ -10,6 +10,7 @@ import uiReducer, {
 describe('UI reducer test suites', () => {
   const initialState: UIState = {
     isDark: true,
+    errors: { login: false, registration: false },
     isRegistered: false,
     isDrawerOpen: false,
     user: {
@@ -24,6 +25,7 @@ describe('UI reducer test suites', () => {
   it('should handle initial state', () => {
     expect(uiReducer(initialState, { type: 'unknown' })).toEqual({
       isDark: true,
+      errors: { login: false, registration: false },
       isRegistered: false,
       isDrawerOpen: false,
       user: {

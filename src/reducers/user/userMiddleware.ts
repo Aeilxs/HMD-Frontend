@@ -1,12 +1,12 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { RootState } from "../../store/store";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { RootState } from '../../store/store';
 
 export const registerLoginUser = createAsyncThunk(
-  "ui/registerLoginUser",
+  'ui/registerLoginUser',
   async (_, { getState }) => {
     const { email, password } = (getState() as RootState).ui.user;
-    const response = await axios.post("http://localhost:8000/api/login", {
+    const response = await axios.post('https://localhost:8000/api/login', {
       username: email,
       password: password,
     });

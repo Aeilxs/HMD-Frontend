@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectTheme, toggleDrawer, toggleTheme } from '../../reducers/UI/uiSlice';
 import { DarkMode } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { selectIsLogged } from '../../reducers/user/userSlice';
+import { onLogout, selectIsLogged } from '../../reducers/user/userSlice';
 
 export default function Nav(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
@@ -59,6 +59,7 @@ export default function Nav(): JSX.Element {
           {isLogged && (
             <>
               <Button
+                onClick={() => dispatch(onLogout(false))}
                 sx={{ mr: 2 }}
                 size="small"
                 color="inherit"

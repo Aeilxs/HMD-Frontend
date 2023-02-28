@@ -4,12 +4,13 @@ import { calcAge } from "../../utils/math";
 import { drugState } from "../dashboard/drugSlice";
 import { fetchDrugs, registerLoginUser } from "./userMiddleware";
 
+
 export interface UserState {
   isLogged: boolean;
   dateOfBirth: string | null;
   age: number;
-  weight: number | "";
-  height: number | "";
+  weight: number | '';
+  height: number | '';
   token: string;
   drugs: drugState[];
 }
@@ -25,7 +26,7 @@ const initialState: UserState = {
 };
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     setDateOfBirth: (state, action: PayloadAction<string>) => {
@@ -41,25 +42,25 @@ export const userSlice = createSlice({
     setHeight: (state, action: PayloadAction<number>) => {
       return { ...state, height: action.payload };
     },
+    onLogout: (state, action: PayloadAction<boolean>) => {
+      return { ...state, isLogged: false, token: '' };
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(registerLoginUser.fulfilled, (state, action) => {
-        console.log("ok");
-        console.log(action.payload);
         return { ...state, isLogged: true, token: action.payload };
       })
       .addCase(registerLoginUser.rejected, (state, action) => {
         console.error("non");
         // en cas d'erreur
-      })
       .addCase(fetchDrugs.fulfilled, (state, action) => {
         return { ...state, drugs: action.payload };
       });
   },
 });
 
-export const { setDateOfBirth, setWeight, setHeight } = userSlice.actions;
+export const { setDateOfBirth, setWeight, setHeight, onLogout } = userSlice.actions;
 
 export const selectIsLogged = (state: RootState) => state.user.isLogged;
 export const selectDateOfBirth = (state: RootState) => state.user.dateOfBirth;

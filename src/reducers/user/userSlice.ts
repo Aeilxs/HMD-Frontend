@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 import { calcAge } from "../../utils/math";
-import { registerLoginUser } from "./userMiddleware";
+import { drugState } from "../dashboard/drugSlice";
+import { fetchDrugs, registerLoginUser } from "./userMiddleware";
 
 export interface UserState {
   isLogged: boolean;
@@ -10,6 +11,7 @@ export interface UserState {
   weight: number | "";
   height: number | "";
   token: string;
+  drugs: drugState[];
 }
 
 const initialState: UserState = {
@@ -19,6 +21,7 @@ const initialState: UserState = {
   weight: "",
   height: "",
   token: "",
+  drugs: [],
 };
 
 export const userSlice = createSlice({
@@ -49,6 +52,9 @@ export const userSlice = createSlice({
       .addCase(registerLoginUser.rejected, (state, action) => {
         console.error("non");
         // en cas d'erreur
+      })
+      .addCase(fetchDrugs.fulfilled, (state, action) => {
+        return { ...state, drugs: action.payload };
       });
   },
 });

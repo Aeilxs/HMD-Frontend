@@ -9,13 +9,14 @@ export const registerLoginUser = createAsyncThunk(
   async (_, { getState, dispatch }) => {
     try {
       const { email, password } = (getState() as RootState).ui.user;
-      const response = await axios.post('https://localhost:8000/api/login', {
+      const response = await axios.post('http://localhost:8000/api/login', {
         username: email,
         password: password,
       });
       dispatch(setLoginError(false));
       dispatch(setValue({ value: '', name: 'email' }));
       dispatch(setValue({ value: '', name: 'password' }));
+      console.log(response.data.token);
       return response.data.token;
     } catch (error) {
       dispatch(setLoginError(true));
@@ -41,14 +42,10 @@ export const registerLoginUser = createAsyncThunk(
 // );
 
 // action de récuperation des données médicamenteuses
-export const fetchDrugs = createAsyncThunk(
-  "user/fetchDrugs",
-  async (_, { getState }) => {
-    const token = (getState() as RootState).user.token;
-    const response = await axios.get(
-      `http://localhost:8000/api/users/1/medications`,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    return response.data;
-  }
-);
+export const fetchDrugs = createAsyncThunk('user/fetchDrugs', async (_, { getState }) => {
+  const token = (getState() as RootState).user.token;
+  const response = await axios.get(`http://localhost:8000/api/users/1/medications`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+});

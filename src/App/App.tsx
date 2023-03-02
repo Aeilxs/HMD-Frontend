@@ -22,6 +22,7 @@ import SmokePage from '../views/SmokePage/SmokePage';
 import SleepPage from '../views/SleepPage/SleepPage';
 import HydrationPage from '../views/HydrationPage/HydrationPage';
 import AuthPage from '../views/Authentication/AuthenticationPage';
+import DashboardPage from '../views/DashboardPage/DashboardPage';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
@@ -74,7 +75,10 @@ function App(): JSX.Element {
             path="/hydratation"
             element={<HydrationPage />}
           />
-
+          <Route
+            path="/dashboard"
+            element={<DashboardPage />}
+          />
           <Route
             path="*"
             element={

@@ -1,15 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { RootState } from '../../../store/store';
 import axios from 'axios';
+import { RootState } from '../../../store/store';
 
-export const registerUser = createAsyncThunk('user/registerUser', async (_, { getState }) => {
-  const { firstname, lastname, email, password, gender } = (getState() as RootState).ui.user;
-  const response = await axios.post('http://localhost:8000/api/users', {
-    firstname: firstname,
-    lastname: lastname,
-    email: email,
-    password: password,
-    gender: gender,
-  });
+export const postHydration = createAsyncThunk('hydration/postHydration', async (_, { getState }) => {
+  const { date, quantity } = (getState() as RootState).hydration;
+  const token = (getState() as RootState).user.token;
+  const response = await axios.post(
+    'http://localhost:8000/api/users/hydrations',
+    {
+      quantity: quantity,
+      date: date,
+    },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
   return response.data;
 });

@@ -25,6 +25,10 @@ export default function SmokePage(): JSX.Element {
       />
       <Box
         component="form"
+        onSubmit={(event) => {
+          event.preventDefault()
+          dispatch(postSmoke())
+        }}
         sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}
       >
         <CustomDatePicker
@@ -42,7 +46,6 @@ export default function SmokePage(): JSX.Element {
         <Button
           sx={{ m: 'auto' }}
           variant="contained"
-          onClick={() => dispatch(postSmoke())}
         >
           Valider
         </Button>

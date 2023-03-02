@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
+import { postSleep } from './sleepMiddleware';
 
 export interface SleepState {
   date: string | null;
@@ -33,6 +34,15 @@ export const sleepSlice = createSlice({
     setQuality: (state, action: PayloadAction<number>) => {
       return { ...state, quality: action.payload };
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(postSleep.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(postSleep.rejected, (state, action) => {
+        console.error(action.payload);
+      });
   },
 });
 

@@ -7,6 +7,7 @@ import hydrationReducer from '../reducers/dashboard/hydrationSlice';
 import sleepReducer from '../reducers/dashboard/sleepSlice';
 import smokeReducer from '../reducers/dashboard/smokeSlice';
 import sportReducer from '../reducers/dashboard/sportSlice';
+import profilReducer from '../reducers/dashboard/profilSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     sleep: sleepReducer,
     smoke: smokeReducer,
     sport: sportReducer,
+    profil: profilReducer,
   },
 });
 

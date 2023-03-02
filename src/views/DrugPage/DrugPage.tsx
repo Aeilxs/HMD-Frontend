@@ -12,7 +12,6 @@ import {
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';
-import { fetchDrugs } from '../../reducers/user/userMiddleware';
 
 export default function DrugPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -55,7 +54,12 @@ export default function DrugPage(): JSX.Element {
           onChange={(event) => dispatch(setInfos(event.target.value))}
         />
         <Box sx={{ margin: 'auto', mt: '2em' }}>
-          <Button type="submit" variant="contained" onSubmit={() => dispatch(fetchDrugs)}>Envoyer</Button>
+          <Button
+            type="submit"
+            variant="contained"
+          >
+            Envoyer
+          </Button>
         </Box>
       </Box>
     </Container>

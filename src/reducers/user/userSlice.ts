@@ -1,27 +1,36 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { fetchUser, registerLoginUser } from './userMiddleware';
+import { dataHydrationApi } from '../dashboard/hydrationSlice';
+import { dataProfilApi } from '../dashboard/profilSlice';
+import { dataSmokeApi } from '../dashboard/smokeSlice';
+import { dataSportApi } from '../dashboard/sportSlice';
+import { dataDrugApi } from '../dashboard/drugSlice';
 import { RootState } from '../../store/store';
 import { calcAge } from '../../utils/math';
-import { drugState } from '../dashboard/drugSlice';
-import { fetchUser, registerLoginUser } from './userMiddleware';
+import { dataSleepApi } from '../dashboard/sleepSlice';
 
 export interface UserState {
   isLogged: boolean;
-  dateOfBirth: string | null;
-  age: number;
-  weight: number | '';
-  height: number | '';
   token: string;
-  drugs: drugState[];
+  properties: dataProfilApi[];
+  medicalTreatments: dataDrugApi[];
+  cigarettes: dataSmokeApi[];
+  caloricAlimentation: [];
+  hydratations: dataHydrationApi[];
+  activities: dataSportApi[];
+  sleeps: dataSleepApi[];
 }
 
 const initialState: UserState = {
   isLogged: false,
-  dateOfBirth: null,
-  age: 0,
-  weight: '',
-  height: '',
   token: '',
-  drugs: [],
+  properties: [],
+  medicalTreatments: [],
+  cigarettes: [],
+  caloricAlimentation: [],
+  hydratations: [],
+  activities: [],
+  sleeps: [],
 };
 
 export const userSlice = createSlice({
@@ -55,7 +64,8 @@ export const userSlice = createSlice({
         // en cas d'erreur
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        console.log(action.payload)
+        console.log(action.payload);
+        return { ...state, ...action.payload };
       });
   },
 });
@@ -63,8 +73,5 @@ export const userSlice = createSlice({
 export const { setDateOfBirth, setWeight, setHeight, onLogout } = userSlice.actions;
 
 export const selectIsLogged = (state: RootState) => state.user.isLogged;
-export const selectDateOfBirth = (state: RootState) => state.user.dateOfBirth;
-export const selectWeight = (state: RootState) => state.user.weight;
-export const selectHeight = (state: RootState) => state.user.height;
 
 export default userSlice.reducer;

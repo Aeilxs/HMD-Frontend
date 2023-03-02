@@ -8,6 +8,15 @@ export interface sportState {
   intensity: 'Faible' | 'Modérée' | 'Élevée';
 }
 
+export interface dataSportApi {
+  id: number;
+  type: string;
+  time: number;
+  intensity: number;
+  caloriesPerSession: number;
+  date: string;
+}
+
 const initialState: sportState = {
   date: 'Wed, 15 Jul 1998 22:00:00 GMT',
   type: 'course',

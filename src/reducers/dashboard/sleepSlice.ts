@@ -7,6 +7,13 @@ export interface SleepState {
   quality: number | '';
 }
 
+export interface dataSleepApi {
+  id: number;
+  time: number;
+  quality: number;
+  date: string;
+}
+
 const initialState: SleepState = {
   date: null,
   quantity: '',

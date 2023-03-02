@@ -6,6 +6,12 @@ export interface HydrationState {
   quantity: number | '';
 }
 
+export interface dataHydrationApi {
+  id: number;
+  quantity: number;
+  date: string;
+}
+
 const initialState: HydrationState = {
   date: null,
   quantity: '',

@@ -6,6 +6,12 @@ export interface SmokeState {
   quantity: number | '';
 }
 
+export interface dataSmokeApi {
+  id: number;
+  quantity: number;
+  date: string;
+}
+
 const initialState: SmokeState = {
   date: null,
   quantity: '',

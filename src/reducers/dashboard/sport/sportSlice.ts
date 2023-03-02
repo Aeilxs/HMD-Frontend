@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
+import { postSport } from './sportMiddleware';
 
 export interface sportState {
   date: string;
   type: 'course' | 'marche' | 'natation' | 'velo' | 'exercices' | '';
   duration: number | '';
-  intensity: 'Faible' | 'Modérée' | 'Élevée';
+  intensity: '' | number;
 }
 
 export interface dataSportApi {
@@ -21,7 +22,7 @@ const initialState: sportState = {
   date: 'Wed, 15 Jul 1998 22:00:00 GMT',
   type: 'course',
   duration: '',
-  intensity: 'Modérée',
+  intensity: '',
 };
 
 export const sportSlice = createSlice({
@@ -37,12 +38,22 @@ export const sportSlice = createSlice({
     setDuration: (state, action: PayloadAction<number>) => {
       return { ...state, duration: action.payload };
     },
-    setIntensity: (state, action: PayloadAction<'Faible' | 'Modérée' | 'Élevée'>) => {
+    setIntensity: (state, action: PayloadAction<number>) => {
       return { ...state, intensity: action.payload };
     },
     setDate: (state, action: PayloadAction<string>) => {
       return { ...state, date: action.payload };
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(postSport.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(postSport.rejected, () => {
+        console.error('non');
+        // en cas d'erreur
+      });
   },
 });
 

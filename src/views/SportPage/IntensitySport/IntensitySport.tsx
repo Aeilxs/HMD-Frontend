@@ -3,8 +3,6 @@ import { selectIntensity, setIntensity } from '../../../reducers/dashboard/sport
 
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
-type Intensity = 'Faible' | 'Modérée' | 'Élevée';
-
 export default function IntensitySport(): JSX.Element {
   const dispatch = useAppDispatch();
   const intensity = useAppSelector(selectIntensity);
@@ -15,12 +13,12 @@ export default function IntensitySport(): JSX.Element {
       <Select
         label="Intensité"
         value={intensity}
-        onChange={(event) => dispatch(setIntensity(event.target.value as Intensity))}
+        onChange={(event) => dispatch(setIntensity(Number(event.target.value)))}
       >
-        {intensityLevels.map((intensity) => (
+        {intensityLevels.map((intensity, i) => (
           <MenuItem
             key={intensity}
-            value={intensity}
+            value={++i}
           >
             {intensity}
           </MenuItem>

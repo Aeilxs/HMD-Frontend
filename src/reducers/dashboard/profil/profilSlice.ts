@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
 import { calcAge } from '../../../utils/math';
+import { postProfil } from './profilMiddleware';
 
 export interface dataProfilApi {
   id: number;
@@ -41,6 +42,16 @@ export const profilSlice = createSlice({
     setHeight: (state, action: PayloadAction<number>) => {
       return { ...state, height: action.payload };
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(postProfil.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(postProfil.rejected, () => {
+        console.error('non');
+        // en cas d'erreur
+      });
   },
 });
 

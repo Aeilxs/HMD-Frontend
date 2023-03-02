@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { RootState } from '../../../store/store';
+import axios from 'axios';
 
 export const registerUser = createAsyncThunk('user/registerUser', async (_, { getState }) => {
   const { firstname, lastname, email, password, gender } = (getState() as RootState).ui.user;

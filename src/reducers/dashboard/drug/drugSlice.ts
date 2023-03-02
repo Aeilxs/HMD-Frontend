@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
+import { postDrug } from './drugMiddleware';
 
 export interface drugState {
   date: string;
@@ -38,6 +39,16 @@ export const drugSlice = createSlice({
     setInfos: (state, action: PayloadAction<string>) => {
       return { ...state, infos: action.payload };
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(postDrug.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(postDrug.rejected, () => {
+        console.error('nonsfghsrthsrthsrthsrths');
+        // en cas d'erreur
+      });
   },
 });
 

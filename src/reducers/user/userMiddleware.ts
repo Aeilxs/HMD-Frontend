@@ -16,7 +16,7 @@ export const registerLoginUser = createAsyncThunk(
       dispatch(setLoginError(false));
       dispatch(setValue({ value: '', name: 'email' }));
       dispatch(setValue({ value: '', name: 'password' }));
-      console.log(response.data.token);
+      dispatch(fetchUser(response.data.token))
       return response.data.token;
     } catch (error) {
       dispatch(setLoginError(true));
@@ -24,6 +24,14 @@ export const registerLoginUser = createAsyncThunk(
     }
   }
 );
+
+// action de récuperation des données utilisateur
+export const fetchUser= createAsyncThunk('user/fetchUser', async (token:string, { getState }) => {
+  const response = await axios.get(`http://localhost:8000/api/users/user`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+});
 
 // action d'inscription
 // export const registerUser = createAsyncThunk(

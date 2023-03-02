@@ -25,7 +25,21 @@ export const registerLoginUser = createAsyncThunk(
   }
 );
 
-export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string, { getState }) => {
+// action d'inscription
+export const registerUser = createAsyncThunk('user/registerUser', async (_, { getState }) => {
+  console.log('middleware registerUser');
+  const { firstname, lastname, email, password, gender } = (getState() as RootState).ui.user;
+  const response = await axios.post('http://localhost:8000/api/users', {
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+    password: password,
+    gender: gender,
+  });
+  return response.data;
+});
+
+export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string) => {
   const response = await axios.get(`http://localhost:8000/api/users/user`, {
     headers: { Authorization: `Bearer ${token}` },
   });

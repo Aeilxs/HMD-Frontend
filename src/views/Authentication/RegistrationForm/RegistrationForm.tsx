@@ -14,6 +14,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { registerUser } from '../../../reducers/user/userMiddleware';
 
 interface RegistrationFormProps {
   error: boolean;
@@ -36,6 +37,7 @@ function RegistrationForm({ error }: RegistrationFormProps) {
       component="form"
       onSubmit={(event) => {
         event.preventDefault();
+        dispatch(registerUser());
       }}
     >
       <FormControl

@@ -1,10 +1,10 @@
 import Grid from './Grid/Grid';
-import ActivitiesGraph from './Activities/ActivitiesGraph';
-import HydrationsGraph from './Hydrations/HydrationsGraph';
-import SmokesGraph from './Smokes/SmokesGraph';
-import SleepGraph from './Sleeps/SleepsGraph';
-import DrugsGraph from './Drugs/DrugsGraph';
-import FoodGraph from './Food/FoodGraph';
+import ActivitiesGraph from './ActivitiesGraph/ActivitiesGraph';
+import HydrationsGraph from './HydrationsGraph/HydrationsGraph';
+import SmokesGraph from './SmokesGraph/SmokesGraph';
+import SleepGraph from './SleepsGraph/SleepsGraph';
+import DrugsGraph from './DrugsGraph/DrugsGraph';
+import FoodGraph from './FoodGraph/FoodGraph';
 
 export default function DashboardPage(): JSX.Element {
   return (

@@ -7,10 +7,11 @@ import {
   setQuantity,
   setDate,
   setQuality,
-} from '../../reducers/dashboard/sleepSlice';
+} from '../../reducers/dashboard/sleep/sleepSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';
+import { postSleep } from '../../reducers/dashboard/sleep/sleepMiddleware';
 
 export default function SleepPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -28,6 +29,10 @@ export default function SleepPage(): JSX.Element {
       <Box
         sx={{ my: 2, display: 'flex', flexDirection: 'column' }}
         component="form"
+        onSubmit={(event) => {
+          event.preventDefault()
+          dispatch(postSleep())
+        }}
       >
         <TextField
           onChange={(event) => dispatch(setQuantity(Number(event.target.value)))}
@@ -55,6 +60,7 @@ export default function SleepPage(): JSX.Element {
         <Button
           sx={{ m: 'auto' }}
           variant="contained"
+          type='submit'
         >
           Envoyer
         </Button>

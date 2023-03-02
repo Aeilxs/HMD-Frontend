@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../store/store';
+import { RootState } from '../../../store/store';
+import { postSmoke } from './smokeMiddleware';
 
 export interface SmokeState {
   date: string | null;
@@ -27,6 +28,15 @@ export const smokeSlice = createSlice({
     setSmokeQuantity: (state, action: PayloadAction<number>) => {
       return { ...state, quantity: action.payload };
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(postSmoke.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(postSmoke.rejected, (state, action) => {
+        console.error(action.payload);
+      });
   },
 });
 

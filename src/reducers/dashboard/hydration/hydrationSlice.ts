@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../store/store';
+import { RootState } from '../../../store/store';
+import { postHydration } from './hydrationMiddleware';
 
 export interface HydrationState {
   date: string | null;
@@ -27,6 +28,15 @@ export const hydrationSlice = createSlice({
     setQuantity: (state, action: PayloadAction<number>) => {
       return { ...state, quantity: action.payload };
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(postHydration.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(postHydration.rejected, (state, action) => {
+        console.error(action.payload);
+      });
   },
 });
 

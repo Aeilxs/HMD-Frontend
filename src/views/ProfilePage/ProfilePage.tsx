@@ -6,7 +6,7 @@ import {
   selectWeight,
   setHeight,
   setWeight,
-} from '../../reducers/dashboard/profilSlice';
+} from '../../reducers/dashboard/profil/profilSlice';
 
 import MessageBox from '../../shared/MessageBox/MessageBox';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';

@@ -5,7 +5,7 @@ import TypeSport from './TypeSport/TypeSport';
 
 import { Box, Button, Container } from '@mui/material';
 import { useAppSelector } from '../../store/hooks';
-import { selectDate, setDate } from '../../reducers/dashboard/sportSlice';
+import { selectDate, setDate } from '../../reducers/dashboard/sport/sportSlice';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 
 export default function SportPage(): JSX.Element {

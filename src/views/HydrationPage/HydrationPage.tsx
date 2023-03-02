@@ -5,10 +5,11 @@ import {
   setDate,
   setQuantity,
   selectHydrationQuantity,
-} from '../../reducers/dashboard/hydrationSlice';
+} from '../../reducers/dashboard/hydration/hydrationSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';
+import { postHydration } from '../../reducers/dashboard/hydration/hydrationMiddleware';
 
 export default function HydrationPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -23,6 +24,10 @@ export default function HydrationPage(): JSX.Element {
       />
       <Box
         component="form"
+        onSubmit={(event) => {
+          event.preventDefault()
+          dispatch(postHydration())
+        }}
         sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}
       >
         <CustomDatePicker
@@ -40,6 +45,7 @@ export default function HydrationPage(): JSX.Element {
         <Button
           sx={{ m: 'auto' }}
           variant="contained"
+          type='submit'
         >
           Valider
         </Button>

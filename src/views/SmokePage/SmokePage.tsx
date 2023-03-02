@@ -9,7 +9,8 @@ import {
   selectSmokeQuantity,
   setSmokeDate,
   setSmokeQuantity,
-} from '../../reducers/dashboard/smokeSlice';
+} from '../../reducers/dashboard/smoke/smokeSlice';
+import { postSmoke } from '../../reducers/dashboard/smoke/smokeMiddleware';
 
 export default function SmokePage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -24,6 +25,10 @@ export default function SmokePage(): JSX.Element {
       />
       <Box
         component="form"
+        onSubmit={(event) => {
+          event.preventDefault()
+          dispatch(postSmoke())
+        }}
         sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}
       >
         <CustomDatePicker

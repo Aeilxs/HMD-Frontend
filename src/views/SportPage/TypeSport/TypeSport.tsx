@@ -1,4 +1,4 @@
-import { selectType, setType } from '../../../reducers/dashboard/sportSlice';
+import { selectType, setType } from '../../../reducers/dashboard/sport/sportSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import { FormControlLabel, FormLabel, RadioGroup, FormControl, Radio } from '@mui/material';

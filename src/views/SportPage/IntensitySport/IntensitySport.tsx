@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { selectIntensity, setIntensity } from '../../../reducers/dashboard/sportSlice';
+import { selectIntensity, setIntensity } from '../../../reducers/dashboard/sport/sportSlice';
 
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 

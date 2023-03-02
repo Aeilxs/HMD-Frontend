@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { RootState } from '../../../store/store';
+import axios from 'axios';
 
 export const postSleep = createAsyncThunk('sleep/postSleep', async (_, { getState }) => {
   const { date, quantity, quality } = (getState() as RootState).sleep;

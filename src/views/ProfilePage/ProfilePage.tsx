@@ -13,6 +13,7 @@ import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 
 import { Box } from '@mui/system';
 import { Button, Container, TextField, Typography } from '@mui/material';
+import { postProfil } from '../../reducers/dashboard/profil/profilMiddleware';
 
 export default function ProfilePage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -37,6 +38,10 @@ export default function ProfilePage(): JSX.Element {
       <Box
         sx={{ display: 'flex', flexDirection: 'column' }}
         component="form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          dispatch(postProfil());
+        }}
       >
         <CustomDatePicker
           value={dateOfBirth}
@@ -61,6 +66,7 @@ export default function ProfilePage(): JSX.Element {
         <Button
           sx={{ m: 'auto' }}
           variant="contained"
+          type="submit"
         >
           Envoyer
         </Button>

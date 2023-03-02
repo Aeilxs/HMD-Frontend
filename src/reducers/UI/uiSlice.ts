@@ -32,7 +32,7 @@ const initialState: UIState = {
   isDark: true,
   errors: { login: false, registration: false },
   isRegistered: false,
-  isDrawerOpen: true,
+  isDrawerOpen: false,
   user: {
     firstname: '',
     lastname: '',

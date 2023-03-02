@@ -12,6 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';
+import { postDrug } from '../../reducers/dashboard/drug/drugMiddleware';
 
 export default function DrugPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -27,7 +28,14 @@ export default function DrugPage(): JSX.Element {
         content="lorem lorem lorem lorem lorem lorem lorem"
         width={100}
       />
-      <Box sx={{ display: 'flex', flexDirection: 'column', mx: 'auto', my: 2 }}>
+      <Box
+        component="form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          dispatch(postDrug());
+        }}
+        sx={{ display: 'flex', flexDirection: 'column', mx: 'auto', my: 2 }}
+      >
         <CustomDatePicker
           value={date}
           actionCreator={setDate}

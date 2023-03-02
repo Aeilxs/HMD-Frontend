@@ -4,12 +4,14 @@ import IntensitySport from './IntensitySport/IntensitySport';
 import TypeSport from './TypeSport/TypeSport';
 
 import { Box, Button, Container } from '@mui/material';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectDate, setDate } from '../../reducers/dashboard/sport/sportSlice';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
+import { postSport } from '../../reducers/dashboard/sport/sportMiddleware';
 
 export default function SportPage(): JSX.Element {
   const date = useAppSelector(selectDate);
+  const dispatch = useAppDispatch();
   return (
     <Container>
       <MessageBox
@@ -17,7 +19,11 @@ export default function SportPage(): JSX.Element {
         content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac mauris sit amet velit tristique pretium ut sed eros. Sed vel efficitur mauris. Sed euismod aliquam libero id convallis."
         width={100}
       />
-      <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', mx: 'auto', my: 2 }}>
+      <Box
+        component="form"
+        onSubmit={() => {}}
+        sx={{ display: 'flex', flexDirection: 'column', width: '50%', mx: 'auto', my: 2 }}
+      >
         <TypeSport />
         <DurationSport />
         <IntensitySport />
@@ -27,7 +33,12 @@ export default function SportPage(): JSX.Element {
         />
 
         <Box sx={{ m: 'auto', mt: 2 }}>
-          <Button variant="contained">Envoyer</Button>
+          <Button
+            onClick={() => dispatch(postSport())}
+            variant="contained"
+          >
+            Envoyer
+          </Button>
         </Box>
       </Box>
     </Container>

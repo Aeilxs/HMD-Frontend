@@ -2,9 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../../store/store';
 import { setLoginError, setValue } from '../UI/uiSlice';
-// import { createMemoryHistory } from '@remix-run/router';
 
-// action de connexion
 export const registerLoginUser = createAsyncThunk(
   'ui/registerLoginUser',
   async (_, { getState, dispatch }) => {
@@ -14,9 +12,6 @@ export const registerLoginUser = createAsyncThunk(
         username: email,
         password: password,
       });
-      // const history = createMemoryHistory();
-      // history.replace('/');
-      // console.log(history);
       dispatch(setLoginError(false));
       dispatch(setValue({ value: '', name: 'email' }));
       dispatch(setValue({ value: '', name: 'password' }));
@@ -27,9 +22,9 @@ export const registerLoginUser = createAsyncThunk(
     }
   }
 );
+
 // action d'inscription
 export const registerUser = createAsyncThunk('user/registerUser', async (_, { getState }) => {
-  console.log('middleware registerUser');
   const { firstname, lastname, email, password, gender } = (getState() as RootState).ui.user;
   const response = await axios.post('http://localhost:8000/api/users', {
     firstname: firstname,

@@ -10,6 +10,7 @@ import {
   setSmokeDate,
   setSmokeQuantity,
 } from '../../reducers/dashboard/smoke/smokeSlice';
+import { postSmoke } from '../../reducers/dashboard/smoke/smokeMiddleware';
 
 export default function SmokePage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -41,6 +42,7 @@ export default function SmokePage(): JSX.Element {
         <Button
           sx={{ m: 'auto' }}
           variant="contained"
+          onClick={() => dispatch(postSmoke())}
         >
           Valider
         </Button>

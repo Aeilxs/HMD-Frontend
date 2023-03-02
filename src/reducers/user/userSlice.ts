@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchUser, registerLoginUser } from './userMiddleware';
-import { dataHydrationApi } from '../dashboard/hydrationSlice';
-import { dataProfilApi } from '../dashboard/profilSlice';
-import { dataSmokeApi } from '../dashboard/smokeSlice';
-import { dataSportApi } from '../dashboard/sportSlice';
-import { dataDrugApi } from '../dashboard/drugSlice';
+import { dataHydrationApi } from '../dashboard/hydration/hydrationSlice';
+import { dataProfilApi } from '../dashboard/profil/profilSlice';
+import { dataSmokeApi } from '../dashboard/smoke/smokeSlice';
+import { dataSportApi } from '../dashboard/sport/sportSlice';
+import { dataDrugApi } from '../dashboard/drug/drugSlice';
 import { RootState } from '../../store/store';
 import { calcAge } from '../../utils/math';
-import { dataSleepApi } from '../dashboard/sleepSlice';
+import { dataSleepApi } from '../dashboard/sleep/sleepSlice';
 
 export interface UserState {
   isLogged: boolean;

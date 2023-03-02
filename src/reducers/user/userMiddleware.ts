@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../../store/store';
 import { setLoginError, setValue } from '../UI/uiSlice';
+// import { createMemoryHistory } from '@remix-run/router';
 
 // action de connexion
 export const registerLoginUser = createAsyncThunk(
@@ -13,6 +14,9 @@ export const registerLoginUser = createAsyncThunk(
         username: email,
         password: password,
       });
+      // const history = createMemoryHistory();
+      // history.replace('/');
+      // console.log(history);
       dispatch(setLoginError(false));
       dispatch(setValue({ value: '', name: 'email' }));
       dispatch(setValue({ value: '', name: 'password' }));
@@ -20,11 +24,9 @@ export const registerLoginUser = createAsyncThunk(
       return response.data.token;
     } catch (error) {
       dispatch(setLoginError(true));
-      throw error;
     }
   }
 );
-
 // action d'inscription
 export const registerUser = createAsyncThunk('user/registerUser', async (_, { getState }) => {
   console.log('middleware registerUser');

@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
-import { selectQuantity, setQuantity } from '../../../reducers/dashboard/foodSlice';
+import { selectQuantity, setQuantity } from '../../../reducers/dashboard/food/foodSlice';
 
 import { TextField } from '@mui/material';
 

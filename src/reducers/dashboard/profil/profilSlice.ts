@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../store/store';
-import { calcAge } from '../../utils/math';
+import { RootState } from '../../../store/store';
+import { calcAge } from '../../../utils/math';
 
 export interface dataProfilApi {
   id: number;

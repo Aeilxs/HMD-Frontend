@@ -8,7 +8,7 @@ import {
   setInfos,
   setName,
   setQuantity,
-} from '../../reducers/dashboard/drugSlice';
+} from '../../reducers/dashboard/drug/drugSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';

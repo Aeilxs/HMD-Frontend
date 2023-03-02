@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { selectDuration, setDuration } from '../../../reducers/dashboard/sportSlice';
+import { selectDuration, setDuration } from '../../../reducers/dashboard/sport/sportSlice';
 
 import { TextField } from '@mui/material';
 

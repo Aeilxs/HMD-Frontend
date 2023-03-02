@@ -3,7 +3,7 @@ import {
   setSelectedFood,
   Food,
   selectSelectedFood,
-} from '../../../reducers/dashboard/foodSlice';
+} from '../../../reducers/dashboard/food/foodSlice';
 import { Autocomplete, TextField } from '@mui/material';
 
 interface FoodProps {

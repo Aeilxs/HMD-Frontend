@@ -5,7 +5,7 @@ import {
   setDate,
   setQuantity,
   selectHydrationQuantity,
-} from '../../reducers/dashboard/hydrationSlice';
+} from '../../reducers/dashboard/hydration/hydrationSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';

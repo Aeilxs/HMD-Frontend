@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { Container, CssBaseline } from '@mui/material';
 import { themeDark, themeLight } from '../theme/theme';
@@ -11,6 +11,7 @@ import CustomScrollBar from '../shared/CustomScrollBar/CustomScrollBar';
 import Footer from '../shared/Footer/Footer';
 import Nav from '../shared/Nav/Nav';
 import NotFound from '../errors/NotFound';
+import { selectIsLogged } from '../reducers/user/userSlice';
 
 import Home from '../views/Home/Home';
 import ProfilePage from '../views/ProfilePage/ProfilePage';
@@ -24,6 +25,7 @@ import AuthPage from '../views/Authentication/AuthenticationPage';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
+  const isLogged = useAppSelector(selectIsLogged);
 
   return (
     <ThemeProvider theme={isDark ? themeDark : themeLight}>
@@ -42,7 +44,7 @@ function App(): JSX.Element {
           />
           <Route
             path="/authentification"
-            element={<AuthPage />}
+            element={isLogged ? <Navigate to="/profil" /> : <AuthPage />}
           />
           <Route
             path="/profil"

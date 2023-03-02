@@ -9,7 +9,7 @@ import {
   selectSmokeQuantity,
   setSmokeDate,
   setSmokeQuantity,
-} from '../../reducers/dashboard/smokeSlice';
+} from '../../reducers/dashboard/smoke/smokeSlice';
 
 export default function SmokePage(): JSX.Element {
   const dispatch = useAppDispatch();

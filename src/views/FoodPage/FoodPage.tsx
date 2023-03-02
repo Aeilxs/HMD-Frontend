@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../store/hooks";
+import { useAppSelector } from '../../store/hooks';
 
 import {
   Food,
@@ -7,21 +7,15 @@ import {
   selectIsLoading,
   selectSelectedFood,
   setDate,
-} from "../../reducers/dashboard/foodSlice";
+} from '../../reducers/dashboard/food/foodSlice';
 
-import CategorySelector from "./CategorySelector/CategorySelector";
-import FoodSelector from "./FoodSelector/FoodSelector";
-import QuantitySelector from "./QuantitySelector/QuantitySelector";
+import CategorySelector from './CategorySelector/CategorySelector';
+import FoodSelector from './FoodSelector/FoodSelector';
+import QuantitySelector from './QuantitySelector/QuantitySelector';
 
-import {
-  Box,
-  Container,
-  Button,
-  Typography,
-  CircularProgress,
-} from "@mui/material";
-import MessageBox from "../../shared/MessageBox/MessageBox";
-import CustomDatePicker from "../../shared/CustomDatePicker/CustomDatePicker";
+import { Box, Container, Button, Typography, CircularProgress } from '@mui/material';
+import MessageBox from '../../shared/MessageBox/MessageBox';
+import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 
 export default function FoodPage(): JSX.Element {
   const foods = useAppSelector(selectFoods);
@@ -30,15 +24,15 @@ export default function FoodPage(): JSX.Element {
   const date = useAppSelector(selectDate);
 
   const aliments = [
-    "Fruits frais",
-    "Légumes frais",
-    "Viandes",
-    "Oeufs",
-    "Poissons",
-    "Produits laitiers",
-    "Féculents",
-    "Boissons",
-    "Sauces",
+    'Fruits frais',
+    'Légumes frais',
+    'Viandes',
+    'Oeufs',
+    'Poissons',
+    'Produits laitiers',
+    'Féculents',
+    'Boissons',
+    'Sauces',
   ];
 
   /**
@@ -56,7 +50,7 @@ export default function FoodPage(): JSX.Element {
     <Container>
       <Typography
         variant="h1"
-        sx={{ fontSize: "3em", textAlign: "center", my: 5 }}
+        sx={{ fontSize: '3em', textAlign: 'center', my: 5 }}
       >
         Alimentation
       </Typography>
@@ -68,21 +62,24 @@ export default function FoodPage(): JSX.Element {
 
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          margin: "auto",
-          width: "50%",
-          p: "1em",
-          boxSizing: "border-box",
+          display: 'flex',
+          flexDirection: 'column',
+          margin: 'auto',
+          width: '50%',
+          p: '1em',
+          boxSizing: 'border-box',
         }}
       >
         <CategorySelector aliments={aliments} />
-        {isLoading && <CircularProgress sx={{ m: "auto" }} />}
+        {isLoading && <CircularProgress sx={{ m: 'auto' }} />}
         {!isLoading && foods.length > 0 && <FoodSelector foods={uniqueFoods} />}
         {selectedFood && <QuantitySelector />}
-        <CustomDatePicker value={date} actionCreator={setDate} />
+        <CustomDatePicker
+          value={date}
+          actionCreator={setDate}
+        />
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", marginTop: "2em" }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '2em' }}>
         <Button variant="contained">Envoyer</Button>
       </Box>
     </Container>

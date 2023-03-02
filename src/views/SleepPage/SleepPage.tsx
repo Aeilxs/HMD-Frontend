@@ -7,7 +7,7 @@ import {
   setQuantity,
   setDate,
   setQuality,
-} from '../../reducers/dashboard/sleepSlice';
+} from '../../reducers/dashboard/sleep/sleepSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';

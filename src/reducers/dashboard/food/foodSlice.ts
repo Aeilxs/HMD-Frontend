@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
-import { RootState } from "../../store/store";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { RootState } from '../../../store/store';
 
 interface Nutriments {
-  "energy-kcal": number;
+  'energy-kcal': number;
 }
 interface ApiProps {
   id: string;
@@ -23,7 +23,7 @@ interface FoodState {
   foods: Food[];
   isLoading: boolean;
   selectedFood: Food | null;
-  quantity: number | "";
+  quantity: number | '';
 }
 
 const initialState: FoodState = {
@@ -32,28 +32,26 @@ const initialState: FoodState = {
   foods: [],
   isLoading: false,
   selectedFood: null,
-  quantity: "",
+  quantity: '',
 };
 // https://redux-toolkit.js.org/api/createAsyncThunk#providing-a-custom-dispatch-function
 export const fetchProducts = createAsyncThunk(
-  "food/fetchProducts",
+  'food/fetchProducts',
   async (categoryName: string, { dispatch }) => {
-    const category = categoryName.toLowerCase().replace(/\s+/g, "-");
+    const category = categoryName.toLowerCase().replace(/\s+/g, '-');
     dispatch(setIsLoading(true));
-    const response = await axios.get(
-      `https://fr.openfoodfacts.org/categorie/${category}.json`
-    );
+    const response = await axios.get(`https://fr.openfoodfacts.org/categorie/${category}.json`);
     dispatch(setIsLoading(false));
     return response.data.products.map((product: ApiProps) => ({
       key: product.id,
       name: product.product_name_fr,
-      calories: product["nutriments"]["energy-kcal"],
+      calories: product['nutriments']['energy-kcal'],
     }));
   }
 );
 
 export const FoodSlice = createSlice({
-  name: "food",
+  name: 'food',
   initialState,
   reducers: {
     setDate: (state, action: PayloadAction<string>) => {
@@ -64,7 +62,7 @@ export const FoodSlice = createSlice({
         ...state,
         category: action.payload,
         selectedFood: null,
-        quantity: "",
+        quantity: '',
       };
     },
     setIsLoading: (state, action: PayloadAction<boolean>) => {
@@ -73,7 +71,7 @@ export const FoodSlice = createSlice({
     setSelectedFood: (state, action: PayloadAction<Food>) => {
       return { ...state, selectedFood: action.payload };
     },
-    setQuantity: (state, action: PayloadAction<number | "">) => {
+    setQuantity: (state, action: PayloadAction<number | ''>) => {
       return { ...state, quantity: action.payload };
     },
   },
@@ -84,13 +82,8 @@ export const FoodSlice = createSlice({
   },
 });
 
-export const {
-  setDate,
-  setCategory,
-  setIsLoading,
-  setSelectedFood,
-  setQuantity,
-} = FoodSlice.actions;
+export const { setDate, setCategory, setIsLoading, setSelectedFood, setQuantity } =
+  FoodSlice.actions;
 
 export const selectDate = (state: RootState) => state.food.date;
 export const selectCategory = (state: RootState) => state.food.category;

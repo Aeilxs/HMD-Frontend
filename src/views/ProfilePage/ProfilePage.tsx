@@ -11,12 +11,14 @@ import {
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';
+import { fetchUser } from '../../reducers/user/userMiddleware';
 
 export default function ProfilePage(): JSX.Element {
   const dispatch = useAppDispatch();
   const dateOfBirth = useAppSelector(selectDateOfBirth);
   const weight = useAppSelector(selectWeight);
   const height = useAppSelector(selectHeight);
+
   return (
     <Container sx={{ mt: 2 }}>
       <MessageBox

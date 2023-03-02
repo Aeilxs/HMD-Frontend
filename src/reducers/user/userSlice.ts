@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import { calcAge } from '../../utils/math';
 import { drugState } from '../dashboard/drugSlice';
-import { registerLoginUser } from './userMiddleware';
+import { fetchUser, registerLoginUser } from './userMiddleware';
 
 export interface UserState {
   isLogged: boolean;
@@ -53,6 +53,9 @@ export const userSlice = createSlice({
       .addCase(registerLoginUser.rejected, () => {
         console.error('non');
         // en cas d'erreur
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        console.log(action.payload)
       });
   },
 });

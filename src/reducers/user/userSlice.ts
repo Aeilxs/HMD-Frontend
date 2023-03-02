@@ -53,6 +53,18 @@ export const userSlice = createSlice({
     onLogout: (state, action: PayloadAction<boolean>) => {
       return { ...state, isLogged: false, token: '' };
     },
+    setSleeps: (state, action: PayloadAction<dataSleepApi>) => {
+      return { ...state, sleeps : [...state.sleeps, {...action.payload}]};
+    },
+    removeSleeps: (state, action: PayloadAction<number>) => {
+      state.sleeps = state.sleeps.filter((sleep) => sleep.id !== action.payload);
+    },
+    updateSleeps: (state, action: PayloadAction<dataSleepApi>) => {
+      const index = state.sleeps.findIndex((sleep) => sleep.id === action.payload.id);
+      if (index !== -1) {
+        state.sleeps[index] = action.payload;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -70,8 +82,9 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setDateOfBirth, setWeight, setHeight, onLogout } = userSlice.actions;
+export const { setDateOfBirth, setWeight, setHeight, onLogout, setSleeps,removeSleeps,updateSleeps } = userSlice.actions;
 
 export const selectIsLogged = (state: RootState) => state.user.isLogged;
+export const selectSleeps = (state: RootState) => state.user.sleeps;
 
 export default userSlice.reducer;

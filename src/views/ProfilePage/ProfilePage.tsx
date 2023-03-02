@@ -1,17 +1,18 @@
-import { Button, Container, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   selectDateOfBirth,
+  setDateOfBirth,
   selectHeight,
   selectWeight,
-  setDateOfBirth,
   setHeight,
   setWeight,
-} from '../../reducers/user/userSlice';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
+} from '../../reducers/dashboard/profilSlice';
+
 import MessageBox from '../../shared/MessageBox/MessageBox';
-import { fetchUser } from '../../reducers/user/userMiddleware';
+import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
+
+import { Box } from '@mui/system';
+import { Button, Container, TextField, Typography } from '@mui/material';
 
 export default function ProfilePage(): JSX.Element {
   const dispatch = useAppDispatch();

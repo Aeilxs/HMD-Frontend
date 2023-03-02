@@ -8,6 +8,13 @@ export interface drugState {
   infos: string;
 }
 
+export interface dataDrugApi {
+  id: number;
+  drugName: string;
+  quantity: number;
+  date: string;
+}
+
 const initialState: drugState = {
   date: 'Wed, 15 Jul 1998 22:00:00 GMT',
   name: '',

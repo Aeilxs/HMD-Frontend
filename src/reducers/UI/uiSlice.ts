@@ -1,6 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-
+export interface dataUserApi {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  gender: 'Homme' | 'Femme';
+}
 export interface User {
   firstname: string;
   lastname: string;

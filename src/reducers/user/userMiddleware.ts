@@ -16,7 +16,7 @@ export const registerLoginUser = createAsyncThunk(
       dispatch(setLoginError(false));
       dispatch(setValue({ value: '', name: 'email' }));
       dispatch(setValue({ value: '', name: 'password' }));
-      dispatch(fetchUser(response.data.token))
+      dispatch(fetchUser(response.data.token));
       return response.data.token;
     } catch (error) {
       dispatch(setLoginError(true));
@@ -25,34 +25,8 @@ export const registerLoginUser = createAsyncThunk(
   }
 );
 
-// action de récuperation des données utilisateur
-export const fetchUser= createAsyncThunk('user/fetchUser', async (token:string, { getState }) => {
+export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string, { getState }) => {
   const response = await axios.get(`http://localhost:8000/api/users/user`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return response.data;
-});
-
-// action d'inscription
-// export const registerUser = createAsyncThunk(
-//   "user/registerUser",
-//   async (_, { getState }) => {
-//     const { firstname, lastname, email, password, gender } = (getState() as RootState).ui.user;
-//     const response = await axios.post("http://localhost:8000/api/users", {
-//       firstname: firstname,
-//       lastname: lastname,
-//       email: email,
-//       password: password,
-//       gender: gender,
-//     });
-//     return response.data;
-//   }
-// );
-
-// action de récuperation des données médicamenteuses
-export const fetchDrugs = createAsyncThunk('user/fetchDrugs', async (_, { getState }) => {
-  const token = (getState() as RootState).user.token;
-  const response = await axios.get(`http://localhost:8000/api/users/1/medications`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;

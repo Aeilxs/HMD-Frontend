@@ -42,7 +42,10 @@ export const sleepSlice = createSlice({
       return { ...state, isEdit: action.payload };
     },
     setSelectedSleep: (state, action: PayloadAction<dataSleepApi>) =>{
-      return {...state, ...action.payload}
+      return {...state, ...action.payload, quantity: action.payload.time}
+    },
+    resetInputs: (state) => {
+      return { ...state, date: null, quantity:'', quality:'' }
     }
   },
   extraReducers: (builder) => {
@@ -62,7 +65,7 @@ export const sleepSlice = createSlice({
   },
 });
 
-export const { setDate, setQuantity, setQuality, setIsEdit, setSelectedSleep } = sleepSlice.actions;
+export const { setDate, setQuantity, setQuality, setIsEdit, setSelectedSleep, resetInputs } = sleepSlice.actions;
 
 export const selectSleepDate = (state: RootState) => state.sleep.date;
 export const selectSleepQuantity = (state: RootState) => state.sleep.quantity;

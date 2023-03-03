@@ -26,6 +26,7 @@ export interface UIState {
   isRegistered: boolean;
   isDrawerOpen: boolean;
   user: User;
+  isEdit: boolean
 }
 
 const initialState: UIState = {
@@ -33,6 +34,7 @@ const initialState: UIState = {
   errors: { login: false, registration: false },
   isRegistered: false,
   isDrawerOpen: false,
+  isEdit: false,
   user: {
     firstname: '',
     lastname: '',
@@ -80,10 +82,13 @@ export const UISlice = createSlice({
     setSubscribeError: (state, action: PayloadAction<boolean>) => {
       return { ...state, errors: { ...state.errors, registration: action.payload } };
     },
+    setIsEdit: (state, action: PayloadAction<boolean>) => {
+      return { ...state, isEdit: action.payload };
+    },
   },
 });
 
-export const { toggleTheme, toggleDrawer, toggleForm, setValue, setGender, setLoginError } =
+export const { toggleTheme, toggleDrawer, toggleForm, setValue, setGender, setLoginError, setIsEdit } =
   UISlice.actions;
 
 export const selectTheme = (state: RootState) => state.ui.isDark;
@@ -91,5 +96,6 @@ export const selectDrawerState = (state: RootState) => state.ui.isDrawerOpen;
 export const selectForm = (state: RootState) => state.ui.isRegistered;
 export const selectUser = (state: RootState) => state.ui.user;
 export const selectAuthErrors = (state: RootState) => state.ui.errors;
+export const selectIsEdit = (state: RootState) => state.ui.isEdit;
 
 export default UISlice.reducer;

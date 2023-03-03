@@ -54,15 +54,27 @@ export const userSlice = createSlice({
       return { ...state, isLogged: false, token: '' };
     },
     setSleeps: (state, action: PayloadAction<dataSleepApi>) => {
-      return { ...state, sleeps : [...state.sleeps, {...action.payload}]};
+      return { ...state, sleeps: [...state.sleeps, { ...action.payload }] };
     },
     removeSleeps: (state, action: PayloadAction<number>) => {
-      state.sleeps = state.sleeps.filter((sleep) => sleep.id !== action.payload);
+      return { ...state, sleeps: state.sleeps.filter((sleep) => sleep.id !== action.payload) };
     },
     updateSleeps: (state, action: PayloadAction<dataSleepApi>) => {
       const index = state.sleeps.findIndex((sleep) => sleep.id === action.payload.id);
       if (index !== -1) {
         state.sleeps[index] = action.payload;
+      }
+    },
+    setHydration: (state, action: PayloadAction<dataHydrationApi>) => {
+      return { ...state, hydratations: [...state.hydratations, { ...action.payload }] };
+    },
+    removeHydration: (state, action: PayloadAction<number>) => {
+      return { ...state, hydratations: state.hydratations.filter((hydratation) => hydratation.id !== action.payload) };
+    },
+    updateHydration: (state, action: PayloadAction<dataHydrationApi>) => {
+      const index = state.hydratations.findIndex((hydratation) => hydratation.id === action.payload.id);
+      if (index !== -1) {
+        state.hydratations[index] = action.payload;
       }
     },
   },
@@ -82,9 +94,24 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setDateOfBirth, setWeight, setHeight, onLogout, setSleeps,removeSleeps,updateSleeps } = userSlice.actions;
+export const {
+  setDateOfBirth,
+  setWeight,
+  setHeight,
+  onLogout,
+  setSleeps,
+  removeSleeps,
+  updateSleeps,
+  setHydration,
+  removeHydration,
+  updateHydration,
+} = userSlice.actions;
 
 export const selectIsLogged = (state: RootState) => state.user.isLogged;
 export const selectSleeps = (state: RootState) => state.user.sleeps;
+export const selectDrugs = (state: RootState) => state.user.medicalTreatments;
+export const selectHydrations = (state: RootState) => state.user.hydratations;
+export const selectSmokes = (state: RootState) => state.user.cigarettes;
+export const selectActivites = (state: RootState) => state.user.activities;
 
 export default userSlice.reducer;

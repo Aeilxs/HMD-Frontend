@@ -18,7 +18,6 @@ export const postSleep = createAsyncThunk('sleep/postSleep', async (_, { getStat
     { headers: { Authorization: `Bearer ${token}` } }
   );
   dispatch(setSleeps(response.data));
-  console.log((getState() as RootState).user.sleeps)
   return response.data;
   }
   catch (error) {
@@ -40,7 +39,6 @@ export const editSleep = createAsyncThunk('sleep/editSleep', async (_,{ getState
     { headers: { Authorization: `Bearer ${token}` } }
   );
   dispatch(updateSleeps(response.data));
-  console.log((getState() as RootState).user.sleeps)
   return response.data;
   }
   catch (error) {
@@ -56,7 +54,6 @@ export const deleteSleep = createAsyncThunk('sleep/deleteSleep', async (id:numbe
     { headers: { Authorization: `Bearer ${token}` } }
   );
   dispatch(removeSleeps(id));
-  console.log((getState() as RootState).user.sleeps)
   return response.data;
   }
   catch (error) {

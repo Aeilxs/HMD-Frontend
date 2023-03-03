@@ -7,13 +7,17 @@ import {
   setQuantity,
   setDate,
   setQuality,
-  selectIsEdit,
+  dataSleepApi,
+  setSelectedSleep,
+  resetInputs
 } from '../../reducers/dashboard/sleep/sleepSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';
-import { editSleep, postSleep } from '../../reducers/dashboard/sleep/sleepMiddleware';
-import SleepTable from './SleepTable/SleepTable';
+import { deleteSleep, editSleep, postSleep } from '../../reducers/dashboard/sleep/sleepMiddleware';
+import { selectSleeps } from '../../reducers/user/userSlice';
+import { selectIsEdit } from '../../reducers/UI/uiSlice';
+import CustomTable from '../../shared/CustomTable/CustomTable';
 
 export default function SleepPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -21,6 +25,7 @@ export default function SleepPage(): JSX.Element {
   const sleepQuantity = useAppSelector(selectSleepQuantity);
   const sleepDate = useAppSelector(selectSleepDate);
   const isEdit = useAppSelector(selectIsEdit)
+  const sleeps = useAppSelector(selectSleeps)
 
   return (
     <Container sx={{ mt: 2 }}>
@@ -29,7 +34,7 @@ export default function SleepPage(): JSX.Element {
         content="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero quasi natus eligendi delectus iste deserunt cumque totam ut eius nemo dolor obcaecati esse, corrupti eaque, architecto praesentium minus autem magnam!"
         width={100}
       />
-      <SleepTable />
+      <CustomTable array={sleeps} onSelect={setSelectedSleep} onDelete={deleteSleep} resetInput={resetInputs} />
       <Box
         sx={{ my: 2, display: 'flex', flexDirection: 'column' }}
         component="form"

@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
-import { postSleep } from './sleepMiddleware';
+import { editSleep, postSleep } from './sleepMiddleware';
 
 export interface SleepState {
+  id: number | null;
   date: string | null;
   quantity: number | '';
   quality: number | '';
@@ -16,6 +17,7 @@ export interface dataSleepApi {
 }
 
 const initialState: SleepState = {
+  id:null,
   date: null,
   quantity: '',
   quality: '',
@@ -34,19 +36,31 @@ export const sleepSlice = createSlice({
     setQuality: (state, action: PayloadAction<number>) => {
       return { ...state, quality: action.payload };
     },
+    setSelectedSleep: (state, action: PayloadAction<dataSleepApi>) =>{
+      return {...state, ...action.payload, quantity: action.payload.time}
+    },
+    resetInputs: (state) => {
+      return { ...state, date: null, quantity:'', quality:'' }
+    }
   },
   extraReducers: (builder) => {
     builder
       .addCase(postSleep.fulfilled, (state, action) => {
-        console.log(action.payload);
+        return {...state, ...action.payload}
       })
       .addCase(postSleep.rejected, (state, action) => {
+        console.error(action.payload);
+      })
+      .addCase(editSleep.fulfilled, (state, action) => {
+        return { ...state, isEdit: false };
+      })
+      .addCase(editSleep.rejected, (state, action) => {
         console.error(action.payload);
       });
   },
 });
 
-export const { setDate, setQuantity, setQuality } = sleepSlice.actions;
+export const { setDate, setQuantity, setQuality, setSelectedSleep, resetInputs } = sleepSlice.actions;
 
 export const selectSleepDate = (state: RootState) => state.sleep.date;
 export const selectSleepQuantity = (state: RootState) => state.sleep.quantity;

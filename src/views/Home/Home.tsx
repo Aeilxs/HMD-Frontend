@@ -7,8 +7,9 @@ import img1 from '../../assets/img1.jpg';
 import img2 from '../../assets/img2.png';
 import img3 from '../../assets/img3.png';
 
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { toggleForm } from '../../reducers/UI/uiSlice';
+import { selectIsLogged } from '../../reducers/user/userSlice';
 
 function Home() {
   const images = [
@@ -27,6 +28,7 @@ function Home() {
   ];
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const isLogged = useAppSelector(selectIsLogged);
 
   return (
     <Box sx={{ my: 4 }}>
@@ -48,7 +50,10 @@ function Home() {
         </Typography>
       </Box>
       <Slider images={images} />
+
       <Box sx={{ display: 'flex', justifyContent: 'center', m: 5 }}>
+      {!isLogged  ?
+     ( <>
         <Button
           sx={{ mx: 1 }}
           variant="contained"
@@ -71,6 +76,15 @@ function Home() {
           <Fingerprint />
           Login
         </Button>
+        </>) : ( <Button
+          sx={{ mx: 1 }}
+          variant="contained"
+          onClick={() => {
+            navigate('/profil');
+          }}
+        >
+          Accéder à mon profil
+        </Button>)}
       </Box>
     </Box>
   );

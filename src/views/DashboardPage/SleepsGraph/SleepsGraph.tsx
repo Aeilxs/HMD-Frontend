@@ -10,9 +10,9 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Box } from '@mui/system';
-import { useRender } from '../../../hooks/useRender';
+import { useResize } from '../../../hooks/useResize';
 export default function SleepsGraph(): JSX.Element {
-  const vwValue = useRender();
+  const vwValue = useResize();
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const options = {
     responsive: true,

@@ -9,10 +9,10 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Box } from '@mui/system';
-import { useRender } from '../../../hooks/useRender';
+import { useResize } from '../../../hooks/useResize';
 
 export default function FoodGraphs(): JSX.Element {
-  const vwValue = useRender();
+  const vwValue = useResize();
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
   const options = {
@@ -23,7 +23,7 @@ export default function FoodGraphs(): JSX.Element {
       },
       title: {
         display: true,
-        text: 'Calories consommées',
+        text: 'Alimentation',
       },
     },
   };
@@ -33,19 +33,19 @@ export default function FoodGraphs(): JSX.Element {
     labels,
     datasets: [
       {
-        label: 'Dataset 1',
-        data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        label: 'Calories consommées',
+        data: [1800, 1900, 1700, 1500, 2500, 2300, 2400, 2000, 2000, 2100],
+        backgroundColor: '#f79829',
       },
       {
-        label: 'Dataset 2',
-        data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        label: 'Apport journalier recommandé',
+        data: [2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000],
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
     ],
   };
   return (
-    <Box sx={{ gridColumn: '1 / span 2' }}>
+    <Box>
       <Bar
         key={vwValue}
         data={data}

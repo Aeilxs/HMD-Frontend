@@ -22,7 +22,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  isLogged: false,
+  isLogged: true,
   token: '',
   properties: [],
   medicalTreatments: [],
@@ -69,10 +69,15 @@ export const userSlice = createSlice({
       return { ...state, hydratations: [...state.hydratations, { ...action.payload }] };
     },
     removeHydration: (state, action: PayloadAction<number>) => {
-      return { ...state, hydratations: state.hydratations.filter((hydratation) => hydratation.id !== action.payload) };
+      return {
+        ...state,
+        hydratations: state.hydratations.filter((hydratation) => hydratation.id !== action.payload),
+      };
     },
     updateHydration: (state, action: PayloadAction<dataHydrationApi>) => {
-      const index = state.hydratations.findIndex((hydratation) => hydratation.id === action.payload.id);
+      const index = state.hydratations.findIndex(
+        (hydratation) => hydratation.id === action.payload.id
+      );
       if (index !== -1) {
         state.hydratations[index] = action.payload;
       }

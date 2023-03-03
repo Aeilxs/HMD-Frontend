@@ -3,18 +3,19 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import { Box } from '@mui/system';
-import { useRender } from '../../../hooks/useRender';
+import { useResize } from '../../../hooks/useResize';
 
 export default function SmokesGraph(): JSX.Element {
-  const vwValue = useRender();
-  ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+  const vwValue = useResize();
+  ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
   const options = {
     responsive: true,
     plugins: {
@@ -23,31 +24,26 @@ export default function SmokesGraph(): JSX.Element {
       },
       title: {
         display: true,
-        text: 'Chart.js Bar Chart',
+        text: 'Tabagisme',
       },
     },
   };
 
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  const labels = ['28/02', '01/03', null, null, null, '05/03', '06/03', '07/03', '08/03', '09/03'];
   const data = {
     labels,
     datasets: [
       {
-        label: 'Dataset 1',
-        data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
-      {
-        label: 'Dataset 2',
-        data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        label: 'Quantité de cigarettes',
+        data: [5, 7, 2, 20, 20, 10, 8, 7, 4, 3],
+        backgroundColor: '#7bc1b7',
       },
     ],
   };
 
   return (
     <Box>
-      <Bar
+      <Line
         key={vwValue}
         options={options}
         data={data}

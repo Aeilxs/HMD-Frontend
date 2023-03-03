@@ -10,19 +10,19 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Box } from '@mui/system';
-import { useRender } from '../../../hooks/useRender';
+import { useResize } from '../../../hooks/useResize';
 export default function HydrationsGraph(): JSX.Element {
-  const vwValue = useRender();
+  const vwValue = useResize();
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const options = {
-    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
       },
       title: {
         display: true,
-        text: 'Chart.js Bar Chart',
+        text: 'Hydratation',
       },
     },
   };
@@ -31,11 +31,6 @@ export default function HydrationsGraph(): JSX.Element {
   const data = {
     labels,
     datasets: [
-      {
-        label: 'Dataset 1',
-        data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
       {
         label: 'Dataset 2',
         data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
@@ -49,6 +44,8 @@ export default function HydrationsGraph(): JSX.Element {
       <Bar
         key={vwValue}
         options={options}
+        height={500}
+        width={vwValue / 2}
         data={data}
       />
     </Box>

@@ -11,7 +11,6 @@ import CustomScrollBar from '../shared/CustomScrollBar/CustomScrollBar';
 import Footer from '../shared/Footer/Footer';
 import Nav from '../shared/Nav/Nav';
 import NotFound from '../errors/NotFound';
-import { selectIsLogged } from '../reducers/user/userSlice';
 
 import Home from '../views/Home/Home';
 import ProfilePage from '../views/ProfilePage/ProfilePage';
@@ -22,11 +21,20 @@ import SmokePage from '../views/SmokePage/SmokePage';
 import SleepPage from '../views/SleepPage/SleepPage';
 import HydrationPage from '../views/HydrationPage/HydrationPage';
 import AuthPage from '../views/Authentication/AuthenticationPage';
+import { selectIsLogged } from '../reducers/user/userSlice';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
-  const isLogged = useAppSelector(selectIsLogged);
-
+  const isLogged  = useAppSelector(selectIsLogged)
+  const routes = [
+    { path: "/profil", component: <ProfilePage /> },
+    { path: "/sport", component: <SportPage /> },
+    { path: "/alimentation", component: <FoodPage /> },
+    { path: "/medicaments", component: <DrugPage /> },
+    { path: "/tabagisme", component: <SmokePage /> },
+    { path: "/sommeil", component: <SleepPage /> },
+    { path: "/hydratation", component: <HydrationPage /> },
+  ];
   return (
     <ThemeProvider theme={isDark ? themeDark : themeLight}>
       <CssBaseline />
@@ -44,36 +52,15 @@ function App(): JSX.Element {
           />
           <Route
             path="/authentification"
-            element={isLogged ? <Navigate to="/profil" /> : <AuthPage />}
+            element={isLogged ? (<Navigate to="/profil" />): (<AuthPage />)}
           />
-          <Route
-            path="/profil"
-            element={<ProfilePage />}
-          />
-          <Route
-            path="/sport"
-            element={<SportPage />}
-          />
-          <Route
-            path="/alimentation"
-            element={<FoodPage />}
-          />
-          <Route
-            path="/medicaments"
-            element={<DrugPage />}
-          />
-          <Route
-            path="/tabagisme"
-            element={<SmokePage />}
-          />
-          <Route
-            path="/sommeil"
-            element={<SleepPage />}
-          />
-          <Route
-            path="/hydratation"
-            element={<HydrationPage />}
-          />
+         {routes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={isLogged ? route.component : <Navigate to="/authentification" />}
+            />
+          ))}
 
           <Route
             path="*"

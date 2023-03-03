@@ -3,6 +3,7 @@ import { RootState } from '../../../store/store';
 import { postHydration } from './hydrationMiddleware';
 
 export interface HydrationState {
+  id: number |null
   date: string | null;
   quantity: number | '';
 }
@@ -14,6 +15,7 @@ export interface dataHydrationApi {
 }
 
 const initialState: HydrationState = {
+  id: null,
   date: null,
   quantity: '',
 };
@@ -28,6 +30,12 @@ export const hydrationSlice = createSlice({
     setQuantity: (state, action: PayloadAction<number>) => {
       return { ...state, quantity: action.payload };
     },
+    setSelectedHydration: (state, action: PayloadAction<dataHydrationApi>) =>{
+      return {...state, ...action.payload}
+    },
+    resetInputs: (state) => {
+      return { ...state, date: null, quantity:'' }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -40,7 +48,7 @@ export const hydrationSlice = createSlice({
   },
 });
 
-export const { setDate, setQuantity } = hydrationSlice.actions;
+export const { setDate, setQuantity, setSelectedHydration, resetInputs } = hydrationSlice.actions;
 
 export const selectHydrationDate = (state: RootState) => state.hydration.date;
 export const selectHydrationQuantity = (state: RootState) => state.hydration.quantity;

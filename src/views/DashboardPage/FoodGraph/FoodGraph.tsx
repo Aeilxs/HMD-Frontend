@@ -1,63 +1,55 @@
-import { Box } from '@mui/material';
-import ReactApexChart from 'react-apexcharts';
-import { useState } from 'react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import { Box } from '@mui/system';
+import { useRender } from '../../../hooks/useRender';
 
-export default function FoodGraph(): JSX.Element {
-  const [options, setOptions] = useState({
-    chart: {
-      id: 'food-chart',
+export default function FoodGraphs(): JSX.Element {
+  const vwValue = useRender();
+  ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Calories consommées',
+      },
     },
-    xaxis: {
-      categories: [
-        '02/03',
-        '03/02',
-        '04/02',
-        '05/02',
-        '06/03',
-        '07/04',
-        '08/04',
-        '09/04',
-        '10/04',
-        '11/04',
-        '12/04',
-        '13/04',
-      ],
-    },
-    series: [
+  };
+
+  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  const data = {
+    labels,
+    datasets: [
       {
-        name: 'calories mangées',
-        data: [1500, 1700, 2900, 2000, 2050, 2090, 2000, 1900, 1800, 1800, 1900, 2500],
+        label: 'Dataset 1',
+        data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: 'Dataset 2',
+        data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
     ],
-    yaxis: {
-      min: 0,
-      max: 3500,
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 5,
-        // distributed: true,
-        dataLabels: {
-          hideOverflowingLabels: true,
-          orientation: 'vertical',
-          position: 'center',
-        },
-      },
-    },
-    // @see https://apexcharts.com/docs/options/tooltip/
-    tooltip: {
-      theme: 'dark', // light
-    },
-  });
-
+  };
   return (
     <Box sx={{ gridColumn: '1 / span 2' }}>
-      <ReactApexChart
-        // @ts-ignore
+      <Bar
+        key={vwValue}
+        data={data}
         options={options}
-        series={options.series}
-        type="bar"
-        height={350}
       />
     </Box>
   );

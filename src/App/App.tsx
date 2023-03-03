@@ -21,6 +21,7 @@ import SmokePage from '../views/SmokePage/SmokePage';
 import SleepPage from '../views/SleepPage/SleepPage';
 import HydrationPage from '../views/HydrationPage/HydrationPage';
 import AuthPage from '../views/Authentication/AuthenticationPage';
+import DashboardPage from '../views/DashboardPage/DashboardPage';
 import { selectIsLogged } from '../reducers/user/userSlice';
 
 function App(): JSX.Element {
@@ -34,6 +35,7 @@ function App(): JSX.Element {
     { path: "/tabagisme", component: <SmokePage /> },
     { path: "/sommeil", component: <SleepPage /> },
     { path: "/hydratation", component: <HydrationPage /> },
+    { path: "/dashboard", component: <DashboardPage /> },
   ];
   return (
     <ThemeProvider theme={isDark ? themeDark : themeLight}>
@@ -61,7 +63,6 @@ function App(): JSX.Element {
               element={isLogged ? route.component : <Navigate to="/authentification" />}
             />
           ))}
-
           <Route
             path="*"
             element={

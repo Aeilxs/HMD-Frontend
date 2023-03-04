@@ -86,11 +86,12 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(registerLoginUser.fulfilled, (state, action) => {
-        return { ...state, isLogged: true, token: action.payload };
+        return action.payload === undefined
+          ? { ...state, isLogged: false, token: '' }
+          : { ...state, isLogged: true, token: action.payload };
       })
-      .addCase(registerLoginUser.rejected, () => {
-        console.error('non');
-        // en cas d'erreur
+      .addCase(registerLoginUser.rejected, (state) => {
+        return { ...state, isLogged: false };
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         console.log(action.payload);

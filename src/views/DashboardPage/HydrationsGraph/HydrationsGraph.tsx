@@ -15,6 +15,8 @@ export default function HydrationsGraph(): JSX.Element {
   const vwValue = useResize();
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const options = {
+    responsive: true,
+    height: '100%',
     maintainAspectRatio: false,
     plugins: {
       legend: {
@@ -40,12 +42,10 @@ export default function HydrationsGraph(): JSX.Element {
   };
 
   return (
-    <Box>
+    <Box sx={{ height: '100%' }}>
       <Bar
         key={vwValue}
         options={options}
-        height={500}
-        width={vwValue / 2}
         data={data}
       />
     </Box>

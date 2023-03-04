@@ -22,7 +22,7 @@ export default function DrugsGraph(): JSX.Element {
       },
       title: {
         display: true,
-        text: 'Chart.js Bar Chart',
+        text: 'Traitement médical',
       },
     },
   };

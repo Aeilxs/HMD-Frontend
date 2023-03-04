@@ -28,18 +28,33 @@ export default function ActivitiesGraph(): JSX.Element {
       {
         label: 'Représentation en pourcentage',
         data: [2, 9, 3, 5, 2],
-        backgroundColor: ['#f1fa8c80', '#ff555580', '#8be9fd80', '#ff79c680', '#7bc1b780'],
-        borderColor: '#000',
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+        ],
         borderWidth: 1,
       },
     ],
   };
+
+  console.log(vwValue);
 
   return (
     <Box>
       <Doughnut
         key={vwValue}
         options={options}
+        height={100}
         data={data}
       />
     </Box>

@@ -11,17 +11,23 @@ import {
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';
-import { deleteHydration, editHydration, postHydration } from '../../reducers/dashboard/hydration/hydrationMiddleware';
+import {
+  deleteHydration,
+  editHydration,
+  postHydration,
+} from '../../reducers/dashboard/hydration/hydrationMiddleware';
 import CustomTable from '../../shared/CustomTable/CustomTable';
 import { removeHydration, selectHydrations } from '../../reducers/user/userSlice';
 import { selectIsEdit } from '../../reducers/UI/uiSlice';
+import { useRef } from 'react';
 
 export default function HydrationPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const date = useAppSelector(selectHydrationDate);
   const quantity = useAppSelector(selectHydrationQuantity);
-  const hydrations = useAppSelector(selectHydrations)
+  const hydrations = useAppSelector(selectHydrations);
   const isEdit = useAppSelector(selectIsEdit);
+  const formRef = useRef(null);
 
   return (
     <Container sx={{ mt: 2 }}>
@@ -30,12 +36,21 @@ export default function HydrationPage(): JSX.Element {
         content="L'eau contenue dans le cerveau (85%) lui permet de mieux fonctionner. Un état de déshydratation peut de ce fait impacter les fonctions cognitives et l'humeur. Ces changements d'humeur se caractérisent par un état de fatigue, de colère, de tension, de perte de mémoire ou de dépression. Ainsi, pour avoir un cerveau fonctionnant correctement et être de bonne humeur, il faut boire beaucoup d'eau."
         width={100}
       />
-      <CustomTable array={hydrations} onSelect={setSelectedHydration} onDelete={deleteHydration} resetInput={resetInputs} />
+      {hydrations.length > 0 && (
+        <CustomTable
+          array={hydrations}
+          onSelect={setSelectedHydration}
+          onDelete={deleteHydration}
+          resetInput={resetInputs}
+          formRef={formRef}
+        />
+      )}
       <Box
         component="form"
+        ref={formRef}
         onSubmit={(event) => {
-          event.preventDefault()
-          isEdit ? dispatch(editHydration()) : dispatch(postHydration())
+          event.preventDefault();
+          isEdit ? dispatch(editHydration()) : dispatch(postHydration());
         }}
         sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}
       >
@@ -54,7 +69,7 @@ export default function HydrationPage(): JSX.Element {
         <Button
           sx={{ m: 'auto' }}
           variant="contained"
-          type='submit'
+          type="submit"
         >
           Valider
         </Button>

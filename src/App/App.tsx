@@ -54,7 +54,7 @@ function App(): JSX.Element {
           />
           <Route
             path="/authentification"
-            element={isLogged ? (<Navigate to="/profil" />): (<AuthPage />)}
+            element={isLogged ? (<Navigate to="/dashboard" />): (<AuthPage />)}
           />
          {routes.map((route) => (
             <Route

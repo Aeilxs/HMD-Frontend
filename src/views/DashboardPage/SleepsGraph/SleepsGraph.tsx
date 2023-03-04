@@ -17,7 +17,7 @@ import { Paper } from '@mui/material';
 import { sleepChartData } from '../../../utils/chartsData';
 export default function SleepsGraph(): JSX.Element {
   const vwValue = useResize();
-  const { dates, quality, amount } = sleepChartData();
+  const { dates, quality, amounts } = sleepChartData();
 
   ChartJS.register(
     LinearScale,
@@ -59,7 +59,7 @@ export default function SleepsGraph(): JSX.Element {
         type: 'bar' as const,
         label: 'Durée de la nuit (heures)',
         backgroundColor: 'rgb(53, 162, 235)',
-        data: amount,
+        data: amounts,
       },
     ],
   };

@@ -11,13 +11,14 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { useResize } from '../../../hooks/useResize';
 import { Paper } from '@mui/material';
+import { hydrationsChartData } from '../../../utils/chartsData';
 export default function HydrationsGraph(): JSX.Element {
   const vwValue = useResize();
+  const { dates, amounts } = hydrationsChartData();
+
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const options = {
     responsive: true,
-    height: '100%',
-    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
@@ -29,13 +30,13 @@ export default function HydrationsGraph(): JSX.Element {
     },
   };
 
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  const labels = dates;
   const data = {
     labels,
     datasets: [
       {
-        label: 'Dataset 2',
-        data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+        label: "Quantité d'eau (cl)",
+        data: amounts,
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
     ],

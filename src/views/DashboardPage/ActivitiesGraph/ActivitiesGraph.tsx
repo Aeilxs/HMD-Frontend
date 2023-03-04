@@ -21,6 +21,7 @@ export default function ActivitiesGraph(): JSX.Element {
       },
     },
   };
+
   const data = {
     labels: ['Course', 'Marche', 'Natation', 'Vélo', 'Autre'],
     datasets: [
@@ -45,8 +46,6 @@ export default function ActivitiesGraph(): JSX.Element {
       },
     ],
   };
-
-  console.log(vwValue);
 
   return (
     <Paper

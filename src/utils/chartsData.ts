@@ -25,6 +25,16 @@ export const smokeChartData = () => {
   return { dates: dates, amounts: amounts };
 };
 
+export const hydrationsChartData = () => {
+  const hydrations = store.getState().user.hydratations;
+  const dates: string[] = [];
+  const amounts: number[] = [];
+  hydrations.forEach((hydration) => {
+    amounts.push(hydration.quantity * 100);
+    dates.push(calcDate(hydration.date));
+  });
+  return { dates: dates, amounts: amounts };
+};
+
 export const foodChartData = () => {};
 export const activitiesChartData = () => {};
-export const hydrationsChartData = () => {};

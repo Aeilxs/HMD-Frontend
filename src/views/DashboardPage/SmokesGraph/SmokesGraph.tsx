@@ -10,8 +10,8 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { Box } from '@mui/system';
 import { useResize } from '../../../hooks/useResize';
+import { Paper } from '@mui/material';
 
 export default function SmokesGraph(): JSX.Element {
   const vwValue = useResize();
@@ -42,12 +42,15 @@ export default function SmokesGraph(): JSX.Element {
   };
 
   return (
-    <Box>
+    <Paper
+      elevation={2}
+      sx={{ p: 2 }}
+    >
       <Line
         key={vwValue}
         options={options}
         data={data}
       />
-    </Box>
+    </Paper>
   );
 }

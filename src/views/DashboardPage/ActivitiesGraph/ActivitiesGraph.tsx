@@ -1,9 +1,8 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-
-import { Box } from '@mui/system';
 import { useResize } from '../../../hooks/useResize';
+import { Paper } from '@mui/material';
 
 export default function ActivitiesGraph(): JSX.Element {
   const vwValue = useResize();
@@ -50,13 +49,16 @@ export default function ActivitiesGraph(): JSX.Element {
   console.log(vwValue);
 
   return (
-    <Box>
+    <Paper
+      elevation={2}
+      sx={{ p: 2 }}
+    >
       <Doughnut
         key={vwValue}
         options={options}
         height={100}
         data={data}
       />
-    </Box>
+    </Paper>
   );
 }

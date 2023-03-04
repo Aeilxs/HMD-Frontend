@@ -9,8 +9,8 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { Box } from '@mui/system';
 import { useResize } from '../../../hooks/useResize';
+import { Paper } from '@mui/material';
 export default function HydrationsGraph(): JSX.Element {
   const vwValue = useResize();
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -42,12 +42,15 @@ export default function HydrationsGraph(): JSX.Element {
   };
 
   return (
-    <Box sx={{ height: '100%' }}>
+    <Paper
+      elevation={2}
+      sx={{ p: 2, height: '100%' }}
+    >
       <Bar
         key={vwValue}
         options={options}
         data={data}
       />
-    </Box>
+    </Paper>
   );
 }

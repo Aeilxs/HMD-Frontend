@@ -8,8 +8,8 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { Box } from '@mui/system';
 import { useResize } from '../../../hooks/useResize';
+import { Paper } from '@mui/material';
 
 export default function FoodGraphs(): JSX.Element {
   const vwValue = useResize();
@@ -45,12 +45,15 @@ export default function FoodGraphs(): JSX.Element {
     ],
   };
   return (
-    <Box>
+    <Paper
+      elevation={2}
+      sx={{ p: 2, gridColumn: '1 / span 2' }}
+    >
       <Bar
         key={vwValue}
         data={data}
         options={options}
       />
-    </Box>
+    </Paper>
   );
 }

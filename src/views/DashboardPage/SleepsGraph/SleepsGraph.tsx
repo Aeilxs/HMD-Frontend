@@ -12,10 +12,13 @@ import {
   BarController,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
-import { Box } from '@mui/system';
 import { useResize } from '../../../hooks/useResize';
+import { Paper } from '@mui/material';
+import { sleepChartData } from '../../../utils/chartsData';
 export default function SleepsGraph(): JSX.Element {
   const vwValue = useResize();
+  const { dates, quality, amount } = sleepChartData();
+
   ChartJS.register(
     LinearScale,
     CategoryScale,
@@ -40,8 +43,7 @@ export default function SleepsGraph(): JSX.Element {
     },
   };
 
-  const labels = ['28/02', '01/03', '05/03', '06/03', '07/03', '08/03', '09/03'];
-
+  const labels = dates;
   const data = {
     labels,
     datasets: [
@@ -51,25 +53,28 @@ export default function SleepsGraph(): JSX.Element {
         borderColor: 'rgb(255, 99, 132)',
         borderWidth: 2,
         fill: false,
-        data: [1, 2, 3, 3, 2, 2, 1],
+        data: quality,
       },
       {
         type: 'bar' as const,
         label: 'Durée de la nuit (heures)',
         backgroundColor: 'rgb(53, 162, 235)',
-        data: [8, 10, 7, 6, 5, 7, 7],
+        data: amount,
       },
     ],
   };
 
   return (
-    <Box>
+    <Paper
+      elevation={2}
+      sx={{ p: 2 }}
+    >
       <Chart
         key={vwValue}
         options={options}
         data={data}
         type="bar"
       />
-    </Box>
+    </Paper>
   );
 }

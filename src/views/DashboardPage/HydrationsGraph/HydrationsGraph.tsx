@@ -19,6 +19,7 @@ export default function HydrationsGraph(): JSX.Element {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
@@ -45,7 +46,7 @@ export default function HydrationsGraph(): JSX.Element {
   return (
     <Paper
       elevation={2}
-      sx={{ p: 2, height: '100%' }}
+      sx={{ p: 2, height: '100%', minHeight: '250px' }}
     >
       <Bar
         key={vwValue}

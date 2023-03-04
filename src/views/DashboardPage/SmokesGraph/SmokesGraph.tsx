@@ -20,6 +20,7 @@ export default function SmokesGraph(): JSX.Element {
   ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
@@ -46,7 +47,7 @@ export default function SmokesGraph(): JSX.Element {
   return (
     <Paper
       elevation={2}
-      sx={{ p: 2 }}
+      sx={{ p: 2, height: '100%', minHeight: '250px' }}
     >
       <Line
         key={vwValue}

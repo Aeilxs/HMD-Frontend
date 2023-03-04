@@ -17,6 +17,7 @@ export default function FoodGraphs(): JSX.Element {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
@@ -47,7 +48,7 @@ export default function FoodGraphs(): JSX.Element {
   return (
     <Paper
       elevation={2}
-      sx={{ p: 2, gridColumn: '1 / span 2' }}
+      sx={{ p: 2, gridColumn: '1 / span 2', height: '100%', minHeight: '250px' }}
     >
       <Bar
         key={vwValue}

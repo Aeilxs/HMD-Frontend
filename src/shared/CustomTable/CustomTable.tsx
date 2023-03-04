@@ -15,6 +15,7 @@ import { dataHydrationApi } from '../../reducers/dashboard/hydration/hydrationSl
 import { dataSmokeApi } from '../../reducers/dashboard/smoke/smokeSlice';
 import { dataSportApi } from '../../reducers/dashboard/sport/sportSlice';
 import { setIsEdit } from '../../reducers/UI/uiSlice';
+import { RefObject } from 'react';
 
 type GenericProps = dataSleepApi | dataDrugApi | dataProfilApi | dataHydrationApi | dataSmokeApi | dataSportApi ;
 
@@ -22,10 +23,11 @@ type TableProps<GenericProps> = {
   array : GenericProps[];
   onSelect : Function;
   onDelete : Function;
-  resetInput : Function
+  resetInput : Function;
+  formRef: RefObject<HTMLFormElement>;
 }
 
-export default function CustomTable({array, onSelect, onDelete, resetInput} : TableProps<GenericProps>) {
+export default function CustomTable({array, onSelect, onDelete, resetInput, formRef } : TableProps<GenericProps>) {
   const dispatch = useAppDispatch();
 
   return (
@@ -33,6 +35,7 @@ export default function CustomTable({array, onSelect, onDelete, resetInput} : Ta
         <Button variant="contained" startIcon={<Add />} sx={{position:'absolute', right:0}} onClick={() => {
           dispatch(setIsEdit(false))
           dispatch(resetInput())
+          formRef.current?.scrollIntoView({ behavior: 'smooth' });
           }}>
         Add
       </Button>
@@ -56,6 +59,7 @@ export default function CustomTable({array, onSelect, onDelete, resetInput} : Ta
                 <IconButton aria-label="edit" sx={{backgroundColor:'#f79829', mr:2}} onClick={() => {
                     dispatch(setIsEdit(true))
                     dispatch(onSelect(element as GenericProps))
+                    formRef.current?.scrollIntoView({ behavior: 'smooth' });
                     }}>
                   <Edit />
                 </IconButton>

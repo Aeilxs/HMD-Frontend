@@ -9,7 +9,7 @@ import {
   setQuality,
   dataSleepApi,
   setSelectedSleep,
-  resetInputs
+  resetInputs,
 } from '../../reducers/dashboard/sleep/sleepSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
@@ -18,14 +18,16 @@ import { deleteSleep, editSleep, postSleep } from '../../reducers/dashboard/slee
 import { selectSleeps } from '../../reducers/user/userSlice';
 import { selectIsEdit } from '../../reducers/UI/uiSlice';
 import CustomTable from '../../shared/CustomTable/CustomTable';
+import { useRef } from 'react';
 
 export default function SleepPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const sleepQuality = useAppSelector(selectSleepQuality);
   const sleepQuantity = useAppSelector(selectSleepQuantity);
   const sleepDate = useAppSelector(selectSleepDate);
-  const isEdit = useAppSelector(selectIsEdit)
-  const sleeps = useAppSelector(selectSleeps)
+  const isEdit = useAppSelector(selectIsEdit);
+  const sleeps = useAppSelector(selectSleeps);
+  const formRef = useRef(null);
 
   return (
     <Container sx={{ mt: 2 }}>
@@ -34,13 +36,22 @@ export default function SleepPage(): JSX.Element {
         content="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero quasi natus eligendi delectus iste deserunt cumque totam ut eius nemo dolor obcaecati esse, corrupti eaque, architecto praesentium minus autem magnam!"
         width={100}
       />
-      {sleeps.length > 0 && <CustomTable array={sleeps} onSelect={setSelectedSleep} onDelete={deleteSleep} resetInput={resetInputs} />}
+      {sleeps.length > 0 && (
+        <CustomTable
+          array={sleeps}
+          onSelect={setSelectedSleep}
+          onDelete={deleteSleep}
+          resetInput={resetInputs}
+          formRef={formRef}
+        />
+      )}
       <Box
         sx={{ my: 2, display: 'flex', flexDirection: 'column' }}
         component="form"
+        ref={formRef}
         onSubmit={(event) => {
-          event.preventDefault()
-          isEdit ? dispatch(editSleep()) : dispatch(postSleep())
+          event.preventDefault();
+          isEdit ? dispatch(editSleep()) : dispatch(postSleep());
         }}
       >
         <TextField
@@ -69,7 +80,7 @@ export default function SleepPage(): JSX.Element {
         <Button
           sx={{ m: 'auto' }}
           variant="contained"
-          type='submit'
+          type="submit"
         >
           Envoyer
         </Button>

@@ -20,6 +20,7 @@ import { deleteDrug, editDrug, postDrug } from '../../reducers/dashboard/drug/dr
 import { selectIsEdit } from '../../reducers/UI/uiSlice';
 import CustomTable from '../../shared/CustomTable/CustomTable';
 import { selectDrugs } from '../../reducers/user/userSlice';
+import { useRef } from 'react';
 
 export default function DrugPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -30,6 +31,7 @@ export default function DrugPage(): JSX.Element {
   const quantity = useAppSelector(selectQuantity);
   const isEdit = useAppSelector(selectIsEdit);
   const drugs = useAppSelector(selectDrugs)
+  const formRef = useRef(null);
 
   return (
     <Container sx={{ mt: 2 }}>
@@ -38,22 +40,24 @@ export default function DrugPage(): JSX.Element {
         content="lorem lorem lorem lorem lorem lorem lorem"
         width={100}
       />
+      {drugs.length > 0 && (
+        <CustomTable
+          array={drugs}
+          onSelect={setSelectedDrug}
+          onDelete={deleteDrug}
+          resetInput={resetInputs}
+          formRef={formRef}
+        />
+      )}
       <Box
         component="form"
+        ref={formRef}
         onSubmit={(event) => {
           event.preventDefault();
           isEdit ? dispatch(editDrug()) : dispatch(postDrug());
         }}
         sx={{ display: 'flex', flexDirection: 'column', mx: 'auto', my: 2 }}
       >
-        {drugs.length > 0 && (
-        <CustomTable
-          array={drugs}
-          onSelect={setSelectedDrug}
-          onDelete={deleteDrug}
-          resetInput={resetInputs}
-        />
-      )}
         <CustomDatePicker
           value={date}
           actionCreator={setDate}

@@ -19,6 +19,7 @@ import {
 import CustomTable from '../../shared/CustomTable/CustomTable';
 import { removeHydration, selectHydrations } from '../../reducers/user/userSlice';
 import { selectIsEdit } from '../../reducers/UI/uiSlice';
+import { useRef } from 'react';
 
 export default function HydrationPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -26,6 +27,7 @@ export default function HydrationPage(): JSX.Element {
   const quantity = useAppSelector(selectHydrationQuantity);
   const hydrations = useAppSelector(selectHydrations);
   const isEdit = useAppSelector(selectIsEdit);
+  const formRef = useRef(null);
 
   return (
     <Container sx={{ mt: 2 }}>
@@ -40,10 +42,12 @@ export default function HydrationPage(): JSX.Element {
           onSelect={setSelectedHydration}
           onDelete={deleteHydration}
           resetInput={resetInputs}
+          formRef={formRef}
         />
       )}
       <Box
         component="form"
+        ref={formRef}
         onSubmit={(event) => {
           event.preventDefault();
           isEdit ? dispatch(editHydration()) : dispatch(postHydration());

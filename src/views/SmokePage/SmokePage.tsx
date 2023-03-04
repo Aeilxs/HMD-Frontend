@@ -16,6 +16,7 @@ import { deleteSmoke, editSmoke, postSmoke } from '../../reducers/dashboard/smok
 import { selectSmokes } from '../../reducers/user/userSlice';
 import CustomTable from '../../shared/CustomTable/CustomTable';
 import { selectIsEdit } from '../../reducers/UI/uiSlice';
+import { useRef } from 'react';
 
 export default function SmokePage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ export default function SmokePage(): JSX.Element {
   const smokeDate = useAppSelector(selectSmokeDate);
   const smokes = useAppSelector(selectSmokes);
   const isEdit = useAppSelector(selectIsEdit);
+  const formRef = useRef(null);
 
   return (
     <Container sx={{ mt: 2 }}>
@@ -31,8 +33,18 @@ export default function SmokePage(): JSX.Element {
         content="c'est tabou et qu'on en viendra tous à bout"
         width={100}
       />
+      {smokes.length > 0 && (
+        <CustomTable
+          array={smokes}
+          onSelect={setSelectedSmoke}
+          onDelete={deleteSmoke}
+          resetInput={resetInputs}
+          formRef={formRef}
+        />
+      )}
       <Box
         component="form"
+        ref={formRef}
         onSubmit={(event) => {
           event.preventDefault()
           console.log('smoke submit')
@@ -40,14 +52,6 @@ export default function SmokePage(): JSX.Element {
         }}
         sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}
       >
-        {smokes.length > 0 && (
-        <CustomTable
-          array={smokes}
-          onSelect={setSelectedSmoke}
-          onDelete={deleteSmoke}
-          resetInput={resetInputs}
-        />
-      )}
         <CustomDatePicker
           value={smokeDate}
           actionCreator={setSmokeDate}

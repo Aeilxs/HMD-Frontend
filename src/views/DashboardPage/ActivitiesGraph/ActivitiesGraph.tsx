@@ -3,10 +3,11 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { useResize } from '../../../hooks/useResize';
 import { Paper } from '@mui/material';
+import { activitiesChartData } from '../../../utils/chartsData';
 
 export default function ActivitiesGraph(): JSX.Element {
   const vwValue = useResize();
-
+  const { labels, percentages } = activitiesChartData();
   ChartJS.register(ArcElement, Tooltip, Legend);
 
   const options = {
@@ -24,11 +25,11 @@ export default function ActivitiesGraph(): JSX.Element {
   };
 
   const data = {
-    labels: ['Course', 'Marche', 'Natation', 'Vélo', 'Autre'],
+    labels: labels,
     datasets: [
       {
         label: 'Représentation en pourcentage',
-        data: [2, 9, 3, 5, 2],
+        data: percentages,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',

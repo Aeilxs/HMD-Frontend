@@ -36,5 +36,36 @@ export const hydrationsChartData = () => {
   return { dates: dates, amounts: amounts };
 };
 
+interface ActivityData {
+  marche: number;
+  footing: number;
+  natation: number;
+  velo: number;
+  autre: number;
+  [key: string]: number;
+}
+
+export const activitiesChartData = () => {
+  const activities = store.getState().user.activities;
+  const labels: string[] = ['Marche', 'Footing', 'Natation', 'Velo', 'Autre'];
+  const data: ActivityData = activities.reduce(
+    (acc, cur) => {
+      //@ts-ignore
+      acc[cur.type.toLowerCase()] += cur.time;
+      return acc;
+    },
+    { marche: 0, footing: 0, natation: 0, velo: 0, autre: 0 }
+  );
+
+  const percentages = labels.map((label) => {
+    const time = data[label.toLowerCase()];
+    const percentage = Math.round(
+      (time / activities.reduce((acc, cur) => acc + cur.time, 0)) * 100
+    );
+    return percentage;
+  });
+
+  return { labels: labels, percentages: percentages };
+};
+
 export const foodChartData = () => {};
-export const activitiesChartData = () => {};

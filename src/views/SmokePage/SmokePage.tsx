@@ -5,17 +5,25 @@ import 'dayjs/locale/fr';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
+  resetInputs,
   selectSmokeDate,
   selectSmokeQuantity,
+  setSelectedSmoke,
   setSmokeDate,
   setSmokeQuantity,
 } from '../../reducers/dashboard/smoke/smokeSlice';
-import { postSmoke } from '../../reducers/dashboard/smoke/smokeMiddleware';
+import { deleteSmoke, editSmoke, postSmoke } from '../../reducers/dashboard/smoke/smokeMiddleware';
+import { selectSmokes } from '../../reducers/user/userSlice';
+import CustomTable from '../../shared/CustomTable/CustomTable';
+import { selectIsEdit } from '../../reducers/UI/uiSlice';
 
 export default function SmokePage(): JSX.Element {
   const dispatch = useAppDispatch();
   const smokeInputAmount = useAppSelector(selectSmokeQuantity);
   const smokeDate = useAppSelector(selectSmokeDate);
+  const smokes = useAppSelector(selectSmokes);
+  const isEdit = useAppSelector(selectIsEdit);
+
   return (
     <Container sx={{ mt: 2 }}>
       <MessageBox
@@ -27,10 +35,19 @@ export default function SmokePage(): JSX.Element {
         component="form"
         onSubmit={(event) => {
           event.preventDefault()
-          dispatch(postSmoke())
+          console.log('smoke submit')
+          isEdit ? dispatch(editSmoke()) : dispatch(postSmoke());
         }}
         sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}
       >
+        {smokes.length > 0 && (
+        <CustomTable
+          array={smokes}
+          onSelect={setSelectedSmoke}
+          onDelete={deleteSmoke}
+          resetInput={resetInputs}
+        />
+      )}
         <CustomDatePicker
           value={smokeDate}
           actionCreator={setSmokeDate}
@@ -46,6 +63,7 @@ export default function SmokePage(): JSX.Element {
         <Button
           sx={{ m: 'auto' }}
           variant="contained"
+          type='submit'
         >
           Valider
         </Button>

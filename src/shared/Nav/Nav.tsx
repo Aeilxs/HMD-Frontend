@@ -11,13 +11,14 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectTheme, toggleDrawer, toggleTheme } from '../../reducers/UI/uiSlice';
 import { DarkMode } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { onLogout, selectIsLogged } from '../../reducers/user/userSlice';
+import { onLogout, selectFirstName, selectIsLogged } from '../../reducers/user/userSlice';
 
 export default function Nav(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
   const isLogged = useAppSelector(selectIsLogged);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const initial = useAppSelector(selectFirstName).charAt(0).toUpperCase()
   return (
     <Box sx={{ display: 'block' }}>
       <AppBar
@@ -71,7 +72,7 @@ export default function Nav(): JSX.Element {
                 onClick={() => navigate('/profil')}
                 sx={{ mr: 1, cursor: 'pointer' }}
               >
-                A
+                {initial}
               </Avatar>
             </>
           )}

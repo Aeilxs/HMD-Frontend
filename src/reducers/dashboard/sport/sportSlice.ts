@@ -3,9 +3,10 @@ import { RootState } from '../../../store/store';
 import { postSport } from './sportMiddleware';
 
 export interface sportState {
-  date: string;
-  type: 'course' | 'marche' | 'natation' | 'velo' | 'exercices' | '';
-  duration: number | '';
+  id: number | null;
+  date: string | null;
+  type: string;
+  time: number | '';
   intensity: '' | number;
 }
 
@@ -19,9 +20,10 @@ export interface dataSportApi {
 }
 
 const initialState: sportState = {
-  date: 'Wed, 15 Jul 1998 22:00:00 GMT',
+  id: null,
+  date: null,
   type: 'course',
-  duration: '',
+  time: '',
   intensity: '',
 };
 
@@ -36,13 +38,19 @@ export const sportSlice = createSlice({
       return { ...state, type: action.payload };
     },
     setDuration: (state, action: PayloadAction<number>) => {
-      return { ...state, duration: action.payload };
+      return { ...state, time: action.payload };
     },
     setIntensity: (state, action: PayloadAction<number>) => {
       return { ...state, intensity: action.payload };
     },
     setDate: (state, action: PayloadAction<string>) => {
       return { ...state, date: action.payload };
+    },
+    setSelectedSport: (state, action: PayloadAction<dataSportApi>) => {
+      return { ...state, ...action.payload };
+    },
+    resetInputs: (state) => {
+      return { ...state, date: null, type: '', time: '', intensity: '' };
     },
   },
   extraReducers: (builder) => {
@@ -57,11 +65,12 @@ export const sportSlice = createSlice({
   },
 });
 
-export const { setType, setDuration, setIntensity, setDate } = sportSlice.actions;
+export const { setType, setDuration, setIntensity, setDate, setSelectedSport, resetInputs } =
+  sportSlice.actions;
 
 export const selectDate = (state: RootState) => state.sport.date;
 export const selectType = (state: RootState) => state.sport.type;
-export const selectDuration = (state: RootState) => state.sport.duration;
+export const selectDuration = (state: RootState) => state.sport.time;
 export const selectIntensity = (state: RootState) => state.sport.intensity;
 
 export default sportSlice.reducer;

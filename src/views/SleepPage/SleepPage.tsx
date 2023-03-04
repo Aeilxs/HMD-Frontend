@@ -34,7 +34,7 @@ export default function SleepPage(): JSX.Element {
         content="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero quasi natus eligendi delectus iste deserunt cumque totam ut eius nemo dolor obcaecati esse, corrupti eaque, architecto praesentium minus autem magnam!"
         width={100}
       />
-      <CustomTable array={sleeps} onSelect={setSelectedSleep} onDelete={deleteSleep} resetInput={resetInputs} />
+      {sleeps.length > 0 && <CustomTable array={sleeps} onSelect={setSelectedSleep} onDelete={deleteSleep} resetInput={resetInputs} />}
       <Box
         sx={{ my: 2, display: 'flex', flexDirection: 'column' }}
         component="form"

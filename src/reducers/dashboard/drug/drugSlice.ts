@@ -1,24 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
-import { postDrug } from './drugMiddleware';
+import { editDrug, postDrug } from './drugMiddleware';
 
 export interface drugState {
-  date: string;
+  id: null | number;
+  date: string | null;
   name: string;
-  quantity: string;
+  unit: string;
+  quantity: number | '';
   infos: string;
 }
 
 export interface dataDrugApi {
   id: number;
-  drugName: string;
+  name: string;
+  unit: string;
   quantity: number;
   date: string;
 }
 
 const initialState: drugState = {
-  date: 'Wed, 15 Jul 1998 22:00:00 GMT',
+  id: null,
+  date: null,
   name: '',
+  unit: '',
   quantity: '',
   infos: '',
 };
@@ -33,11 +38,20 @@ export const drugSlice = createSlice({
     setName: (state, action: PayloadAction<string>) => {
       return { ...state, name: action.payload };
     },
-    setQuantity: (state, action: PayloadAction<string>) => {
+    setUnit: (state, action: PayloadAction<string>) => {
+      return { ...state, unit: action.payload };
+    },
+    setQuantity: (state, action: PayloadAction<number>) => {
       return { ...state, quantity: action.payload };
     },
     setInfos: (state, action: PayloadAction<string>) => {
       return { ...state, infos: action.payload };
+    },
+    setSelectedDrug: (state, action: PayloadAction<dataDrugApi>) => {
+      return { ...state, ...action.payload };
+    },
+    resetInputs: (state) => {
+      return { ...state, date: null, name: '', unit: '', quantity: '', infos: '' };
     },
   },
   extraReducers: (builder) => {
@@ -48,14 +62,22 @@ export const drugSlice = createSlice({
       .addCase(postDrug.rejected, () => {
         console.error('nonsfghsrthsrthsrthsrths');
         // en cas d'erreur
+      })
+      .addCase(editDrug.fulfilled, (state, action) => {
+        return { ...state, isEdit: false };
+      })
+      .addCase(editDrug.rejected, (state, action) => {
+        console.error(action.payload);
       });
   },
 });
 
-export const { setDate, setName, setQuantity, setInfos } = drugSlice.actions;
+export const { setDate, setName, setUnit, setQuantity, setInfos, setSelectedDrug, resetInputs } =
+  drugSlice.actions;
 
 export const selectDate = (state: RootState) => state.drug.date;
 export const selectName = (state: RootState) => state.drug.name;
+export const selectUnit = (state: RootState) => state.drug.unit;
 export const selectQuantity = (state: RootState) => state.drug.quantity;
 export const selectInfos = (state: RootState) => state.drug.infos;
 

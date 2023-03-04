@@ -5,13 +5,24 @@ import TypeSport from './TypeSport/TypeSport';
 
 import { Box, Button, Container } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectDate, setDate } from '../../reducers/dashboard/sport/sportSlice';
+import {
+  resetInputs,
+  selectDate,
+  setDate,
+  setSelectedSport,
+} from '../../reducers/dashboard/sport/sportSlice';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
-import { postSport } from '../../reducers/dashboard/sport/sportMiddleware';
+import { deleteSport, editSport, postSport } from '../../reducers/dashboard/sport/sportMiddleware';
+import CustomTable from '../../shared/CustomTable/CustomTable';
+import { selectSports } from '../../reducers/user/userSlice';
+import { selectIsEdit } from '../../reducers/UI/uiSlice';
 
 export default function SportPage(): JSX.Element {
   const date = useAppSelector(selectDate);
   const dispatch = useAppDispatch();
+  const sports = useAppSelector(selectSports);
+  const isEdit = useAppSelector(selectIsEdit);
+
   return (
     <Container>
       <MessageBox
@@ -21,9 +32,20 @@ export default function SportPage(): JSX.Element {
       />
       <Box
         component="form"
-        onSubmit={() => {}}
-        sx={{ display: 'flex', flexDirection: 'column', width: '50%', mx: 'auto', my: 2 }}
+        onSubmit={(event) => {
+          event.preventDefault();
+          isEdit ? dispatch(editSport()) : dispatch(postSport());
+        }}
+        sx={{ display: 'flex', flexDirection: 'column', mx: 'auto', my: 2 }}
       >
+        {sports.length > 0 && (
+          <CustomTable
+            array={sports}
+            onSelect={setSelectedSport}
+            onDelete={deleteSport}
+            resetInput={resetInputs}
+          />
+        )}
         <TypeSport />
         <DurationSport />
         <IntensitySport />
@@ -34,8 +56,8 @@ export default function SportPage(): JSX.Element {
 
         <Box sx={{ m: 'auto', mt: 2 }}>
           <Button
-            onClick={() => dispatch(postSport())}
             variant="contained"
+            type="submit"
           >
             Envoyer
           </Button>

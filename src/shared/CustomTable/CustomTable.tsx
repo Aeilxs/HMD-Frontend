@@ -1,3 +1,4 @@
+import { useAppDispatch } from '../../store/hooks';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -14,8 +15,6 @@ import { dataHydrationApi } from '../../reducers/dashboard/hydration/hydrationSl
 import { dataSmokeApi } from '../../reducers/dashboard/smoke/smokeSlice';
 import { dataSportApi } from '../../reducers/dashboard/sport/sportSlice';
 import { setIsEdit } from '../../reducers/UI/uiSlice';
-import { useAppDispatch } from '../../store/hooks';
-
 
 type GenericProps = dataSleepApi | dataDrugApi | dataProfilApi | dataHydrationApi | dataSmokeApi | dataSportApi ;
 

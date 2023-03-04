@@ -24,7 +24,7 @@ export interface UserState {
 
 const initialState: UserState = {
   isLogged: false,
-  token: '',
+  token: localStorage.getItem('token') || '',
   firstname: '',
   properties: [],
   medicalTreatments: [],
@@ -52,7 +52,11 @@ export const userSlice = createSlice({
     setHeight: (state, action: PayloadAction<number>) => {
       return { ...state, height: action.payload };
     },
+    setIsLogged: (state) => {
+      return { ...state, isLogged: true };
+    },
     onLogout: (state, action: PayloadAction<boolean>) => {
+      localStorage.clear()
       return { ...state, isLogged: false, token: '' };
     },
     setSleeps: (state, action: PayloadAction<dataSleepApi>) => {
@@ -139,6 +143,7 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(registerLoginUser.fulfilled, (state, action) => {
+        localStorage.setItem('token', action.payload);
         return { ...state, isLogged: true, token: action.payload };
       })
       .addCase(registerLoginUser.rejected, (state) => {
@@ -156,6 +161,7 @@ export const {
   setWeight,
   setHeight,
   onLogout,
+  setIsLogged,
   setSleeps,
   removeSleeps,
   updateSleeps,
@@ -180,5 +186,6 @@ export const selectDrugs = (state: RootState) => state.user.medicalTreatments;
 export const selectHydrations = (state: RootState) => state.user.hydratations;
 export const selectSmokes = (state: RootState) => state.user.cigarettes;
 export const selectSports = (state: RootState) => state.user.activities;
+export const selectToken = (state: RootState) => state.user.token;
 
 export default userSlice.reducer;

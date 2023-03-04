@@ -3,7 +3,7 @@ import { ThemeProvider } from '@emotion/react';
 import { Container, CssBaseline } from '@mui/material';
 import { themeDark, themeLight } from '../theme/theme';
 
-import { useAppSelector } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { selectTheme } from '../reducers/UI/uiSlice';
 
 import Drawer from '../shared/Drawer/Drawer';
@@ -22,21 +22,41 @@ import SleepPage from '../views/SleepPage/SleepPage';
 import HydrationPage from '../views/HydrationPage/HydrationPage';
 import AuthPage from '../views/Authentication/AuthenticationPage';
 import DashboardPage from '../views/DashboardPage/DashboardPage';
-import { selectIsLogged } from '../reducers/user/userSlice';
+import { selectIsLogged, selectToken, setIsLogged } from '../reducers/user/userSlice';
+import { useEffect } from 'react';
+import { fetchUser } from '../reducers/user/userMiddleware';
+import { useLocation } from 'react-router-dom';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
-  const isLogged  = useAppSelector(selectIsLogged)
+  const isLogged = useAppSelector(selectIsLogged);
+  const dispatch = useAppDispatch();
+  const token = useAppSelector(selectToken);
+  const location = useLocation();
   const routes = [
-    { path: "/profil", component: <ProfilePage /> },
-    { path: "/sport", component: <SportPage /> },
-    { path: "/alimentation", component: <FoodPage /> },
-    { path: "/medicaments", component: <DrugPage /> },
-    { path: "/tabagisme", component: <SmokePage /> },
-    { path: "/sommeil", component: <SleepPage /> },
-    { path: "/hydratation", component: <HydrationPage /> },
-    { path: "/dashboard", component: <DashboardPage /> },
+    { path: '/profil', component: <ProfilePage /> },
+    { path: '/sport', component: <SportPage /> },
+    { path: '/alimentation', component: <FoodPage /> },
+    { path: '/medicaments', component: <DrugPage /> },
+    { path: '/tabagisme', component: <SmokePage /> },
+    { path: '/sommeil', component: <SleepPage /> },
+    { path: '/hydratation', component: <HydrationPage /> },
+    { path: '/dashboard', component: <DashboardPage /> },
   ];
+
+  useEffect(() => {
+    if (token !== '') {
+      console.log('ok')
+      localStorage.setItem('lastPage', location.pathname);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (token !== '') {
+      dispatch(setIsLogged());
+      dispatch(fetchUser(token));
+    }
+  }, []);
   return (
     <ThemeProvider theme={isDark ? themeDark : themeLight}>
       <CssBaseline />
@@ -54,9 +74,15 @@ function App(): JSX.Element {
           />
           <Route
             path="/authentification"
-            element={isLogged ? (<Navigate to="/dashboard" />): (<AuthPage />)}
+            element={
+              isLogged ? (
+                <Navigate to={localStorage.getItem('lastPage') ?? '/dashboard'} />
+              ) : (
+                <AuthPage />
+              )
+            }
           />
-         {routes.map((route) => (
+          {routes.map((route) => (
             <Route
               key={route.path}
               path={route.path}

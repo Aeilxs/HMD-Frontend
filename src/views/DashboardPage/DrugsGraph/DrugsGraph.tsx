@@ -9,20 +9,21 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { Box } from '@mui/system';
-import { useRender } from '../../../hooks/useRender';
+import { useResize } from '../../../hooks/useResize';
+import { Paper } from '@mui/material';
 export default function DrugsGraph(): JSX.Element {
-  const vwValue = useRender();
+  const vwValue = useResize();
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
       },
       title: {
         display: true,
-        text: 'Chart.js Bar Chart',
+        text: 'Traitement médical',
       },
     },
   };
@@ -45,12 +46,15 @@ export default function DrugsGraph(): JSX.Element {
   };
 
   return (
-    <Box>
+    <Paper
+      elevation={2}
+      sx={{ p: 2, height: '100%', minHeight: '250px' }}
+    >
       <Bar
         key={vwValue}
         options={options}
         data={data}
       />
-    </Box>
+    </Paper>
   );
 }

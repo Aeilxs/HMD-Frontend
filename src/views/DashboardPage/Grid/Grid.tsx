@@ -1,17 +1,17 @@
 import { Container } from '@mui/system';
-import { useRender } from '../../../hooks/useRender';
+import { useResize } from '../../../hooks/useResize';
 
 interface GridProps {
   children: JSX.Element[];
 }
 
 export default function Grid({ children }: GridProps): JSX.Element {
-  const vwValue = useRender();
+  const vwValue = useResize();
   return (
     <Container
       key={vwValue}
       sx={{
-        mt: 2,
+        my: 2,
         display: ['flex', 'flex', 'grid'],
         flexDirection: 'column',
         gridTemplateColumns: 'repeat(2, 1fr)',

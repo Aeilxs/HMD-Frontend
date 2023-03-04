@@ -69,10 +69,15 @@ export const userSlice = createSlice({
       return { ...state, hydratations: [...state.hydratations, { ...action.payload }] };
     },
     removeHydration: (state, action: PayloadAction<number>) => {
-      return { ...state, hydratations: state.hydratations.filter((hydratation) => hydratation.id !== action.payload) };
+      return {
+        ...state,
+        hydratations: state.hydratations.filter((hydratation) => hydratation.id !== action.payload),
+      };
     },
     updateHydration: (state, action: PayloadAction<dataHydrationApi>) => {
-      const index = state.hydratations.findIndex((hydratation) => hydratation.id === action.payload.id);
+      const index = state.hydratations.findIndex(
+        (hydratation) => hydratation.id === action.payload.id
+      );
       if (index !== -1) {
         state.hydratations[index] = action.payload;
       }
@@ -81,11 +86,12 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(registerLoginUser.fulfilled, (state, action) => {
-        return { ...state, isLogged: true, token: action.payload };
+        return action.payload === undefined
+          ? { ...state, isLogged: false, token: '' }
+          : { ...state, isLogged: true, token: action.payload };
       })
-      .addCase(registerLoginUser.rejected, () => {
-        console.error('non');
-        // en cas d'erreur
+      .addCase(registerLoginUser.rejected, (state) => {
+        return { ...state, isLogged: false };
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         console.log(action.payload);

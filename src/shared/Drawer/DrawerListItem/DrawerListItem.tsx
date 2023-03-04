@@ -11,18 +11,14 @@ import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
 import MedicationIcon from '@mui/icons-material/Medication';
 import SmokingRoomsIcon from '@mui/icons-material/SmokingRooms';
 import SportsHandballIcon from '@mui/icons-material/SportsHandball';
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import { useAppDispatch } from '../../../store/hooks';
 import { toggleDrawer } from '../../../reducers/UI/uiSlice';
 import { useNavigate } from 'react-router-dom';
-
-interface DrawerListItemProps {
-  label: string;
-  link: string;
-  icon: 'food' | 'sleep' | 'exercises' | 'hydration' | 'smoke' | 'drugs';
-}
+import { DrawerListItemProps } from '../Drawer';
 
 /**
- * icons : 'food' | 'sleep' | 'exercises' | 'hydration' | 'smoke' | 'drugs'
+ * icons : 'food' | 'sleep' | 'exercises' | 'hydration' | 'smoke' | 'drugs' | 'dashboard'
  */
 export default function DrawerListItem({ label, icon, link }: DrawerListItemProps): JSX.Element {
   const dispatch = useAppDispatch();
@@ -43,6 +39,7 @@ export default function DrawerListItem({ label, icon, link }: DrawerListItemProp
           {icon === 'hydration' && <LocalDrinkIcon />}
           {icon === 'smoke' && <SmokingRoomsIcon />}
           {icon === 'drugs' && <MedicationIcon />}
+          {icon === 'dashboard' && <DashboardCustomizeIcon />}
         </ListItemIcon>
         <ListItemText primary={label} />
       </ListItemButton>

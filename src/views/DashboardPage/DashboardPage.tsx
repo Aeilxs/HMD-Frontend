@@ -12,9 +12,9 @@ export default function DashboardPage(): JSX.Element {
       <FoodGraph />
       <ActivitiesGraph />
       <HydrationsGraph />
-      <SmokesGraph />
       <SleepGraph />
       <DrugsGraph />
+      <SmokesGraph />
     </Grid>
   );
 }

@@ -11,10 +11,14 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { useResize } from '../../../hooks/useResize';
 import { Paper } from '@mui/material';
-import { hydrationsChartData } from '../../../utils/chartsData';
-export default function HydrationsGraph(): JSX.Element {
+
+interface HydrationsGraphProps {
+  dates: string[];
+  amounts: number[];
+}
+
+export default function HydrationsGraph({ dates, amounts }: HydrationsGraphProps): JSX.Element {
   const vwValue = useResize();
-  const { dates, amounts } = hydrationsChartData();
 
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const options = {

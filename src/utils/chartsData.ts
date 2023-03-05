@@ -11,7 +11,7 @@ export const sleepChartData = () => {
     dates.push(calcDate(sleep.date));
     amounts.push(sleep.time);
   });
-  return { dates: dates, amounts: amounts, quality: quality };
+  return { sleepDates: dates, sleepAmounts: amounts, sleepQualities: quality };
 };
 
 export const smokeChartData = () => {
@@ -22,7 +22,7 @@ export const smokeChartData = () => {
     amounts.push(smoke.quantity);
     dates.push(calcDate(smoke.date));
   });
-  return { dates: dates, amounts: amounts };
+  return { smokeDates: dates, smokeAmounts: amounts };
 };
 
 export const hydrationsChartData = () => {
@@ -33,7 +33,7 @@ export const hydrationsChartData = () => {
     amounts.push(hydration.quantity * 100);
     dates.push(calcDate(hydration.date));
   });
-  return { dates: dates, amounts: amounts };
+  return { hydrationsDates: dates, hydrationAmounts: amounts };
 };
 
 interface ActivityData {
@@ -65,7 +65,7 @@ export const activitiesChartData = () => {
     return percentage;
   });
 
-  return { labels: labels, percentages: percentages };
+  return { activitiesLabels: labels, activitiesPercentages: percentages };
 };
 
 export const foodChartData = () => {};

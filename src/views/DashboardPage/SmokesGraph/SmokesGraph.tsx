@@ -12,11 +12,14 @@ import {
 import { Line } from 'react-chartjs-2';
 import { useResize } from '../../../hooks/useResize';
 import { Paper } from '@mui/material';
-import { smokeChartData } from '../../../utils/chartsData';
 
-export default function SmokesGraph(): JSX.Element {
+interface SmokesGraphProps {
+  dates: string[];
+  amounts: number[];
+}
+
+export default function SmokesGraph({ dates, amounts }: SmokesGraphProps): JSX.Element {
   const vwValue = useResize();
-  const { dates, amounts } = smokeChartData();
   ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
   const options = {
     responsive: true,

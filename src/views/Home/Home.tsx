@@ -3,9 +3,9 @@ import { Fingerprint, PersonAdd } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
 
 import Slider from './Slider/Slider';
-import img1 from '../../assets/img1.jpg';
-import img2 from '../../assets/img2.png';
-import img3 from '../../assets/img3.png';
+import img1 from '../../assets/salad.png';
+import img2 from '../../assets/sleep.png';
+import img3 from '../../assets/no-smoking.png';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { toggleForm } from '../../reducers/UI/uiSlice';

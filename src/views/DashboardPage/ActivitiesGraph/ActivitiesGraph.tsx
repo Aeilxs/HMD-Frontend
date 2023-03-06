@@ -12,7 +12,6 @@ export default function ActivitiesGraph(): JSX.Element {
 
   const options = {
     responsive: true,
-    // maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,

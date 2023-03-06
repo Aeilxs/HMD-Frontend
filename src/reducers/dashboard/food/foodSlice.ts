@@ -3,12 +3,19 @@ import axios from 'axios';
 import { RootState } from '../../../store/store';
 
 interface Nutriments {
-  'energy-kcal': number;
+  'energy-kcal_100g': number;
 }
 interface ApiProps {
   id: string;
   product_name_fr: string;
   nutriments: Nutriments;
+}
+
+export interface ConsommedFood {
+  key: string;
+  name: string;
+  calories: number;
+  quantity: number;
 }
 
 export interface Food {
@@ -23,6 +30,7 @@ interface FoodState {
   foods: Food[];
   isLoading: boolean;
   selectedFood: Food | null;
+  consommedFoods: ConsommedFood[];
   quantity: number | '';
 }
 
@@ -32,6 +40,7 @@ const initialState: FoodState = {
   foods: [],
   isLoading: false,
   selectedFood: null,
+  consommedFoods: [],
   quantity: '',
 };
 // https://redux-toolkit.js.org/api/createAsyncThunk#providing-a-custom-dispatch-function
@@ -45,7 +54,7 @@ export const fetchProducts = createAsyncThunk(
     return response.data.products.map((product: ApiProps) => ({
       key: product.id,
       name: product.product_name_fr,
-      calories: product['nutriments']['energy-kcal'],
+      calories: product['nutriments']['energy-kcal_100g'],
     }));
   }
 );
@@ -74,6 +83,20 @@ export const FoodSlice = createSlice({
     setQuantity: (state, action: PayloadAction<number | ''>) => {
       return { ...state, quantity: action.payload };
     },
+    setConsommedFoods: (state) => {
+      if(state.selectedFood && state.quantity) {
+        return {
+          ...state,
+          consommedFoods: [
+            ...state.consommedFoods,
+            { ...state.selectedFood, quantity: state.quantity },
+          ],
+          selectedFood: null,
+          quantity: '',
+          date:null
+        };
+      }
+      }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
@@ -82,7 +105,7 @@ export const FoodSlice = createSlice({
   },
 });
 
-export const { setDate, setCategory, setIsLoading, setSelectedFood, setQuantity } =
+export const { setDate, setCategory, setIsLoading, setSelectedFood, setQuantity, setConsommedFoods } =
   FoodSlice.actions;
 
 export const selectDate = (state: RootState) => state.food.date;
@@ -91,5 +114,6 @@ export const selectFoods = (state: RootState) => state.food.foods;
 export const selectIsLoading = (state: RootState) => state.food.isLoading;
 export const selectSelectedFood = (state: RootState) => state.food.selectedFood;
 export const selectQuantity = (state: RootState) => state.food.quantity;
+export const selectConsommedFoods = (state: RootState) => state.food.consommedFoods;
 
 export default FoodSlice.reducer;

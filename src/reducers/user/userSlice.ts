@@ -150,7 +150,6 @@ export const userSlice = createSlice({
         return { ...state, isLogged: false };
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        console.log(action.payload);
         return { ...state, ...action.payload };
       });
   },

@@ -45,8 +45,7 @@ function App(): JSX.Element {
   ];
 
   useEffect(() => {
-    if (token !== '') {
-      console.log('ok')
+    if (token !== '' && token !== undefined) {
       localStorage.setItem('lastPage', location.pathname);
     }
   }, [location]);

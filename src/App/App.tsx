@@ -48,14 +48,15 @@ function App(): JSX.Element {
     if (token !== '' && token !== undefined) {
       localStorage.setItem('lastPage', location.pathname);
     }
-  }, [location]);
+  }, [location, token]);
 
   useEffect(() => {
     if (token !== '') {
       dispatch(setIsLogged());
       dispatch(fetchUser(token));
     }
-  }, []);
+  }, [token, dispatch]);
+
   return (
     <ThemeProvider theme={isDark ? themeDark : themeLight}>
       <CssBaseline />

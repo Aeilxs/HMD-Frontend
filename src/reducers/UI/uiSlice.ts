@@ -30,7 +30,7 @@ export interface UIState {
 }
 
 const initialState: UIState = {
-  isDark: true,
+  isDark: JSON.parse(localStorage.getItem('isDark') || 'false'),
   errors: { login: false, registration: false },
   isRegistered: false,
   isDrawerOpen: false,
@@ -49,6 +49,7 @@ export const UISlice = createSlice({
   initialState,
   reducers: {
     toggleTheme: (state) => {
+      localStorage.setItem('isDark', JSON.stringify(!state.isDark));
       return { ...state, isDark: !state.isDark };
     },
     toggleForm: (state, action: PayloadAction<boolean>) => {

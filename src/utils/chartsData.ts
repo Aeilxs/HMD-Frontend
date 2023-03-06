@@ -47,6 +47,7 @@ interface ActivityData {
 
 export const activitiesChartData = () => {
   const activities = store.getState().user.activities;
+  if (activities.length === 0) return { activitiesLabels: false, activitiesPercentage: false };
   const labels: string[] = ['Marche', 'Footing', 'Natation', 'Velo', 'Autre'];
   const data: ActivityData = activities.reduce(
     (acc, cur) => {

@@ -21,24 +21,36 @@ export default function DashboardPage(): JSX.Element {
   return (
     <Grid>
       <FoodGraph />
-      <ActivitiesGraph
-        labels={activitiesLabels}
-        percentages={activitiesPercentages}
-      />
-      <HydrationsGraph
-        dates={hydrationsDates}
-        amounts={hydrationAmounts}
-      />
-      <SleepGraph
-        dates={sleepDates}
-        amounts={sleepAmounts}
-        qualities={sleepQualities}
-      />
+
+      {activitiesPercentages && (
+        <ActivitiesGraph
+          labels={activitiesLabels}
+          percentages={activitiesPercentages}
+        />
+      )}
+
+      {hydrationsDates.length > 0 && (
+        <HydrationsGraph
+          dates={hydrationsDates}
+          amounts={hydrationAmounts}
+        />
+      )}
+
+      {sleepDates.length > 0 && (
+        <SleepGraph
+          dates={sleepDates}
+          amounts={sleepAmounts}
+          qualities={sleepQualities}
+        />
+      )}
+
       <DrugsGraph />
-      <SmokesGraph
-        dates={smokeDates}
-        amounts={smokeAmounts}
-      />
+      {smokeDates.length > 0 && (
+        <SmokesGraph
+          dates={smokeDates}
+          amounts={smokeAmounts}
+        />
+      )}
     </Grid>
   );
 }

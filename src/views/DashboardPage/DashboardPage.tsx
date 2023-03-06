@@ -5,16 +5,52 @@ import SmokesGraph from './SmokesGraph/SmokesGraph';
 import SleepGraph from './SleepsGraph/SleepsGraph';
 import DrugsGraph from './DrugsGraph/DrugsGraph';
 import FoodGraph from './FoodGraph/FoodGraph';
+import {
+  sleepChartData,
+  smokeChartData,
+  hydrationsChartData,
+  activitiesChartData,
+} from '../../utils/chartsData';
 
 export default function DashboardPage(): JSX.Element {
+  const { smokeDates, smokeAmounts } = smokeChartData();
+  const { sleepDates, sleepQualities, sleepAmounts } = sleepChartData();
+  const { hydrationsDates, hydrationAmounts } = hydrationsChartData();
+  const { activitiesPercentages, activitiesLabels } = activitiesChartData();
+
   return (
     <Grid>
       <FoodGraph />
-      <ActivitiesGraph />
-      <HydrationsGraph />
-      <SleepGraph />
+
+      {activitiesPercentages && (
+        <ActivitiesGraph
+          labels={activitiesLabels}
+          percentages={activitiesPercentages}
+        />
+      )}
+
+      {hydrationsDates.length > 0 && (
+        <HydrationsGraph
+          dates={hydrationsDates}
+          amounts={hydrationAmounts}
+        />
+      )}
+
+      {sleepDates.length > 0 && (
+        <SleepGraph
+          dates={sleepDates}
+          amounts={sleepAmounts}
+          qualities={sleepQualities}
+        />
+      )}
+
       <DrugsGraph />
-      <SmokesGraph />
+      {smokeDates.length > 0 && (
+        <SmokesGraph
+          dates={smokeDates}
+          amounts={smokeAmounts}
+        />
+      )}
     </Grid>
   );
 }

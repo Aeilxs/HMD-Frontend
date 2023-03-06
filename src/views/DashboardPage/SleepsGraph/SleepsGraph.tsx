@@ -14,10 +14,15 @@ import {
 import { Chart } from 'react-chartjs-2';
 import { useResize } from '../../../hooks/useResize';
 import { Paper } from '@mui/material';
-import { sleepChartData } from '../../../utils/chartsData';
-export default function SleepsGraph(): JSX.Element {
+
+interface SleepsGraphProps {
+  dates: string[];
+  amounts: number[];
+  qualities: number[];
+}
+
+export default function SleepsGraph({ dates, amounts, qualities }: SleepsGraphProps): JSX.Element {
   const vwValue = useResize();
-  const { dates, quality, amounts } = sleepChartData();
 
   ChartJS.register(
     LinearScale,
@@ -54,7 +59,7 @@ export default function SleepsGraph(): JSX.Element {
         borderColor: 'rgb(255, 99, 132)',
         borderWidth: 2,
         fill: false,
-        data: quality,
+        data: qualities,
       },
       {
         type: 'bar' as const,

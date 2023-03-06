@@ -1,8 +1,8 @@
 import { Container } from '@mui/system';
 import { useResize } from '../../../hooks/useResize';
-
+import { ReactNode } from 'react';
 interface GridProps {
-  children: JSX.Element[];
+  children: ReactNode;
 }
 
 export default function Grid({ children }: GridProps): JSX.Element {

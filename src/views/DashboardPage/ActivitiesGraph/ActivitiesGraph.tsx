@@ -3,11 +3,17 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { useResize } from '../../../hooks/useResize';
 import { Paper } from '@mui/material';
-import { activitiesChartData } from '../../../utils/chartsData';
 
-export default function ActivitiesGraph(): JSX.Element {
+interface ActivitiesGraphProps {
+  labels: string[];
+  percentages: number[];
+}
+
+export default function ActivitiesGraph({
+  labels,
+  percentages,
+}: ActivitiesGraphProps): JSX.Element {
   const vwValue = useResize();
-  const { labels, percentages } = activitiesChartData();
   ChartJS.register(ArcElement, Tooltip, Legend);
 
   const options = {

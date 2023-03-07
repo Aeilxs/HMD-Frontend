@@ -13,9 +13,7 @@ function CustomScrollBar({ children }: CustomScrollBarProps): JSX.Element {
 
   useEffect(() => {
     const container = containerRef.current;
-    if (container) {
-      setHasOverflow(container.scrollHeight > container.clientHeight);
-    }
+    if (container) setHasOverflow(container.scrollHeight > container.clientHeight);
   }, [vwValue]);
 
   const scrollbar = {

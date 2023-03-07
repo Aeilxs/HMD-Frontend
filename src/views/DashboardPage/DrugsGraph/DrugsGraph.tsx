@@ -1,60 +1,50 @@
-import React from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-import { useResize } from '../../../hooks/useResize';
 import { Paper } from '@mui/material';
-export default function DrugsGraph(): JSX.Element {
-  const vwValue = useResize();
-  ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Traitement médical',
-      },
-    },
-  };
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import { DrugChartData } from '../../../utils/chartsData';
 
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
-      {
-        label: 'Dataset 2',
-        data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-    ],
-  };
+interface DrugsGraphProps {
+  rows: DrugChartData[];
+}
 
+export default function DrugsGraph({ rows }: DrugsGraphProps): JSX.Element {
   return (
-    <Paper
+    <TableContainer
       elevation={2}
       sx={{ p: 2, height: '100%', minHeight: '250px' }}
+      component={Paper}
     >
-      <Bar
-        key={vwValue}
-        options={options}
-        data={data}
-      />
-    </Paper>
+      <Table
+        sx={{ minWidth: 650 }}
+        size="small"
+        aria-label="a dense table"
+      >
+        <TableHead>
+          <TableRow>
+            <TableCell align="left">Date</TableCell>
+            <TableCell align="left">Médicament</TableCell>
+            <TableCell align="left">Qté</TableCell>
+            <TableCell align="left">Unité</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell align="left">{row.date}</TableCell>
+              <TableCell align="left">{row.name}</TableCell>
+              <TableCell align="left">{row.quantity}</TableCell>
+              <TableCell align="left">{row.unit}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }

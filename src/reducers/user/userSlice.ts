@@ -6,7 +6,7 @@ import { dataSmokeApi } from '../dashboard/smoke/smokeSlice';
 import { dataSportApi } from '../dashboard/sport/sportSlice';
 import { dataDrugApi } from '../dashboard/drug/drugSlice';
 import { RootState } from '../../store/store';
-import { calcAge } from '../../utils/math';
+import { calcAge, sortByDate } from '../../utils/math';
 import { dataSleepApi } from '../dashboard/sleep/sleepSlice';
 import { dataFoodApi } from '../dashboard/food/foodSlice';
 
@@ -28,7 +28,7 @@ const initialState: UserState = {
   isLogged: false,
   token: localStorage.getItem('token') || '',
   firstname: '',
-  gender:'',
+  gender: '',
   properties: [],
   medicalTreatments: [],
   cigarettes: [],
@@ -59,11 +59,16 @@ export const userSlice = createSlice({
       return { ...state, isLogged: true };
     },
     onLogout: (state, action: PayloadAction<boolean>) => {
-      localStorage.clear()
+      localStorage.clear();
       return { ...state, isLogged: false, token: '' };
     },
     setSleeps: (state, action: PayloadAction<dataSleepApi>) => {
-      return { ...state, sleeps: [...state.sleeps, { ...action.payload }] };
+      return {
+        ...state,
+        sleeps: [...state.sleeps, action.payload].sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        ),
+      };
     },
     removeSleeps: (state, action: PayloadAction<number>) => {
       return { ...state, sleeps: state.sleeps.filter((sleep) => sleep.id !== action.payload) };
@@ -75,7 +80,9 @@ export const userSlice = createSlice({
       }
     },
     setHydration: (state, action: PayloadAction<dataHydrationApi>) => {
-      return { ...state, hydratations: [...state.hydratations, { ...action.payload }] };
+      return { ...state, hydratations: [...state.hydratations, { ...action.payload }].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      ), };
     },
     removeHydration: (state, action: PayloadAction<number>) => {
       return {
@@ -92,7 +99,9 @@ export const userSlice = createSlice({
       }
     },
     setDrug: (state, action: PayloadAction<dataDrugApi>) => {
-      return { ...state, medicalTreatments: [...state.medicalTreatments, { ...action.payload }] };
+      return { ...state, medicalTreatments: [...state.medicalTreatments, { ...action.payload }].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      ), };
     },
     removeDrug: (state, action: PayloadAction<number>) => {
       return {
@@ -101,15 +110,15 @@ export const userSlice = createSlice({
       };
     },
     updateDrug: (state, action: PayloadAction<dataDrugApi>) => {
-      const index = state.medicalTreatments.findIndex(
-        (drug) => drug.id === action.payload.id
-      );
+      const index = state.medicalTreatments.findIndex((drug) => drug.id === action.payload.id);
       if (index !== -1) {
         state.medicalTreatments[index] = action.payload;
       }
     },
     setSmoke: (state, action: PayloadAction<dataSmokeApi>) => {
-      return { ...state, cigarettes: [...state.cigarettes, { ...action.payload }] };
+      return { ...state, cigarettes: [...state.cigarettes, { ...action.payload }].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      ), };
     },
     removeSmoke: (state, action: PayloadAction<number>) => {
       return {
@@ -118,15 +127,15 @@ export const userSlice = createSlice({
       };
     },
     updateSmoke: (state, action: PayloadAction<dataSmokeApi>) => {
-      const index = state.cigarettes.findIndex(
-        (cigarette) => cigarette.id === action.payload.id
-      );
+      const index = state.cigarettes.findIndex((cigarette) => cigarette.id === action.payload.id);
       if (index !== -1) {
         state.cigarettes[index] = action.payload;
       }
     },
     setSport: (state, action: PayloadAction<dataSportApi>) => {
-      return { ...state, activities: [...state.activities, { ...action.payload }] };
+      return { ...state, activities: [...state.activities, { ...action.payload }].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      ), };
     },
     removeSport: (state, action: PayloadAction<number>) => {
       return {
@@ -135,26 +144,29 @@ export const userSlice = createSlice({
       };
     },
     updateSport: (state, action: PayloadAction<dataSportApi>) => {
-      const index = state.activities.findIndex(
-        (activity) => activity.id === action.payload.id
-      );
+      const index = state.activities.findIndex((activity) => activity.id === action.payload.id);
       if (index !== -1) {
         state.activities[index] = action.payload;
       }
     },
     setFood: (state, action: PayloadAction<dataFoodApi>) => {
-      return { ...state, caloricAlimentations: [...state.caloricAlimentations, { ...action.payload }] };
+      return {
+        ...state,
+        caloricAlimentations: [...state.caloricAlimentations, { ...action.payload }].sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        ),
+      };
     },
     removeFood: (state, action: PayloadAction<number>) => {
       return {
         ...state,
-        caloricAlimentations: state.caloricAlimentations.filter((food) => food.id !== action.payload),
+        caloricAlimentations: state.caloricAlimentations.filter(
+          (food) => food.id !== action.payload
+        ),
       };
     },
     updateFood: (state, action: PayloadAction<dataFoodApi>) => {
-      const index = state.caloricAlimentations.findIndex(
-        (food) => food.id === action.payload.id
-      );
+      const index = state.caloricAlimentations.findIndex((food) => food.id === action.payload.id);
       if (index !== -1) {
         state.caloricAlimentations[index] = action.payload;
       }
@@ -170,7 +182,16 @@ export const userSlice = createSlice({
         return { ...state, isLogged: false };
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        return { ...state, ...action.payload };
+        return {
+          ...state,
+          ...action.payload,
+          sleeps: sortByDate(action.payload.sleeps),
+          medicalTreatments: sortByDate(action.payload.medicalTreatments),
+          cigarettes: sortByDate(action.payload.cigarettes),
+          activities: sortByDate(action.payload.activities),
+          hydratations: sortByDate(action.payload.hydratations),
+          caloricAlimentations: sortByDate(action.payload.caloricAlimentations),
+        };
       });
   },
 });

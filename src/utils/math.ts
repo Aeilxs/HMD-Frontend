@@ -1,5 +1,11 @@
 import { ConsommedFood } from '../reducers/dashboard/food/foodSlice';
-import { dataUserApi } from '../reducers/UI/uiSlice';
+import {dataFoodApi} from '../reducers/dashboard/food/foodSlice';
+import {dataSleepApi} from '../reducers/dashboard/sleep/sleepSlice';
+import {dataHydrationApi} from '../reducers/dashboard/hydration/hydrationSlice';
+import {dataSmokeApi} from '../reducers/dashboard/smoke/smokeSlice';
+import {dataSportApi} from '../reducers/dashboard/sport/sportSlice';
+import {dataDrugApi} from '../reducers/dashboard/drug/drugSlice';
+
 
 export const calcAge = (date: string): number => {
   const diff = Date.now() - new Date(date).getTime();
@@ -34,3 +40,7 @@ export const calcMB = ( {weight, height, age, gender }: MBProps): number | undef
     ? Math.ceil(13.707 * weight + 492.3 * height - 6.673 * age + 77.607)
     : Math.ceil(9.74 * weight + 172.9 * height - 4.737 * age + 667.051);
 };
+
+export const sortByDate = (array: dataSmokeApi[] | dataFoodApi[] | dataSportApi[] | dataSleepApi[] | dataHydrationApi[] | dataDrugApi[]) => {
+  return array.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+}

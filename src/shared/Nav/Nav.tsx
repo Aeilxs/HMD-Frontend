@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { Avatar, IconButton } from '@mui/material';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import LightModeIcon from '@mui/icons-material/LightMode';
+import { DarkMode } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import Typography from '@mui/material/Typography';
+import { Avatar, IconButton } from '@mui/material';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectTheme, toggleDrawer, toggleTheme } from '../../reducers/UI/uiSlice';
-import { DarkMode } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
 import { onLogout, selectFirstName, selectIsLogged } from '../../reducers/user/userSlice';
 
 export default function Nav(): JSX.Element {

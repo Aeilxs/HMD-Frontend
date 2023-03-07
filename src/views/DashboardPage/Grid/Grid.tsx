@@ -1,6 +1,7 @@
+import { ReactNode } from 'react';
 import { Container } from '@mui/system';
 import { useResize } from '../../../hooks/useResize';
-import { ReactNode } from 'react';
+
 interface GridProps {
   children: ReactNode;
 }

@@ -34,7 +34,7 @@ function Home() {
     <Box sx={{ my: 4 }}>
       <Box sx={{ textAlign: 'center' }}>
         <Typography
-          sx={{ fontSize: '3em' }}
+          sx={{ fontSize: '3em', fontWeight: 'bold' }}
           variant="h1"
           gutterBottom
         >
@@ -45,46 +45,49 @@ function Home() {
           variant="subtitle1"
           gutterBottom
         >
-          La santé à portée de main : notre dashboard vous accompagne au quotidien. Alors n'hésitez
-          plus, prenez le contrôle de votre santé et améliorez votre bien-être.
+          La santé à portée de main : notre dashboard vous accompagne au quotidien. Alors n'hésitez plus, prenez le
+          contrôle de votre santé et améliorez votre bien-être.
         </Typography>
       </Box>
       <Slider images={images} />
 
       <Box sx={{ display: 'flex', justifyContent: 'center', m: 5 }}>
-      {!isLogged  ?
-     ( <>
-        <Button
-          sx={{ mx: 1 }}
-          variant="contained"
-          onClick={() => {
-            dispatch(toggleForm(false));
-            navigate('/authentification');
-          }}
-        >
-          <PersonAdd />
-          Sign up
-        </Button>
-        <Button
-          sx={{ mx: 1 }}
-          variant="contained"
-          onClick={() => {
-            dispatch(toggleForm(true));
-            navigate('/authentification');
-          }}
-        >
-          <Fingerprint />
-          Login
-        </Button>
-        </>) : ( <Button
-          sx={{ mx: 1 }}
-          variant="contained"
-          onClick={() => {
-            navigate('/profil');
-          }}
-        >
-          Accéder à mon profil
-        </Button>)}
+        {!isLogged ? (
+          <>
+            <Button
+              sx={{ mx: 1 }}
+              variant="contained"
+              onClick={() => {
+                dispatch(toggleForm(false));
+                navigate('/authentification');
+              }}
+            >
+              <PersonAdd />
+              Sign up
+            </Button>
+            <Button
+              sx={{ mx: 1 }}
+              variant="contained"
+              onClick={() => {
+                dispatch(toggleForm(true));
+                navigate('/authentification');
+              }}
+            >
+              <Fingerprint />
+              Login
+            </Button>
+          </>
+        ) : (
+          <Button
+            sx={{ mx: 1 }}
+            variant="contained"
+            onClick={() => {
+              navigate('/profil');
+            }}
+          >
+            Accéder à mon profil
+          </Button>
+        )}
       </Box>
     </Box>
   );

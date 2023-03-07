@@ -17,7 +17,7 @@ import { dataSportApi } from '../../reducers/dashboard/sport/sportSlice';
 import { setIsEdit } from '../../reducers/UI/uiSlice';
 import { RefObject } from 'react';
 
-type GenericProps = dataSleepApi | dataDrugApi | dataProfilApi | dataHydrationApi | dataSmokeApi | dataSportApi ;
+type GenericProps = dataSleepApi | dataDrugApi | dataProfilApi | dataHydrationApi | dataSmokeApi | dataSportApi;
 
 type TableProps<GenericProps> = {
   array : GenericProps[];

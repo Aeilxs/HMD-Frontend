@@ -14,8 +14,8 @@ export interface dataProfilApi {
 export interface ProfilState {
   dateOfBirth: string | null;
   age: number;
-  weight: number | '';
-  height: number | '';
+  weight: number |'';
+  height: number |'';
 }
 
 const initialState: ProfilState = {
@@ -60,5 +60,6 @@ export const { setDateOfBirth, setWeight, setHeight } = profilSlice.actions;
 export const selectDateOfBirth = (state: RootState) => state.profil.dateOfBirth;
 export const selectWeight = (state: RootState) => state.profil.weight;
 export const selectHeight = (state: RootState) => state.profil.height;
+export const selectAge = (state: RootState) => state.profil.age;
 
 export default profilSlice.reducer;

@@ -17,20 +17,20 @@ export const calcDate = (oldDate: string): string => {
   );
 };
 
-export const calcTotalCalories = (foods: ConsommedFood[]): number => {
-  return foods
-    .map((food) => (Number(food.calories) / 100) * food.quantity)
-    .reduce((acc, calories) => acc + calories, 0);
-};
-interface MBProps {
-  weight: number;
-  height: number;
-  age: number;
-  gender: 'Femme' | 'Homme';
+export const calcCalories = (food: ConsommedFood): number => (Math.ceil((Number(food.calories) / 100) * food.quantity));
+export interface MBProps {
+  weight: number | '';
+  height: number | '';
+  age: number | null;
+  gender: 'Femme' | 'Homme' | '';
 }
 
-export const calcMB = ({ weight, height, age, gender }: MBProps): number => {
+export const calcMB = ( {weight, height, age, gender }: MBProps): number | undefined => {
+  if (weight === '' || height === '' || age === null || gender === "") {
+    console.log("RETURN VIDE");
+    return;
+  };
   return gender === 'Homme'
-    ? 13.707 * weight + 492.3 * height - 6.673 * age + 77.607
-    : 9.74 * weight + 172.9 * height - 4.737 * age + 667.051;
+    ? Math.ceil(13.707 * weight + 492.3 * height - 6.673 * age + 77.607)
+    : Math.ceil(9.74 * weight + 172.9 * height - 4.737 * age + 667.051);
 };

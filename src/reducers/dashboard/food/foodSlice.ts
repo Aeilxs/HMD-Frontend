@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../../../store/store';
+import { postFood } from './foodMiddleware';
 
 interface Nutriments {
   'energy-kcal_100g': number;
@@ -11,6 +12,13 @@ interface ApiProps {
   nutriments: Nutriments;
 }
 
+export interface dataFoodApi {
+  id: number;
+  name: string;
+  caloricNeed: number;
+  caloricIntake: number;
+  date: string;
+}
 export interface ConsommedFood {
   key: string;
   name: string;
@@ -25,6 +33,7 @@ export interface Food {
 }
 
 interface FoodState {
+  id: number | null;
   date: string | null;
   category: string | null;
   foods: Food[];
@@ -35,6 +44,7 @@ interface FoodState {
 }
 
 const initialState: FoodState = {
+  id: null,
   date: null,
   category: null,
   foods: [],
@@ -83,6 +93,9 @@ export const FoodSlice = createSlice({
     setQuantity: (state, action: PayloadAction<number | ''>) => {
       return { ...state, quantity: action.payload };
     },
+    setId: (state, action: PayloadAction<number>) => {
+      return { ...state, id: action.payload };
+    },
     setConsommedFoods: (state) => {
       if(state.selectedFood && state.quantity) {
         return {
@@ -91,26 +104,33 @@ export const FoodSlice = createSlice({
             ...state.consommedFoods,
             { ...state.selectedFood, quantity: state.quantity },
           ],
-          selectedFood: null,
-          quantity: '',
-          date:null
         };
-      }
+        }
+      },
+      resetInputs: (state) => {
+        return { ...state, ...initialState }
       }
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchProducts.fulfilled, (state, action) => {
+    builder
+    .addCase(fetchProducts.fulfilled, (state, action) => {
       state.foods = action.payload;
+    })
+    .addCase(postFood.fulfilled, (state, action) => {
+      return {...state, selectedFood: action.payload}
+    })
+    .addCase(postFood.rejected, (state, action) => {
+      console.log('non')
     });
   },
 });
 
-export const { setDate, setCategory, setIsLoading, setSelectedFood, setQuantity, setConsommedFoods } =
+export const { setDate, setCategory, setIsLoading, setSelectedFood, setQuantity, setConsommedFoods, resetInputs, setId } =
   FoodSlice.actions;
 
 export const selectDate = (state: RootState) => state.food.date;
 export const selectCategory = (state: RootState) => state.food.category;
-export const selectFoods = (state: RootState) => state.food.foods;
+export const selectFoodsList = (state: RootState) => state.food.foods;
 export const selectIsLoading = (state: RootState) => state.food.isLoading;
 export const selectSelectedFood = (state: RootState) => state.food.selectedFood;
 export const selectQuantity = (state: RootState) => state.food.quantity;

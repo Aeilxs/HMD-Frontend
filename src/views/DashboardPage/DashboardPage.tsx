@@ -10,33 +10,30 @@ import {
   smokeChartData,
   hydrationsChartData,
   activitiesChartData,
-  mergeData,
+  drugsChartData,
 } from '../../utils/chartsData';
+import { selectDrugs, selectHydrations, selectSleeps, selectSmokes, selectSports } from '../../reducers/user/userSlice';
 import { useAppSelector } from '../../store/hooks';
-import { selectHydrations, selectSleeps, selectSmokes, selectSports } from '../../reducers/user/userSlice';
 
 export default function DashboardPage(): JSX.Element {
-  const smokeData = smokeChartData(useAppSelector(selectSmokes));
+  const { activitiesPercentages, activitiesLabels } = activitiesChartData(useAppSelector(selectSports));
   const { sleepDates, sleepQualities, sleepAmounts } = sleepChartData(useAppSelector(selectSleeps));
   const hydrationData = hydrationsChartData(useAppSelector(selectHydrations));
-  const { activitiesPercentages, activitiesLabels } = activitiesChartData(useAppSelector(selectSports));
-
+  const smokeData = smokeChartData(useAppSelector(selectSmokes));
+  const drugData = drugsChartData(useAppSelector(selectDrugs));
   return (
     <Grid>
       <FoodGraph />
-
       {activitiesPercentages && (
         <ActivitiesGraph
           labels={activitiesLabels}
           percentages={activitiesPercentages}
         />
       )}
-
       <HydrationsGraph
         dates={hydrationData.dates}
         amounts={hydrationData.data}
       />
-
       {sleepDates.length > 0 && (
         <SleepGraph
           dates={sleepDates}
@@ -44,8 +41,7 @@ export default function DashboardPage(): JSX.Element {
           qualities={sleepQualities}
         />
       )}
-
-      <DrugsGraph />
+      <DrugsGraph rows={drugData} />
       <SmokesGraph
         dates={smokeData.dates}
         amounts={smokeData.data}

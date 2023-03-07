@@ -1,3 +1,4 @@
+import { dataDrugApi } from '../reducers/dashboard/drug/drugSlice';
 import { dataHydrationApi } from '../reducers/dashboard/hydration/hydrationSlice';
 import { dataSleepApi } from '../reducers/dashboard/sleep/sleepSlice';
 import { dataSmokeApi } from '../reducers/dashboard/smoke/smokeSlice';
@@ -65,7 +66,26 @@ export const activitiesChartData = (activities: dataSportApi[]) => {
   return { activitiesLabels: labels, activitiesPercentages: percentages };
 };
 
-export const mergeData = (dates: string[], data: number[]) => {
+export interface DrugChartData {
+  id: number;
+  name: string;
+  unit: string;
+  quantity: number;
+  date: string;
+}
+
+export const drugsChartData = (drugs: dataDrugApi[]) => {
+  const rows: DrugChartData[] = [];
+  drugs.forEach((drug) => {
+    const { name, unit, quantity, date } = drug;
+    rows.push({ id: drug.id, name, unit, quantity, date: calcDate(date) });
+  });
+  return rows;
+};
+
+export const foodChartData = () => {};
+
+const mergeData = (dates: string[], data: number[]) => {
   const mergedData: Record<string, number> = {};
   for (let i = 0; i < dates.length; i++) {
     const currentDate = dates[i];
@@ -80,5 +100,3 @@ export const mergeData = (dates: string[], data: number[]) => {
   const mergedDataArray = Object.values(mergedData);
   return { dates: mergedDates, data: mergedDataArray };
 };
-
-export const foodChartData = () => {};

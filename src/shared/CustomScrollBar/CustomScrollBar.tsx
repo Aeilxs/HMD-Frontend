@@ -14,7 +14,7 @@ function CustomScrollBar({ children }: CustomScrollBarProps): JSX.Element {
   useEffect(() => {
     const container = containerRef.current;
     if (container) setHasOverflow(container.scrollHeight > container.clientHeight);
-  }, [vwValue]);
+  }, []);
 
   const scrollbar = {
     height: '82vh',
@@ -38,8 +38,8 @@ function CustomScrollBar({ children }: CustomScrollBarProps): JSX.Element {
 
   return (
     <Container
-      disableGutters
       key={vwValue}
+      disableGutters
       maxWidth={false}
       ref={containerRef}
       sx={hasOverflow ? scrollbar : noscroll}

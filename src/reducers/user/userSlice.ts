@@ -8,15 +8,17 @@ import { dataDrugApi } from '../dashboard/drug/drugSlice';
 import { RootState } from '../../store/store';
 import { calcAge } from '../../utils/math';
 import { dataSleepApi } from '../dashboard/sleep/sleepSlice';
+import { dataFoodApi } from '../dashboard/food/foodSlice';
 
 export interface UserState {
   isLogged: boolean;
   token: string;
   firstname: string;
+  gender: 'Femme' | 'Homme' | '';
   properties: dataProfilApi[];
   medicalTreatments: dataDrugApi[];
   cigarettes: dataSmokeApi[];
-  caloricAlimentation: [];
+  caloricAlimentations: dataFoodApi[];
   hydratations: dataHydrationApi[];
   activities: dataSportApi[];
   sleeps: dataSleepApi[];
@@ -26,10 +28,11 @@ const initialState: UserState = {
   isLogged: false,
   token: localStorage.getItem('token') || '',
   firstname: '',
+  gender:'',
   properties: [],
   medicalTreatments: [],
   cigarettes: [],
-  caloricAlimentation: [],
+  caloricAlimentations: [],
   hydratations: [],
   activities: [],
   sleeps: [],
@@ -139,6 +142,23 @@ export const userSlice = createSlice({
         state.activities[index] = action.payload;
       }
     },
+    setFood: (state, action: PayloadAction<dataFoodApi>) => {
+      return { ...state, caloricAlimentations: [...state.caloricAlimentations, { ...action.payload }] };
+    },
+    removeFood: (state, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        caloricAlimentations: state.caloricAlimentations.filter((food) => food.id !== action.payload),
+      };
+    },
+    updateFood: (state, action: PayloadAction<dataFoodApi>) => {
+      const index = state.caloricAlimentations.findIndex(
+        (food) => food.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.caloricAlimentations[index] = action.payload;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -176,9 +196,13 @@ export const {
   setSport,
   removeSport,
   updateSport,
+  setFood,
+  removeFood,
+  updateFood,
 } = userSlice.actions;
 
 export const selectFirstName = (state: RootState) => state.user.firstname;
+export const selectGender = (state: RootState) => state.user.gender;
 export const selectIsLogged = (state: RootState) => state.user.isLogged;
 export const selectSleeps = (state: RootState) => state.user.sleeps;
 export const selectDrugs = (state: RootState) => state.user.medicalTreatments;
@@ -186,5 +210,6 @@ export const selectHydrations = (state: RootState) => state.user.hydratations;
 export const selectSmokes = (state: RootState) => state.user.cigarettes;
 export const selectSports = (state: RootState) => state.user.activities;
 export const selectToken = (state: RootState) => state.user.token;
+export const selectFoods = (state: RootState) => state.user.caloricAlimentations;
 
 export default userSlice.reducer;

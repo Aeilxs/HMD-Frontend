@@ -37,6 +37,7 @@ export const sleepSlice = createSlice({
       return { ...state, quality: action.payload };
     },
     setSelectedSleep: (state, action: PayloadAction<dataSleepApi>) =>{
+      console.log(action.payload)
       return {...state, ...action.payload, quantity: action.payload.time}
     },
     resetInputs: (state) => {

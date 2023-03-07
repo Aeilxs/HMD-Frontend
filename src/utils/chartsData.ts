@@ -2,7 +2,6 @@ import { dataHydrationApi } from '../reducers/dashboard/hydration/hydrationSlice
 import { dataSleepApi } from '../reducers/dashboard/sleep/sleepSlice';
 import { dataSmokeApi } from '../reducers/dashboard/smoke/smokeSlice';
 import { dataSportApi } from '../reducers/dashboard/sport/sportSlice';
-import { store } from '../store/store';
 import { calcDate } from './math';
 
 export const sleepChartData = (sleeps: dataSleepApi[]) => {
@@ -24,7 +23,7 @@ export const smokeChartData = (smokes: dataSmokeApi[]) => {
     amounts.push(smoke.quantity);
     dates.push(calcDate(smoke.date));
   });
-  return { smokeDates: dates, smokeAmounts: amounts };
+  return mergeData(dates, amounts);
 };
 
 export const hydrationsChartData = (hydrations: dataHydrationApi[]) => {
@@ -34,7 +33,7 @@ export const hydrationsChartData = (hydrations: dataHydrationApi[]) => {
     amounts.push(hydration.quantity * 100);
     dates.push(calcDate(hydration.date));
   });
-  return { hydrationsDates: dates, hydrationAmounts: amounts };
+  return mergeData(dates, amounts);
 };
 
 interface ActivityData {
@@ -60,13 +59,26 @@ export const activitiesChartData = (activities: dataSportApi[]) => {
 
   const percentages = labels.map((label) => {
     const time = data[label.toLowerCase()];
-    const percentage = Math.round(
-      (time / activities.reduce((acc, cur) => acc + cur.time, 0)) * 100
-    );
+    const percentage = Math.round((time / activities.reduce((acc, cur) => acc + cur.time, 0)) * 100);
     return percentage;
   });
-
   return { activitiesLabels: labels, activitiesPercentages: percentages };
+};
+
+export const mergeData = (dates: string[], data: number[]) => {
+  const mergedData: Record<string, number> = {};
+  for (let i = 0; i < dates.length; i++) {
+    const currentDate = dates[i];
+    const currentData = data[i];
+    if (mergedData[currentDate]) {
+      mergedData[currentDate] += currentData;
+    } else {
+      mergedData[currentDate] = currentData;
+    }
+  }
+  const mergedDates = Object.keys(mergedData);
+  const mergedDataArray = Object.values(mergedData);
+  return { dates: mergedDates, data: mergedDataArray };
 };
 
 export const foodChartData = () => {};

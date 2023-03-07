@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { Container, CssBaseline } from '@mui/material';
@@ -23,9 +25,7 @@ import HydrationPage from '../views/HydrationPage/HydrationPage';
 import AuthPage from '../views/Authentication/AuthenticationPage';
 import DashboardPage from '../views/DashboardPage/DashboardPage';
 import { selectIsLogged, selectToken, setIsLogged } from '../reducers/user/userSlice';
-import { useEffect } from 'react';
 import { fetchUser } from '../reducers/user/userMiddleware';
-import { useLocation } from 'react-router-dom';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);

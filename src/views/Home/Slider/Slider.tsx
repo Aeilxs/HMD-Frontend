@@ -36,7 +36,7 @@ function Slider({ images }: SliderProps) {
           >
             <ArrowBackIosNew />
           </Button>
-          <Box sx={{ height: ['200px', '400px'] }}>
+          <Box sx={{ height: ['200px', '400px', '450px', '500px'] }}>
             <Box
               component="img"
               src={images[currentImage].name}

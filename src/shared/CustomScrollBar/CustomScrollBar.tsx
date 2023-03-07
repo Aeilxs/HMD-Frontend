@@ -1,7 +1,6 @@
 import { Container } from '@mui/material';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useResize } from '../../hooks/useResize';
-
 interface CustomScrollBarProps {
   children: ReactNode;
 }
@@ -10,11 +9,10 @@ function CustomScrollBar({ children }: CustomScrollBarProps): JSX.Element {
   const vwValue = useResize();
   const containerRef = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
-
   useEffect(() => {
     const container = containerRef.current;
     if (container) setHasOverflow(container.scrollHeight > container.clientHeight);
-  }, [vwValue]);
+  }, [vwValue, children]);
 
   const scrollbar = {
     height: '82vh',
@@ -38,8 +36,8 @@ function CustomScrollBar({ children }: CustomScrollBarProps): JSX.Element {
 
   return (
     <Container
-      disableGutters
       key={vwValue}
+      disableGutters
       maxWidth={false}
       ref={containerRef}
       sx={hasOverflow ? scrollbar : noscroll}

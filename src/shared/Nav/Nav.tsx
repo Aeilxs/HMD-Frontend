@@ -18,7 +18,7 @@ export default function Nav(): JSX.Element {
   const isLogged = useAppSelector(selectIsLogged);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const initial = useAppSelector(selectFirstName).charAt(0).toUpperCase()
+  const initial = useAppSelector(selectFirstName).charAt(0).toUpperCase();
   return (
     <Box sx={{ display: 'block' }}>
       <AppBar
@@ -32,9 +32,12 @@ export default function Nav(): JSX.Element {
           p: 1,
         }}
       >
-        <IconButton onClick={() => dispatch(toggleDrawer())}>
-          <MenuIcon />
-        </IconButton>
+        {isLogged && (
+          <IconButton onClick={() => dispatch(toggleDrawer())}>
+            <MenuIcon />
+          </IconButton>
+        )}
+
         <Box
           onClick={() => navigate('/')}
           sx={{ display: 'flex', cursor: 'pointer' }}
@@ -76,9 +79,7 @@ export default function Nav(): JSX.Element {
               </Avatar>
             </>
           )}
-          <IconButton onClick={() => dispatch(toggleTheme())}>
-            {isDark ? <LightModeIcon /> : <DarkMode />}
-          </IconButton>
+          <IconButton onClick={() => dispatch(toggleTheme())}>{isDark ? <LightModeIcon /> : <DarkMode />}</IconButton>
         </Box>
       </AppBar>
     </Box>

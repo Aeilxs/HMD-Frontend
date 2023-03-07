@@ -62,7 +62,7 @@ function App(): JSX.Element {
       <CssBaseline />
       <Nav />
       <CustomScrollBar>
-        <Drawer />
+        {isLogged && <Drawer />}
         <Routes>
           <Route
             path="/"
@@ -74,13 +74,7 @@ function App(): JSX.Element {
           />
           <Route
             path="/authentification"
-            element={
-              isLogged ? (
-                <Navigate to={localStorage.getItem('lastPage') ?? '/dashboard'} />
-              ) : (
-                <AuthPage />
-              )
-            }
+            element={isLogged ? <Navigate to={localStorage.getItem('lastPage') ?? '/dashboard'} /> : <AuthPage />}
           />
           {routes.map((route) => (
             <Route

@@ -1,7 +1,8 @@
 import { Container } from '@mui/material';
+import { ReactNode } from 'react';
 
 interface CustomScrollBarProps {
-  children: JSX.Element[];
+  children: ReactNode;
 }
 
 function CustomScrollBar({ children }: CustomScrollBarProps): JSX.Element {

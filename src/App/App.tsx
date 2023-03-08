@@ -23,19 +23,20 @@ import SleepPage from '../views/SleepPage/SleepPage';
 import HydrationPage from '../views/HydrationPage/HydrationPage';
 import AuthPage from '../views/Authentication/AuthenticationPage';
 import DashboardPage from '../views/DashboardPage/DashboardPage';
-import { selectIsLogged, selectToken, setIsLogged } from '../reducers/user/userSlice';
+import { selectIsLogged, selectProperties, selectToken, setIsLogged } from '../reducers/user/userSlice';
 import { fetchUser } from '../reducers/user/userMiddleware';
+
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
   const isLogged = useAppSelector(selectIsLogged);
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectToken);
+  const properties = useAppSelector(selectProperties)
 
   const routes = [
     { path: '/profil', component: <ProfilePage /> },
     { path: '/sport', component: <SportPage /> },
-    { path: '/alimentation', component: <FoodPage /> },
     { path: '/medicaments', component: <DrugPage /> },
     { path: '/tabagisme', component: <SmokePage /> },
     { path: '/sommeil', component: <SleepPage /> },
@@ -76,6 +77,10 @@ function App(): JSX.Element {
               element={localStorage.getItem('token') || isLogged ? route.component : <Navigate to="/authentification" />}
             />
           ))}
+           <Route
+            path="/alimentation"
+            element={properties.length <= 0 ? <Navigate to='/profil' /> : <FoodPage />}
+          />
           <Route
             path="*"
             element={

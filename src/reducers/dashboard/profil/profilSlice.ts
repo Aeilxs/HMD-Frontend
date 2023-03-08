@@ -8,21 +8,21 @@ export interface dataProfilApi {
   size: number;
   weight: number;
   age: number;
-  date: string;
+  dateOfBirth: string;
 }
 
 export interface ProfilState {
   dateOfBirth: string | null;
-  age: number;
+  age: number | '';
   weight: number |'';
-  height: number |'';
+  size: number |'';
 }
 
 const initialState: ProfilState = {
   dateOfBirth: null,
-  age: 0,
+  age: '',
   weight: '',
-  height: '',
+  size: '',
 };
 
 export const profilSlice = createSlice({
@@ -42,6 +42,9 @@ export const profilSlice = createSlice({
     setHeight: (state, action: PayloadAction<number>) => {
       return { ...state, height: action.payload };
     },
+    setProfilInputs: (state, action: PayloadAction<dataProfilApi>) => {
+      return { ...state, ...action.payload };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,11 +58,11 @@ export const profilSlice = createSlice({
   },
 });
 
-export const { setDateOfBirth, setWeight, setHeight } = profilSlice.actions;
+export const { setDateOfBirth, setWeight, setHeight,setProfilInputs } = profilSlice.actions;
 
 export const selectDateOfBirth = (state: RootState) => state.profil.dateOfBirth;
 export const selectWeight = (state: RootState) => state.profil.weight;
-export const selectHeight = (state: RootState) => state.profil.height;
+export const selectHeight = (state: RootState) => state.profil.size;
 export const selectAge = (state: RootState) => state.profil.age;
 
 export default profilSlice.reducer;

@@ -28,18 +28,18 @@ export default function SportPage(): JSX.Element {
   return (
     <Container>
       <MessageBox
-        title="En savoir plus"
-        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac mauris sit amet velit tristique pretium ut sed eros. Sed vel efficitur mauris. Sed euismod aliquam libero id convallis."
+        title="Saviez-vous que le sport..."
+        content="Le sport et l'activité physique sont connus pour leurs nombreux bienfaits pour la santé. Outre les avantages évidents pour la condition physique, les exercices physiques peuvent aider à réduire le stress, l'anxiété et la dépression en stimulant la production de neurotransmetteurs tels que la dopamine et la sérotonine. Le sport peut également améliorer la confiance en soi, l'estime de soi et la qualité du sommeil. Il est recommandé de pratiquer une activité physique régulière pour maintenir une bonne santé mentale et physique. Des activités comme la marche, la course, la natation ou le yoga peuvent être des options bénéfiques et accessibles pour tous les niveaux de condition physique."
       />
       {sports.length > 0 && (
-          <CustomTable
-            array={sports}
-            onSelect={setSelectedSport}
-            onDelete={deleteSport}
-            resetInput={resetInputs}
-            formRef={formRef}
-          />
-        )}
+        <CustomTable
+          array={sports}
+          onSelect={setSelectedSport}
+          onDelete={deleteSport}
+          resetInput={resetInputs}
+          formRef={formRef}
+        />
+      )}
       <Box
         component="form"
         ref={formRef}

@@ -22,6 +22,7 @@ import CategorySelector from './CategorySelector/CategorySelector';
 import QuantitySelector from './QuantitySelector/QuantitySelector';
 
 import { Box, Container, Button, Typography, CircularProgress } from '@mui/material';
+import { selectFoods } from '../../reducers/user/userSlice';
 
 export default function FoodPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -31,6 +32,7 @@ export default function FoodPage(): JSX.Element {
   const selectedFood = useAppSelector(selectSelectedFood);
   const date = useAppSelector(selectDate);
   const uniqueFoods = getUniqueFoods(foodsList);
+  const foods = useAppSelector(selectFoods)
 
   const aliments = [
     'Fruits frais',
@@ -56,7 +58,7 @@ export default function FoodPage(): JSX.Element {
           title="Saviez-vous que l'alimentation peut influencer votre humeur ?"
           content="Les aliments que nous consommons peuvent affecter notre état d'esprit et notre humeur. Des études ont montré que certains aliments peuvent stimuler la production de neurotransmetteurs tels que la sérotonine, qui peuvent améliorer notre bien-être émotionnel. Cependant, d'autres aliments peuvent avoir l'effet inverse et causer de l'anxiété, de la fatigue ou de l'irritabilité. Il est donc important de faire des choix alimentaires sains pour maintenir une humeur positive."
         />
-      <FoodTable />
+      {foods.length > 0 && <FoodTable />}
       <Box
         component='form'
         sx={{

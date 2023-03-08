@@ -82,10 +82,10 @@ function Home() {
             sx={{ mx: 1 }}
             variant="contained"
             onClick={() => {
-              navigate('/profil');
+              navigate('/dashboard');
             }}
           >
-            Accéder à mon profil
+            Accéder au dashboard
           </Button>
         )}
       </Box>

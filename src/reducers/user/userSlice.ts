@@ -167,6 +167,18 @@ export const userSlice = createSlice({
         state.caloricAlimentations[index] = action.payload;
       }
     },
+    setProperties: (state, action: PayloadAction<dataProfilApi>) => {
+      return {
+        ...state,
+        properties: [...state.properties, { ...action.payload }]
+      };
+    },
+    updateProperties: (state, action: PayloadAction<dataProfilApi>) => {
+      const index = state.properties.findIndex((property) => property.id === action.payload.id);
+      if (index !== -1) {
+        state.properties[index] = action.payload;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -217,6 +229,8 @@ export const {
   setFood,
   removeFood,
   updateFood,
+  setProperties,
+  updateProperties
 } = userSlice.actions;
 
 export const selectFirstName = (state: RootState) => state.user.firstname;
@@ -229,5 +243,6 @@ export const selectSmokes = (state: RootState) => state.user.cigarettes;
 export const selectSports = (state: RootState) => state.user.activities;
 export const selectToken = (state: RootState) => state.user.token;
 export const selectFoods = (state: RootState) => state.user.caloricAlimentations;
+export const selectProperties = (state: RootState) => state.user.properties;
 
 export default userSlice.reducer;

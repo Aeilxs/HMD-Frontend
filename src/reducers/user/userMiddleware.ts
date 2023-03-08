@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../../store/store';
+import { setProfilInputs } from '../dashboard/profil/profilSlice';
 import { setLoginError, setValue } from '../UI/uiSlice';
 
 export const registerLoginUser = createAsyncThunk(
@@ -36,9 +37,10 @@ export const registerUser = createAsyncThunk('user/registerUser', async (_, { ge
   return response.data;
 });
 
-export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string) => {
+export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string, {dispatch}) => {
   const response = await axios.get(`http://localhost:8000/api/users/user`, {
     headers: { Authorization: `Bearer ${token}` },
   });
+  dispatch(setProfilInputs(response.data.properties[0]))
   return response.data;
 });

@@ -12,21 +12,29 @@ import MessageBox from '../../shared/MessageBox/MessageBox';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 
 import { Box } from '@mui/system';
-import { Button, Container, TextField, Typography } from '@mui/material';
-import { postProfil } from '../../reducers/dashboard/profil/profilMiddleware';
+import { Alert, AlertTitle, Button, Container, TextField, Typography } from '@mui/material';
+import { editProfil, postProfil } from '../../reducers/dashboard/profil/profilMiddleware';
+import { selectProperties } from '../../reducers/user/userSlice';
 
 export default function ProfilePage(): JSX.Element {
   const dispatch = useAppDispatch();
   const dateOfBirth = useAppSelector(selectDateOfBirth);
   const weight = useAppSelector(selectWeight);
   const height = useAppSelector(selectHeight);
+  const properties = useAppSelector(selectProperties);
 
   return (
     <Container sx={{ mt: 2 }}>
-      <MessageBox
-        title="Pourquoi avons nous besoin de ces informations ?"
-        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-      />
+      {properties.length === 0 && (
+        <Alert
+          severity="info"
+          sx={{ mb: 2 }}
+        >
+          <AlertTitle>Informations manquantes</AlertTitle>
+          Veuillez compléter vos informations pour accéder à la page alimentation.
+        </Alert>
+      )}
+
       <Typography
         sx={{ mt: 2, mb: 2 }}
         variant="h3"
@@ -34,12 +42,16 @@ export default function ProfilePage(): JSX.Element {
       >
         A propos de vous
       </Typography>
+      <MessageBox
+        title="Pourquoi avons-nous besoin de ces informations ?"
+        content="Afin de fournir des données précises et personnalisées pour votre santé, nous avons besoin de certaines informations de base, telles que votre âge, votre taille et votre date de naissance. Ces informations sont utilisées pour effectuer des calculs et des analyses qui nous permettent de surveiller votre santé de manière efficace. Nous prenons la protection de vos données personnelles très au sérieux et nous utilisons ces informations uniquement à des fins de santé et de bien-être."
+      />
       <Box
         sx={{ display: 'flex', flexDirection: 'column' }}
         component="form"
         onSubmit={(event) => {
           event.preventDefault();
-          dispatch(postProfil());
+          properties.length > 0 ? dispatch(editProfil(properties[0].id)) : dispatch(postProfil());
         }}
       >
         <CustomDatePicker

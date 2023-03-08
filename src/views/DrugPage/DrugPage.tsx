@@ -35,10 +35,10 @@ export default function DrugPage(): JSX.Element {
 
   return (
     <Container sx={{ mt: 2 }}>
-      <MessageBox
-        title="En savoir plus"
-        content="lorem lorem lorem lorem lorem lorem lorem"
-      />
+     <MessageBox
+       title="L'importance de suivre ses traitements médicaux"
+       content="Lorsqu'un professionnel de la santé prescrit un traitement médical, il est important de suivre attentivement les instructions pour maximiser les chances de guérison ou d'amélioration de votre santé. Cela peut inclure la prise régulière de médicaments, le suivi d'un régime alimentaire spécifique ou la participation à des séances de thérapie ou de réadaptation. Le non-respect de ces instructions peut entraîner des complications et des conséquences négatives sur la santé, y compris des effets secondaires indésirables ou une aggravation de l'état de santé. Si vous avez des préoccupations ou des questions concernant votre traitement, n'hésitez pas à en discuter avec votre médecin ou votre professionnel de la santé. Ensemble, vous pouvez travailler pour trouver un traitement efficace et adapté à votre situation individuelle."
+     />
       {drugs.length > 0 && (
         <CustomTable
           array={drugs}

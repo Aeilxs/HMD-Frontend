@@ -1,17 +1,15 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
-import { postFood } from './foodMiddleware';
+import { fetchProducts, postFood } from './foodMiddleware';
 
-interface Nutriments {
+export interface Nutriments {
   'energy-kcal_100g': number;
 }
-interface ApiProps {
+export interface ApiProps {
   id: string;
   product_name_fr: string;
   nutriments: Nutriments;
 }
-
 export interface dataFoodApi {
   id: number;
   name: string;
@@ -53,21 +51,6 @@ const initialState: FoodState = {
   consommedFoods: [],
   quantity: '',
 };
-// https://redux-toolkit.js.org/api/createAsyncThunk#providing-a-custom-dispatch-function
-export const fetchProducts = createAsyncThunk(
-  'food/fetchProducts',
-  async (categoryName: string, { dispatch }) => {
-    const category = categoryName.toLowerCase().replace(/\s+/g, '-');
-    dispatch(setIsLoading(true));
-    const response = await axios.get(`https://fr.openfoodfacts.org/categorie/${category}.json`);
-    dispatch(setIsLoading(false));
-    return response.data.products.map((product: ApiProps) => ({
-      key: product.id,
-      name: product.product_name_fr,
-      calories: product['nutriments']['energy-kcal_100g'],
-    }));
-  }
-);
 
 export const FoodSlice = createSlice({
   name: 'food',
@@ -116,11 +99,14 @@ export const FoodSlice = createSlice({
     .addCase(fetchProducts.fulfilled, (state, action) => {
       state.foods = action.payload;
     })
+    .addCase(fetchProducts.rejected, (state, action) => {
+      console.log('foods fetch rejected')
+    })
     .addCase(postFood.fulfilled, (state, action) => {
       return {...state, selectedFood: action.payload}
     })
     .addCase(postFood.rejected, (state, action) => {
-      console.log('non')
+      console.log('food post rejected')
     });
   },
 });
@@ -135,5 +121,6 @@ export const selectIsLoading = (state: RootState) => state.food.isLoading;
 export const selectSelectedFood = (state: RootState) => state.food.selectedFood;
 export const selectQuantity = (state: RootState) => state.food.quantity;
 export const selectConsommedFoods = (state: RootState) => state.food.consommedFoods;
+export const selectId = (state: RootState) => state.food.id;
 
 export default FoodSlice.reducer;

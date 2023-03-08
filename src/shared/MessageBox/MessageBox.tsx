@@ -5,12 +5,11 @@ import { ExpandMore, Info } from '@mui/icons-material';
 interface MessageProps {
   title: string;
   content: string;
-  width: number;
 }
 
-function MessageBox({ title, content, width }: MessageProps) {
+function MessageBox({ title, content }: MessageProps) {
   return (
-    <Accordion sx={{ width: `${width}%` }}>
+    <Accordion sx={{ width: '100%', mb:4 }}>
       <AccordionSummary
         expandIcon={<ExpandMore />}
         aria-controls="panel1a-content"

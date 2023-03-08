@@ -1,12 +1,12 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import {
-  fetchProducts,
   selectCategory,
   setCategory,
 } from '../../../reducers/dashboard/food/foodSlice';
 
 import { Autocomplete, TextField } from '@mui/material';
+import { fetchProducts } from '../../../reducers/dashboard/food/foodMiddleware';
 
 interface CategoryProps {
   aliments: string[];

@@ -6,7 +6,7 @@ import { dataSmokeApi } from '../dashboard/smoke/smokeSlice';
 import { dataSportApi } from '../dashboard/sport/sportSlice';
 import { dataDrugApi } from '../dashboard/drug/drugSlice';
 import { RootState } from '../../store/store';
-import { calcAge } from '../../utils/math';
+import { calcAge, sortByDate } from '../../utils/math';
 import { dataSleepApi } from '../dashboard/sleep/sleepSlice';
 import { dataFoodApi } from '../dashboard/food/foodSlice';
 
@@ -63,7 +63,12 @@ export const userSlice = createSlice({
       return { ...initialState };
     },
     setSleeps: (state, action: PayloadAction<dataSleepApi>) => {
-      return { ...state, sleeps: [...state.sleeps, { ...action.payload }] };
+      return {
+        ...state,
+        sleeps: [...state.sleeps, action.payload].sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        ),
+      };
     },
     removeSleeps: (state, action: PayloadAction<number>) => {
       return { ...state, sleeps: state.sleeps.filter((sleep) => sleep.id !== action.payload) };
@@ -75,7 +80,9 @@ export const userSlice = createSlice({
       }
     },
     setHydration: (state, action: PayloadAction<dataHydrationApi>) => {
-      return { ...state, hydratations: [...state.hydratations, { ...action.payload }] };
+      return { ...state, hydratations: [...state.hydratations, { ...action.payload }].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      ), };
     },
     removeHydration: (state, action: PayloadAction<number>) => {
       return {
@@ -90,7 +97,9 @@ export const userSlice = createSlice({
       }
     },
     setDrug: (state, action: PayloadAction<dataDrugApi>) => {
-      return { ...state, medicalTreatments: [...state.medicalTreatments, { ...action.payload }] };
+      return { ...state, medicalTreatments: [...state.medicalTreatments, { ...action.payload }].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      ), };
     },
     removeDrug: (state, action: PayloadAction<number>) => {
       return {
@@ -105,7 +114,9 @@ export const userSlice = createSlice({
       }
     },
     setSmoke: (state, action: PayloadAction<dataSmokeApi>) => {
-      return { ...state, cigarettes: [...state.cigarettes, { ...action.payload }] };
+      return { ...state, cigarettes: [...state.cigarettes, { ...action.payload }].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      ), };
     },
     removeSmoke: (state, action: PayloadAction<number>) => {
       return {
@@ -120,7 +131,9 @@ export const userSlice = createSlice({
       }
     },
     setSport: (state, action: PayloadAction<dataSportApi>) => {
-      return { ...state, activities: [...state.activities, { ...action.payload }] };
+      return { ...state, activities: [...state.activities, { ...action.payload }].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      ), };
     },
     removeSport: (state, action: PayloadAction<number>) => {
       return {
@@ -135,12 +148,17 @@ export const userSlice = createSlice({
       }
     },
     setFood: (state, action: PayloadAction<dataFoodApi>) => {
-      return { ...state, caloricAlimentations: [...state.caloricAlimentations, { ...action.payload }] };
+      return {
+        ...state,
+        caloricAlimentations: [...state.caloricAlimentations, { ...action.payload }]
+      };
     },
     removeFood: (state, action: PayloadAction<number>) => {
       return {
         ...state,
-        caloricAlimentations: state.caloricAlimentations.filter((food) => food.id !== action.payload),
+        caloricAlimentations: state.caloricAlimentations.filter(
+          (food) => food.id !== action.payload
+        ),
       };
     },
     updateFood: (state, action: PayloadAction<dataFoodApi>) => {
@@ -161,7 +179,16 @@ export const userSlice = createSlice({
         return { ...state, isLogged: false };
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        return { ...state, ...action.payload };
+        return {
+          ...state,
+          ...action.payload,
+          sleeps: sortByDate(action.payload.sleeps),
+          medicalTreatments: sortByDate(action.payload.medicalTreatments),
+          cigarettes: sortByDate(action.payload.cigarettes),
+          activities: sortByDate(action.payload.activities),
+          hydratations: sortByDate(action.payload.hydratations),
+          caloricAlimentations: sortByDate(action.payload.caloricAlimentations),
+        };
       });
   },
 });

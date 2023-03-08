@@ -41,6 +41,5 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string
   const response = await axios.get(`http://localhost:8000/api/users/user`, {
     headers: { Authorization: `Bearer ${token}` },
   });
-  dispatch(setProfilInputs(response.data.properties[0]))
   return response.data;
 });

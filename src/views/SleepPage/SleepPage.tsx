@@ -1,4 +1,4 @@
-import { Button, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Button, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import {
   selectSleepDate,
@@ -32,9 +32,9 @@ export default function SleepPage(): JSX.Element {
   return (
     <Container sx={{ mt: 2 }}>
       <MessageBox
-       title="Saviez-vous que le sommeil..."
-       content="Le sommeil joue un rôle crucial dans notre santé globale. Il permet à notre corps de se reposer, de récupérer et de se régénérer, ce qui est essentiel pour maintenir un bon équilibre émotionnel et mental. Des études ont montré que le manque de sommeil peut causer une diminution de la concentration, de l'irritabilité et de l'anxiété. Il est donc important de faire en sorte de dormir suffisamment chaque nuit pour maintenir une bonne santé physique et mentale. Des astuces pour améliorer la qualité de votre sommeil incluent de maintenir une routine de sommeil régulière, de créer un environnement de sommeil confortable et de limiter les stimulants tels que la caféine et l'alcool avant de se coucher."
-     />
+        title="Saviez-vous que le sommeil..."
+        content="Le sommeil joue un rôle crucial dans notre santé globale. Il permet à notre corps de se reposer, de récupérer et de se régénérer, ce qui est essentiel pour maintenir un bon équilibre émotionnel et mental. Des études ont montré que le manque de sommeil peut causer une diminution de la concentration, de l'irritabilité et de l'anxiété. Il est donc important de faire en sorte de dormir suffisamment chaque nuit pour maintenir une bonne santé physique et mentale. Des astuces pour améliorer la qualité de votre sommeil incluent de maintenir une routine de sommeil régulière, de créer un environnement de sommeil confortable et de limiter les stimulants tels que la caféine et l'alcool avant de se coucher."
+      />
       {sleeps.length > 0 && (
         <CustomTable
           array={sleeps}
@@ -61,21 +61,45 @@ export default function SleepPage(): JSX.Element {
           variant="outlined"
           sx={{ mb: 1, mt: 1 }}
         />
-        <CustomDatePicker
-          value={sleepDate}
-          actionCreator={setDate}
-        />
-
         <InputLabel sx={{ my: 1, textAlign: 'center' }}>Qualité du sommeil</InputLabel>
         <Select
           value={sleepQuality}
           onChange={(event) => dispatch(setQuality(Number(event.target.value)))}
-          sx={{ width: 'fit-content', m: 'auto', mx: 'auto', my: 1 }}
+          sx={{
+            width: 'fit-content',
+            m: 'auto',
+            mx: 'auto',
+            my: 1,
+            backgroundColor: '#f2f2f2',
+            color: '#333',
+            border: 'none',
+            borderRadius: '4px',
+            padding: '4px 12px',
+          }}
         >
-          <MenuItem value={1}>&#128532;</MenuItem>
-          <MenuItem value={2}>&#128528;</MenuItem>
-          <MenuItem value={3}>&#128512;</MenuItem>
+          <MenuItem
+            value={1}
+            sx={{ fontSize: '25px' }}
+          >
+            &#128532;
+          </MenuItem>
+          <MenuItem
+            value={2}
+            sx={{ fontSize: '25px' }}
+          >
+            &#128528;
+          </MenuItem>
+          <MenuItem
+            value={3}
+            sx={{ fontSize: '25px' }}
+          >
+            &#128512;
+          </MenuItem>
         </Select>
+        <CustomDatePicker
+          value={sleepDate}
+          actionCreator={setDate}
+        />
         <Button
           sx={{ m: 'auto' }}
           variant="contained"

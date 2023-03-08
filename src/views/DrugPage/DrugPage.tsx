@@ -1,4 +1,13 @@
-import { Box, Button, Container, FormControl, FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+} from '@mui/material';
 import {
   resetInputs,
   selectDate,
@@ -30,15 +39,15 @@ export default function DrugPage(): JSX.Element {
   const infos = useAppSelector(selectInfos);
   const quantity = useAppSelector(selectQuantity);
   const isEdit = useAppSelector(selectIsEdit);
-  const drugs = useAppSelector(selectDrugs)
+  const drugs = useAppSelector(selectDrugs);
   const formRef = useRef(null);
 
   return (
     <Container sx={{ mt: 2 }}>
-     <MessageBox
-       title="L'importance de suivre ses traitements médicaux"
-       content="Lorsqu'un professionnel de la santé prescrit un traitement médical, il est important de suivre attentivement les instructions pour maximiser les chances de guérison ou d'amélioration de votre santé. Cela peut inclure la prise régulière de médicaments, le suivi d'un régime alimentaire spécifique ou la participation à des séances de thérapie ou de réadaptation. Le non-respect de ces instructions peut entraîner des complications et des conséquences négatives sur la santé, y compris des effets secondaires indésirables ou une aggravation de l'état de santé. Si vous avez des préoccupations ou des questions concernant votre traitement, n'hésitez pas à en discuter avec votre médecin ou votre professionnel de la santé. Ensemble, vous pouvez travailler pour trouver un traitement efficace et adapté à votre situation individuelle."
-     />
+      <MessageBox
+        title="L'importance de suivre ses traitements médicaux"
+        content="Lorsqu'un professionnel de la santé prescrit un traitement médical, il est important de suivre attentivement les instructions pour maximiser les chances de guérison ou d'amélioration de votre santé. Cela peut inclure la prise régulière de médicaments, le suivi d'un régime alimentaire spécifique ou la participation à des séances de thérapie ou de réadaptation. Le non-respect de ces instructions peut entraîner des complications et des conséquences négatives sur la santé, y compris des effets secondaires indésirables ou une aggravation de l'état de santé. Si vous avez des préoccupations ou des questions concernant votre traitement, n'hésitez pas à en discuter avec votre médecin ou votre professionnel de la santé. Ensemble, vous pouvez travailler pour trouver un traitement efficace et adapté à votre situation individuelle."
+      />
       {drugs.length > 0 && (
         <CustomTable
           array={drugs}
@@ -57,10 +66,6 @@ export default function DrugPage(): JSX.Element {
         }}
         sx={{ display: 'flex', flexDirection: 'column', mx: 'auto', my: 2 }}
       >
-        <CustomDatePicker
-          value={date}
-          actionCreator={setDate}
-        />
         <TextField
           label="Quel medicament prenez-vous ?"
           variant="standard"
@@ -68,20 +73,32 @@ export default function DrugPage(): JSX.Element {
           value={name}
           onChange={(event) => dispatch(setName(event.target.value))}
         />
-      <FormControl component="fieldset">
-        <label>Unité du médicament</label>
-        <RadioGroup
-          aria-label="unit"
-          name="unit"
-          value={unit}
-          onChange={(event) => dispatch(setUnit(event.target.value))}
-          row
-        >
-          <FormControlLabel value="comprimés" control={<Radio />} label="Comprimé(s)" />
-          <FormControlLabel value="cuillères" control={<Radio />} label="Cuillère(s)" />
-          <FormControlLabel value="sachets" control={<Radio />} label="Sachet(s)" />
-        </RadioGroup>
-      </FormControl>
+        <FormControl component="fieldset">
+          <label>Unité du médicament</label>
+          <RadioGroup
+            aria-label="unit"
+            name="unit"
+            value={unit}
+            onChange={(event) => dispatch(setUnit(event.target.value))}
+            row
+          >
+            <FormControlLabel
+              value="comprimés"
+              control={<Radio />}
+              label="Comprimé(s)"
+            />
+            <FormControlLabel
+              value="cuillères"
+              control={<Radio />}
+              label="Cuillère(s)"
+            />
+            <FormControlLabel
+              value="sachets"
+              control={<Radio />}
+              label="Sachet(s)"
+            />
+          </RadioGroup>
+        </FormControl>
         <TextField
           label="Dose"
           variant="standard"
@@ -95,6 +112,10 @@ export default function DrugPage(): JSX.Element {
           sx={{ py: 3 }}
           value={infos}
           onChange={(event) => dispatch(setInfos(event.target.value))}
+        />
+        <CustomDatePicker
+          value={date}
+          actionCreator={setDate}
         />
         <Box sx={{ margin: 'auto', mt: '2em' }}>
           <Button

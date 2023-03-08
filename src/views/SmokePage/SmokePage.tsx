@@ -29,9 +29,8 @@ export default function SmokePage(): JSX.Element {
   return (
     <Container sx={{ mt: 2 }}>
       <MessageBox
-        title="Saviez vous que la fumée d'une cigarette..."
-        content="contient plus de 7 000 substances chimiques. Parmi ces substances, 69 sont reconnues comme cancérogènes. La fumée aspirée circule dans le corps humain et touche presque chacun des organes. C'est pourquoi le tabagisme affecte autant la santé et le bien-être des fumeurs. La fumée affecte aussi la santé des non-fumeurs qui y sont exposés.
-        Les autres produits du tabac, comme les cigares et les cigarillos, ou l'utilisation d'une pipe à eau présentent aussi des risques importants pour la santé. Ce ne sont pas des options plus sécuritaires que de fumer la cigarette."
+        title="Comment réduire sa consommation de cigarettes ?"
+        content="Si vous cherchez à réduire votre consommation de cigarettes, voici quelques conseils utiles. Tout d'abord, établissez un plan et fixez-vous des objectifs réalisables pour réduire progressivement le nombre de cigarettes que vous fumez chaque jour. Essayez de vous rappeler les raisons pour lesquelles vous voulez arrêter de fumer ou réduire votre consommation et gardez ces raisons en tête. Évitez les déclencheurs qui vous incitent à fumer, comme le café ou l'alcool. Essayez également de remplacer la cigarette par des alternatives plus saines, comme des bonbons à la menthe ou des bâtons de cannelle. Enfin, n'hésitez pas à demander de l'aide et du soutien à votre entourage ou à un professionnel de la santé. Avec de la patience et de la persévérance, vous pouvez réussir à réduire votre consommation de cigarettes et à améliorer votre santé."
       />
       {smokes.length > 0 && (
         <CustomTable
@@ -52,10 +51,6 @@ export default function SmokePage(): JSX.Element {
         }}
         sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}
       >
-        <CustomDatePicker
-          value={smokeDate}
-          actionCreator={setSmokeDate}
-        />
         <TextField
           onChange={(event) => dispatch(setSmokeQuantity(Number(event.target.value)))}
           value={smokeInputAmount}
@@ -63,6 +58,10 @@ export default function SmokePage(): JSX.Element {
           type="number"
           variant="outlined"
           sx={{ mb: 1, mt: 1 }}
+        />
+        <CustomDatePicker
+          value={smokeDate}
+          actionCreator={setSmokeDate}
         />
         <Button
           sx={{ m: 'auto' }}

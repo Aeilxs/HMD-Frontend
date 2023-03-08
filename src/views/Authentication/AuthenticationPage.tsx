@@ -2,7 +2,7 @@ import { useAppSelector } from '../../store/hooks';
 
 import LoginForm from './LoginForm/LoginForm';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
-import AuthFormToggle from './AuthFormToggle';
+import AuthFormToggle from './AuthFormToggle/AuthFormToggle';
 
 import { Box, Paper } from '@mui/material';
 import { selectAuthErrors } from '../../reducers/UI/uiSlice';

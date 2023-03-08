@@ -52,7 +52,7 @@ function RegistrationForm({ error }: RegistrationFormProps) {
       >
         <Typography
           variant="h1"
-          sx={{ fontSize: '3em', mb: 5 }}
+          sx={{ fontSize: '3em', mb: 5, textAlign:'center' }}
         >
           Formulaire d'inscription
         </Typography>

@@ -36,7 +36,7 @@ function LoginForm({ error }: LoginFormProps) {
       >
         <Typography
           variant="h1"
-          sx={{ fontSize: '3em', mb: 5 }}
+          sx={{ fontSize: '3em', mb: 5, textAlign:'center' }}
         >
           Formulaire de connexion
         </Typography>

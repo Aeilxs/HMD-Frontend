@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectForm, toggleForm } from '../../reducers/UI/uiSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { selectForm, toggleForm } from '../../../reducers/UI/uiSlice';
 
 import { Typography, Button, Container } from '@mui/material';
 
@@ -19,12 +19,12 @@ function AuthFormToggle({ text, buttonText }: AuthFormToggleProps) {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        p: 2,
+        p: 5,
       }}
     >
       <Typography
         variant="h1"
-        sx={{ fontSize: '3em', mb: 5 }}
+        sx={{ fontSize: '3em', mb: 5, textAlign:'center' }}
       >
         {text}
       </Typography>

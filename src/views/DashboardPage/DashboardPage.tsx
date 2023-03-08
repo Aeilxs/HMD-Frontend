@@ -21,6 +21,7 @@ export default function DashboardPage(): JSX.Element {
   const hydrationData = hydrationsChartData(useAppSelector(selectHydrations));
   const smokeData = smokeChartData(useAppSelector(selectSmokes));
   const drugData = drugsChartData(useAppSelector(selectDrugs));
+
   return (
     <Grid>
       <FoodGraph />

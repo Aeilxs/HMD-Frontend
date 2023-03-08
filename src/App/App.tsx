@@ -55,7 +55,7 @@ function App(): JSX.Element {
       dispatch(setIsLogged());
       dispatch(fetchUser(token));
     }
-  }, [token, dispatch]);
+  }, [dispatch, token]);
 
   return (
     <ThemeProvider theme={isDark ? themeDark : themeLight}>

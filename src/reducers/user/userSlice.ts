@@ -60,7 +60,7 @@ export const userSlice = createSlice({
     },
     onLogout: (state, action: PayloadAction<boolean>) => {
       localStorage.clear();
-      return { ...state, isLogged: false, token: '' };
+      return { ...initialState };
     },
     setSleeps: (state, action: PayloadAction<dataSleepApi>) => {
       return {
@@ -91,9 +91,7 @@ export const userSlice = createSlice({
       };
     },
     updateHydration: (state, action: PayloadAction<dataHydrationApi>) => {
-      const index = state.hydratations.findIndex(
-        (hydratation) => hydratation.id === action.payload.id
-      );
+      const index = state.hydratations.findIndex((hydratation) => hydratation.id === action.payload.id);
       if (index !== -1) {
         state.hydratations[index] = action.payload;
       }
@@ -174,6 +172,7 @@ export const userSlice = createSlice({
     builder
       .addCase(registerLoginUser.fulfilled, (state, action) => {
         localStorage.setItem('token', action.payload);
+        if (action.payload === undefined) return;
         return { ...state, isLogged: true, token: action.payload };
       })
       .addCase(registerLoginUser.rejected, (state) => {

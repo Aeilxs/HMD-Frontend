@@ -29,8 +29,9 @@ export default function SmokePage(): JSX.Element {
   return (
     <Container sx={{ mt: 2 }}>
       <MessageBox
-        title="Saviez vous que le tabagisme..."
-        content="c'est tabou et qu'on en viendra tous à bout"
+        title="Saviez vous que la fumée d'une cigarette..."
+        content="contient plus de 7 000 substances chimiques. Parmi ces substances, 69 sont reconnues comme cancérogènes. La fumée aspirée circule dans le corps humain et touche presque chacun des organes. C'est pourquoi le tabagisme affecte autant la santé et le bien-être des fumeurs. La fumée affecte aussi la santé des non-fumeurs qui y sont exposés.
+        Les autres produits du tabac, comme les cigares et les cigarillos, ou l'utilisation d'une pipe à eau présentent aussi des risques importants pour la santé. Ce ne sont pas des options plus sécuritaires que de fumer la cigarette."
       />
       {smokes.length > 0 && (
         <CustomTable
@@ -45,8 +46,8 @@ export default function SmokePage(): JSX.Element {
         component="form"
         ref={formRef}
         onSubmit={(event) => {
-          event.preventDefault()
-          console.log('smoke submit')
+          event.preventDefault();
+          console.log('smoke submit');
           isEdit ? dispatch(editSmoke()) : dispatch(postSmoke());
         }}
         sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}
@@ -66,7 +67,7 @@ export default function SmokePage(): JSX.Element {
         <Button
           sx={{ m: 'auto' }}
           variant="contained"
-          type='submit'
+          type="submit"
         >
           Valider
         </Button>

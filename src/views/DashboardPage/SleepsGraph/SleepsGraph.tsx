@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Chart as ChartJS,
   LinearScale,
@@ -13,7 +13,7 @@ import {
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 import { useResize } from '../../../hooks/useResize';
-import { Paper } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 
 interface SleepsGraphProps {
   dates: string[];
@@ -22,6 +22,7 @@ interface SleepsGraphProps {
 }
 
 export default function SleepsGraph({ dates, amounts, qualities }: SleepsGraphProps): JSX.Element {
+  const [elevation, setElevation] = useState(2);
   const vwValue = useResize();
 
   ChartJS.register(
@@ -71,9 +72,12 @@ export default function SleepsGraph({ dates, amounts, qualities }: SleepsGraphPr
   };
 
   return (
-    <Paper
-      elevation={2}
-      sx={{ p: 2, height: '100%', minHeight: '250px' }}
+    <Box
+      component={Paper}
+      elevation={elevation}
+      onMouseLeave={() => setElevation(2)}
+      onMouseEnter={() => setElevation(8)}
+      sx={{ p: 2, height: '100%', minHeight: '250px', cursor: 'pointer' }}
     >
       <Chart
         key={vwValue}
@@ -81,6 +85,6 @@ export default function SleepsGraph({ dates, amounts, qualities }: SleepsGraphPr
         data={data}
         type="bar"
       />
-    </Paper>
+    </Box>
   );
 }

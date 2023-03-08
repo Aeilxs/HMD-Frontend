@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,7 +11,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { useResize } from '../../../hooks/useResize';
-import { Paper } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 
 interface SmokesGraphProps {
   dates: string[];
@@ -19,6 +19,7 @@ interface SmokesGraphProps {
 }
 
 export default function SmokesGraph({ dates, amounts }: SmokesGraphProps): JSX.Element {
+  const [elevation, setElevation] = useState(2);
   const vwValue = useResize();
   ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
   const options = {
@@ -48,15 +49,19 @@ export default function SmokesGraph({ dates, amounts }: SmokesGraphProps): JSX.E
   };
 
   return (
-    <Paper
-      elevation={2}
-      sx={{ p: 2, height: '100%', minHeight: '250px' }}
+    <Box
+      component={Paper}
+      elevation={elevation}
+      onMouseLeave={() => setElevation(2)}
+      onMouseEnter={() => setElevation(8)}
+      sx={{ p: 2, height: '100%', minHeight: '250px', cursor: 'pointer' }}
     >
-      <Line
+      <Box
+        component={Line}
         key={vwValue}
         options={options}
         data={data}
       />
-    </Paper>
+    </Box>
   );
 }

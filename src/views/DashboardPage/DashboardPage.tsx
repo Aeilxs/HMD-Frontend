@@ -14,6 +14,7 @@ import {
 } from '../../utils/chartsData';
 import { selectDrugs, selectHydrations, selectSleeps, selectSmokes, selectSports } from '../../reducers/user/userSlice';
 import { useAppSelector } from '../../store/hooks';
+import AddBox from './AddBox/AddBox';
 
 export default function DashboardPage(): JSX.Element {
   const { activitiesPercentages, activitiesLabels } = activitiesChartData(useAppSelector(selectSports));
@@ -21,6 +22,8 @@ export default function DashboardPage(): JSX.Element {
   const hydrationData = hydrationsChartData(useAppSelector(selectHydrations));
   const smokeData = smokeChartData(useAppSelector(selectSmokes));
   const drugData = drugsChartData(useAppSelector(selectDrugs));
+
+  const displayAddBox = drugData.length === 0 || smokeData.dates.length === 0;
 
   return (
     <Grid>
@@ -31,10 +34,12 @@ export default function DashboardPage(): JSX.Element {
           percentages={activitiesPercentages}
         />
       )}
-      <HydrationsGraph
-        dates={hydrationData.dates}
-        amounts={hydrationData.data}
-      />
+      {hydrationData.dates.length !== 0 && (
+        <HydrationsGraph
+          dates={hydrationData.dates}
+          amounts={hydrationData.data}
+        />
+      )}
       {sleepDates.length > 0 && (
         <SleepGraph
           dates={sleepDates}
@@ -42,11 +47,19 @@ export default function DashboardPage(): JSX.Element {
           qualities={sleepQualities}
         />
       )}
-      <DrugsGraph rows={drugData} />
-      <SmokesGraph
-        dates={smokeData.dates}
-        amounts={smokeData.data}
-      />
+      {drugData.length !== 0 && <DrugsGraph rows={drugData} />}
+      {smokeData.dates.length !== 0 && (
+        <SmokesGraph
+          dates={smokeData.dates}
+          amounts={smokeData.data}
+        />
+      )}
+      {displayAddBox && (
+        <AddBox
+          drugOption={drugData.length}
+          smokeOption={smokeData.dates.length}
+        />
+      )}
     </Grid>
   );
 }

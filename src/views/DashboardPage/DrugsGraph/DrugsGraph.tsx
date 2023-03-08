@@ -5,6 +5,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { useState } from 'react';
 import { DrugChartData } from '../../../utils/chartsData';
 
 interface DrugsGraphProps {
@@ -12,11 +13,14 @@ interface DrugsGraphProps {
 }
 
 export default function DrugsGraph({ rows }: DrugsGraphProps): JSX.Element {
+  const [elevation, setElevation] = useState(2);
   return (
     <TableContainer
-      elevation={2}
+      elevation={elevation}
       sx={{ p: 2, height: '100%', minHeight: '250px' }}
       component={Paper}
+      onMouseEnter={() => setElevation(8)}
+      onMouseLeave={() => setElevation(2)}
     >
       <Table
         sx={{ minWidth: 650 }}

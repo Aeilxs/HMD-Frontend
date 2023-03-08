@@ -1,9 +1,24 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
 import axios from 'axios';
-import { Food } from './foodSlice';
+import { ApiProps, Food, setIsLoading } from './foodSlice';
 import { calcCalories, calcMB } from '../../../utils/math';
 import { removeFood, setFood, updateFood } from '../../user/userSlice';
+
+export const fetchProducts = createAsyncThunk(
+  'food/fetchProducts',
+  async (categoryName: string, { dispatch }) => {
+    const category = categoryName.toLowerCase().replace(/\s+/g, '-');
+    dispatch(setIsLoading(true));
+    const response = await axios.get(`https://fr.openfoodfacts.org/categorie/${category}.json`);
+    dispatch(setIsLoading(false));
+    return response.data.products.map((product: ApiProps) => ({
+      key: product.id,
+      name: product.product_name_fr,
+      calories: product['nutriments']['energy-kcal_100g'],
+    }));
+  }
+);
 
 export const postFood = createAsyncThunk(
   'food/postFood',
@@ -42,7 +57,6 @@ export const postFood = createAsyncThunk(
 export const editFood = createAsyncThunk('food/editFood',   async ( selectedFood: Food | null, { getState, dispatch }) => {
   try {
     const { date, quantity, id } = (getState() as RootState).food;
-    console.log(id)
     if (!selectedFood) {
       throw new Error('Selected food is not set');
     }

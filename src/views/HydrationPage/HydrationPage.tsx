@@ -34,7 +34,6 @@ export default function HydrationPage(): JSX.Element {
       <MessageBox
         title="Pourquoi s'hydrater ?"
         content="L'eau contenue dans le cerveau (85%) lui permet de mieux fonctionner. Un état de déshydratation peut de ce fait impacter les fonctions cognitives et l'humeur. Ces changements d'humeur se caractérisent par un état de fatigue, de colère, de tension, de perte de mémoire ou de dépression. Ainsi, pour avoir un cerveau fonctionnant correctement et être de bonne humeur, il faut boire beaucoup d'eau."
-        width={100}
       />
       {hydrations.length > 0 && (
         <CustomTable

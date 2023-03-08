@@ -31,7 +31,6 @@ export default function SmokePage(): JSX.Element {
       <MessageBox
         title="Saviez vous que le tabagisme..."
         content="c'est tabou et qu'on en viendra tous à bout"
-        width={100}
       />
       {smokes.length > 0 && (
         <CustomTable

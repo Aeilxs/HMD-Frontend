@@ -38,7 +38,6 @@ export default function DrugPage(): JSX.Element {
       <MessageBox
         title="En savoir plus"
         content="lorem lorem lorem lorem lorem lorem lorem"
-        width={100}
       />
       {drugs.length > 0 && (
         <CustomTable

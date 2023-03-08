@@ -34,7 +34,6 @@ export default function SleepPage(): JSX.Element {
       <MessageBox
         title="Les bienfaits du sommeil"
         content="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero quasi natus eligendi delectus iste deserunt cumque totam ut eius nemo dolor obcaecati esse, corrupti eaque, architecto praesentium minus autem magnam!"
-        width={100}
       />
       {sleeps.length > 0 && (
         <CustomTable

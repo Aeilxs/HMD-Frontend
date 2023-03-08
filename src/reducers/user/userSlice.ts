@@ -152,9 +152,7 @@ export const userSlice = createSlice({
     setFood: (state, action: PayloadAction<dataFoodApi>) => {
       return {
         ...state,
-        caloricAlimentations: [...state.caloricAlimentations, { ...action.payload }].sort(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-        ),
+        caloricAlimentations: [...state.caloricAlimentations, { ...action.payload }]
       };
     },
     removeFood: (state, action: PayloadAction<number>) => {

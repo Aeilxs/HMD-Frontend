@@ -30,7 +30,6 @@ export default function SportPage(): JSX.Element {
       <MessageBox
         title="En savoir plus"
         content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac mauris sit amet velit tristique pretium ut sed eros. Sed vel efficitur mauris. Sed euismod aliquam libero id convallis."
-        width={100}
       />
       {sports.length > 0 && (
           <CustomTable

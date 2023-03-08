@@ -1,16 +1,8 @@
-import React from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import React, { useState } from 'react';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { useResize } from '../../../hooks/useResize';
-import { Paper } from '@mui/material';
+import { Box, Button, Paper } from '@mui/material';
 
 interface HydrationsGraphProps {
   dates: string[];
@@ -19,6 +11,7 @@ interface HydrationsGraphProps {
 
 export default function HydrationsGraph({ dates, amounts }: HydrationsGraphProps): JSX.Element {
   const vwValue = useResize();
+  const [elevation, setElevation] = useState(2);
 
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const options = {
@@ -48,15 +41,19 @@ export default function HydrationsGraph({ dates, amounts }: HydrationsGraphProps
   };
 
   return (
-    <Paper
-      elevation={2}
-      sx={{ p: 2, height: '100%', minHeight: '250px' }}
+    <Box
+      component={Paper}
+      elevation={elevation}
+      onMouseLeave={() => setElevation(2)}
+      onMouseEnter={() => setElevation(8)}
+      sx={{ p: 2, height: '100%', minHeight: '250px', cursor: 'pointer' }}
     >
-      <Bar
+      <Box
+        component={Bar}
         key={vwValue}
         options={options}
         data={data}
       />
-    </Paper>
+    </Box>
   );
 }

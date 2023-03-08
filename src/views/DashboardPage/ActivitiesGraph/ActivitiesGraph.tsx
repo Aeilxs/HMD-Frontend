@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { useResize } from '../../../hooks/useResize';
-import { Paper } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 
 interface ActivitiesGraphProps {
   labels: string[];
   percentages: number[];
 }
 
-export default function ActivitiesGraph({
-  labels,
-  percentages,
-}: ActivitiesGraphProps): JSX.Element {
+export default function ActivitiesGraph({ labels, percentages }: ActivitiesGraphProps): JSX.Element {
+  const [elevation, setElevation] = useState(2);
   const vwValue = useResize();
   ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -55,16 +53,20 @@ export default function ActivitiesGraph({
   };
 
   return (
-    <Paper
-      elevation={2}
-      sx={{ p: 2, height: '100%', minHeight: '250px' }}
+    <Box
+      component={Paper}
+      onMouseEnter={() => setElevation(8)}
+      onMouseLeave={() => setElevation(2)}
+      elevation={elevation}
+      sx={{ cursor: 'pointer', p: 2, height: '100%', minHeight: '250px', textAlign: 'right' }}
     >
-      <Doughnut
+      <Box
+        component={Doughnut}
         key={vwValue}
         options={options}
         height={100}
         data={data}
       />
-    </Paper>
+    </Box>
   );
 }

@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { Container, CssBaseline } from '@mui/material';
@@ -32,7 +31,7 @@ function App(): JSX.Element {
   const isLogged = useAppSelector(selectIsLogged);
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectToken);
-  const location = useLocation();
+
   const routes = [
     { path: '/profil', component: <ProfilePage /> },
     { path: '/sport', component: <SportPage /> },
@@ -45,17 +44,11 @@ function App(): JSX.Element {
   ];
 
   useEffect(() => {
-    if (token !== '' && token !== undefined) {
-      localStorage.setItem('lastPage', location.pathname);
-    }
-  }, [location, token]);
-
-  useEffect(() => {
-    if (token !== '') {
-      dispatch(setIsLogged());
+    if (localStorage.getItem('token')) {
+      dispatch(setIsLogged())
       dispatch(fetchUser(token));
     }
-  }, [dispatch, token]);
+  }, [token]);
 
   return (
     <ThemeProvider theme={isDark ? themeDark : themeLight}>
@@ -74,13 +67,13 @@ function App(): JSX.Element {
           />
           <Route
             path="/authentification"
-            element={isLogged ? <Navigate to={localStorage.getItem('lastPage') ?? '/dashboard'} /> : <AuthPage />}
+            element={isLogged ? <Navigate to='/dashboard' /> : <AuthPage />}
           />
           {routes.map((route) => (
             <Route
               key={route.path}
               path={route.path}
-              element={isLogged ? route.component : <Navigate to="/authentification" />}
+              element={localStorage.getItem('token') || isLogged ? route.component : <Navigate to="/authentification" />}
             />
           ))}
           <Route

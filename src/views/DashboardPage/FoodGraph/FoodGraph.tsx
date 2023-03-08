@@ -1,23 +1,16 @@
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { useResize } from '../../../hooks/useResize';
 import { Paper } from '@mui/material';
+import { useState } from 'react';
+import { Box } from '@mui/system';
 
 export default function FoodGraphs(): JSX.Element {
   const vwValue = useResize();
+  const [elevation, setElevation] = useState(2);
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
@@ -45,16 +38,21 @@ export default function FoodGraphs(): JSX.Element {
       },
     ],
   };
+
   return (
-    <Paper
-      elevation={2}
-      sx={{ p: 2, gridColumn: '1 / span 2', height: '100%', minHeight: '250px' }}
+    <Box
+      component={Paper}
+      onMouseEnter={() => setElevation(8)}
+      onMouseLeave={() => setElevation(2)}
+      elevation={elevation}
+      sx={{ p: 2, gridColumn: '1 / span 2', height: '100%', minHeight: '250px', textAlign: 'right', cursor: 'pointer' }}
     >
-      <Bar
+      <Box
+        component={Bar}
         key={vwValue}
         data={data}
         options={options}
       />
-    </Paper>
+    </Box>
   );
 }

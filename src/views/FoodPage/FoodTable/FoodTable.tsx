@@ -30,23 +30,24 @@ export default function FoodTable(): JSX.Element {
           }}>
         Add
       </Button>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Nom de l'aliment</TableCell>
-            <TableCell>Calories consommées</TableCell>
+            <TableCell sx={{ textAlign:'center' }}>Nom de l'aliment</TableCell>
+            <TableCell sx={{ textAlign:'center' }}>Calories consommées</TableCell>
+            <TableCell sx={{ textAlign:'center' }}></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
         {foods.map((food) => (
           <TableRow key={food.id}>
-            <TableCell>{food.name}</TableCell>
-            <TableCell>{food.caloricIntake}</TableCell>
-            <TableCell>
+            <TableCell sx={{ textAlign:'center' }}>{food.name}</TableCell>
+            <TableCell sx={{ textAlign:'center' }}>{food.caloricIntake}</TableCell>
+            <TableCell sx={{ textAlign:'center' }}>
                 <IconButton aria-label="delete" sx={{backgroundColor:'red'}} onClick={() => dispatch(deleteFood(food.id))}>
                   <Delete />
                 </IconButton>
-                <IconButton aria-label="edit" sx={{backgroundColor:'#f79829', mr:2}} onClick={() => {
+                <IconButton aria-label="edit" sx={{backgroundColor:'#f79829', ml:2}} onClick={() => {
                     dispatch(setIsEdit(true))
                     dispatch(setId(food.id))
                     }}>

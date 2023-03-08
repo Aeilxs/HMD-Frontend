@@ -60,7 +60,7 @@ export const drugSlice = createSlice({
         console.log(action.payload);
       })
       .addCase(postDrug.rejected, () => {
-        console.error('nonsfghsrthsrthsrthsrths');
+        console.error('post drug rejected');
         // en cas d'erreur
       })
       .addCase(editDrug.fulfilled, (state, action) => {

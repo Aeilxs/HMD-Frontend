@@ -47,6 +47,7 @@ export default function CustomTable({array, onSelect, onDelete, resetInput, form
           {Object.keys(array[0]).map((key) => (
               <TableCell key={key} sx={{textAlign:'center'}}>{key.toUpperCase()}</TableCell>
             ))}
+              <TableCell sx={{ textAlign:'center' }}></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

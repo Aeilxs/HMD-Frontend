@@ -28,7 +28,7 @@ const initialState: UserState = {
   isLogged: false,
   token: localStorage.getItem('token') || '',
   firstname: '',
-  gender:'',
+  gender: '',
   properties: [],
   medicalTreatments: [],
   cigarettes: [],
@@ -59,8 +59,8 @@ export const userSlice = createSlice({
       return { ...state, isLogged: true };
     },
     onLogout: (state, action: PayloadAction<boolean>) => {
-      localStorage.clear()
-      return { ...state, isLogged: false, token: '' };
+      localStorage.clear();
+      return { ...initialState };
     },
     setSleeps: (state, action: PayloadAction<dataSleepApi>) => {
       return { ...state, sleeps: [...state.sleeps, { ...action.payload }] };
@@ -84,9 +84,7 @@ export const userSlice = createSlice({
       };
     },
     updateHydration: (state, action: PayloadAction<dataHydrationApi>) => {
-      const index = state.hydratations.findIndex(
-        (hydratation) => hydratation.id === action.payload.id
-      );
+      const index = state.hydratations.findIndex((hydratation) => hydratation.id === action.payload.id);
       if (index !== -1) {
         state.hydratations[index] = action.payload;
       }
@@ -101,9 +99,7 @@ export const userSlice = createSlice({
       };
     },
     updateDrug: (state, action: PayloadAction<dataDrugApi>) => {
-      const index = state.medicalTreatments.findIndex(
-        (drug) => drug.id === action.payload.id
-      );
+      const index = state.medicalTreatments.findIndex((drug) => drug.id === action.payload.id);
       if (index !== -1) {
         state.medicalTreatments[index] = action.payload;
       }
@@ -118,9 +114,7 @@ export const userSlice = createSlice({
       };
     },
     updateSmoke: (state, action: PayloadAction<dataSmokeApi>) => {
-      const index = state.cigarettes.findIndex(
-        (cigarette) => cigarette.id === action.payload.id
-      );
+      const index = state.cigarettes.findIndex((cigarette) => cigarette.id === action.payload.id);
       if (index !== -1) {
         state.cigarettes[index] = action.payload;
       }
@@ -135,9 +129,7 @@ export const userSlice = createSlice({
       };
     },
     updateSport: (state, action: PayloadAction<dataSportApi>) => {
-      const index = state.activities.findIndex(
-        (activity) => activity.id === action.payload.id
-      );
+      const index = state.activities.findIndex((activity) => activity.id === action.payload.id);
       if (index !== -1) {
         state.activities[index] = action.payload;
       }
@@ -152,9 +144,7 @@ export const userSlice = createSlice({
       };
     },
     updateFood: (state, action: PayloadAction<dataFoodApi>) => {
-      const index = state.caloricAlimentations.findIndex(
-        (food) => food.id === action.payload.id
-      );
+      const index = state.caloricAlimentations.findIndex((food) => food.id === action.payload.id);
       if (index !== -1) {
         state.caloricAlimentations[index] = action.payload;
       }
@@ -164,6 +154,7 @@ export const userSlice = createSlice({
     builder
       .addCase(registerLoginUser.fulfilled, (state, action) => {
         localStorage.setItem('token', action.payload);
+        if (action.payload === undefined) return;
         return { ...state, isLogged: true, token: action.payload };
       })
       .addCase(registerLoginUser.rejected, (state) => {

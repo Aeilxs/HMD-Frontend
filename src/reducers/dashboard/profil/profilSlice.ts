@@ -40,7 +40,7 @@ export const profilSlice = createSlice({
       return { ...state, weight: action.payload };
     },
     setHeight: (state, action: PayloadAction<number>) => {
-      return { ...state, height: action.payload };
+      return { ...state, size: action.payload };
     },
     setProfilInputs: (state, action: PayloadAction<dataProfilApi>) => {
       return { ...state, ...action.payload };

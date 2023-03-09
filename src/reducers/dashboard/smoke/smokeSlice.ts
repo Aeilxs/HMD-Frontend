@@ -1,11 +1,11 @@
-import { AlertColor } from '@mui/material';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
 import { RootState } from '../../../store/store';
 import { editSmoke, postSmoke } from './smokeMiddleware';
 
 export interface SmokeState {
   id: number | null;
-  message: SmokeMessage;
+  message: AlertMessage;
   date: string | null;
   quantity: number | '';
 }
@@ -14,11 +14,6 @@ export interface dataSmokeApi {
   id: number;
   quantity: number;
   date: string;
-}
-
-export interface SmokeMessage {
-  severity: AlertColor;
-  message: string;
 }
 
 const initialState: SmokeState = {
@@ -48,11 +43,11 @@ export const smokeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(postSmoke.fulfilled, (state, action) => {
-        const { severity, message } = action.payload as SmokeMessage;
+        const { severity, message } = action.payload as AlertMessage;
         return { ...state, message: { severity: severity, message: message } };
       })
       .addCase(postSmoke.rejected, (state, action) => {
-        const { severity, message } = action.payload as SmokeMessage;
+        const { severity, message } = action.payload as AlertMessage;
         return { ...state, message: { severity: severity, message: message } };
       })
       .addCase(editSmoke.fulfilled, (state, action) => {

@@ -17,7 +17,6 @@ export const postSmoke = createAsyncThunk('smoke/postSmoke', async (_, { getStat
       { headers: { Authorization: `Bearer ${token}` } }
     );
     dispatch(setSmoke(response.data));
-    console.log(response.data);
     return {
       severity: 'info',
       message: `Votre consommation de cigarette du ${calcDate(response.data.date)} a bien été ajoutée`,

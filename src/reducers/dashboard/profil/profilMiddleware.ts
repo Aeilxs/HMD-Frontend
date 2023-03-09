@@ -17,12 +17,12 @@ export const postProfil = createAsyncThunk('profil/postProfil', async (_, { getS
     },
     { headers: { Authorization: `Bearer ${token}` } }
   );
-  dispatch(setProfilInputs(response.data))
+  dispatch(setProfilInputs(response.data));
   dispatch(setProperties(response.data));
   return response.data;
 });
 
-export const editProfil = createAsyncThunk('profil/postProfil', async (id:number, { getState, dispatch }) => {
+export const editProfil = createAsyncThunk('profil/postProfil', async (id: number, { getState, dispatch }) => {
   const { weight, size, age, dateOfBirth } = (getState() as RootState).profil;
   const token = (getState() as RootState).user.token;
   const response = await axios.patch(
@@ -35,8 +35,7 @@ export const editProfil = createAsyncThunk('profil/postProfil', async (id:number
     },
     { headers: { Authorization: `Bearer ${token}` } }
   );
-  dispatch(setProfilInputs(response.data))
+  dispatch(setProfilInputs(response.data));
   dispatch(updateProperties(response.data));
   return response.data;
 });
-

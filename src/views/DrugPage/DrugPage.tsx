@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   Container,
@@ -11,6 +12,7 @@ import {
 import {
   resetInputs,
   selectDate,
+  selectDrugMessage,
   selectInfos,
   selectName,
   selectQuantity,
@@ -40,6 +42,7 @@ export default function DrugPage(): JSX.Element {
   const quantity = useAppSelector(selectQuantity);
   const isEdit = useAppSelector(selectIsEdit);
   const drugs = useAppSelector(selectDrugs);
+  const message = useAppSelector(selectDrugMessage);
   const formRef = useRef(null);
 
   return (
@@ -66,6 +69,7 @@ export default function DrugPage(): JSX.Element {
         }}
         sx={{ display: 'flex', flexDirection: 'column', mx: 'auto', my: 2 }}
       >
+        {message.message && <Alert severity={message.severity}>{message.message}</Alert>}
         <TextField
           label="Quel medicament prenez-vous ?"
           variant="standard"

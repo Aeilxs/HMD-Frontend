@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
 import { RootState } from '../../../store/store';
 import { postSport } from './sportMiddleware';
 
 export interface sportState {
   id: number | null;
+  message: AlertMessage;
   date: string | null;
   type: string;
   time: number | '';
@@ -21,6 +23,7 @@ export interface dataSportApi {
 
 const initialState: sportState = {
   id: null,
+  message: { severity: 'info', message: '' },
   date: null,
   type: 'course',
   time: '',
@@ -51,7 +54,15 @@ export const sportSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(postSport.fulfilled, (state, action) => {}).addCase(postSport.rejected, () => {});
+    builder
+      .addCase(postSport.fulfilled, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
+      })
+      .addCase(postSport.rejected, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
+      });
   },
 });
 
@@ -61,5 +72,6 @@ export const selectDate = (state: RootState) => state.sport.date;
 export const selectType = (state: RootState) => state.sport.type;
 export const selectDuration = (state: RootState) => state.sport.time;
 export const selectIntensity = (state: RootState) => state.sport.intensity;
+export const selectSportMessage = (state: RootState) => state.sport.message;
 
 export default sportSlice.reducer;

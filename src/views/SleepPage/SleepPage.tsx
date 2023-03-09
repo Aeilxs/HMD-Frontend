@@ -1,4 +1,4 @@
-import { Button, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Alert, Button, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import {
   selectSleepDate,
@@ -7,9 +7,9 @@ import {
   setQuantity,
   setDate,
   setQuality,
-  dataSleepApi,
   setSelectedSleep,
   resetInputs,
+  selectSleepMessage,
 } from '../../reducers/dashboard/sleep/sleepSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
@@ -27,8 +27,8 @@ export default function SleepPage(): JSX.Element {
   const sleepDate = useAppSelector(selectSleepDate);
   const isEdit = useAppSelector(selectIsEdit);
   const sleeps = useAppSelector(selectSleeps);
+  const { message, severity } = useAppSelector(selectSleepMessage);
   const formRef = useRef(null);
-
   return (
     <Container sx={{ mt: 2 }}>
       <MessageBox
@@ -53,10 +53,18 @@ export default function SleepPage(): JSX.Element {
           isEdit ? dispatch(editSleep()) : dispatch(postSleep());
         }}
       >
+        {message && (
+          <Alert
+            sx={{ my: 1 }}
+            severity={severity}
+          >
+            {message}
+          </Alert>
+        )}
         <TextField
           onChange={(event) => dispatch(setQuantity(Number(event.target.value)))}
           value={sleepQuantity}
-          label="Durée (heure)"
+          label="Durée (minutes)"
           type="number"
           variant="outlined"
           sx={{ mb: 1, mt: 1 }}

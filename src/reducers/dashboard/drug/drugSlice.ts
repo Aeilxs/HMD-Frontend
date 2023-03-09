@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
 import { RootState } from '../../../store/store';
 import { editDrug, postDrug } from './drugMiddleware';
 
 export interface drugState {
   id: null | number;
+  message: AlertMessage;
   date: string | null;
   name: string;
   unit: string;
@@ -21,6 +23,7 @@ export interface dataDrugApi {
 
 const initialState: drugState = {
   id: null,
+  message: { severity: 'info', message: '' },
   date: null,
   name: '',
   unit: '',
@@ -56,8 +59,14 @@ export const drugSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(postDrug.fulfilled, (state, action) => {})
-      .addCase(postDrug.rejected, () => {})
+      .addCase(postDrug.fulfilled, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
+      })
+      .addCase(postDrug.rejected, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
+      })
       .addCase(editDrug.fulfilled, (state, action) => {
         return { ...state, isEdit: false };
       })
@@ -74,5 +83,6 @@ export const selectName = (state: RootState) => state.drug.name;
 export const selectUnit = (state: RootState) => state.drug.unit;
 export const selectQuantity = (state: RootState) => state.drug.quantity;
 export const selectInfos = (state: RootState) => state.drug.infos;
+export const selectDrugMessage = (state: RootState) => state.drug.message;
 
 export default drugSlice.reducer;

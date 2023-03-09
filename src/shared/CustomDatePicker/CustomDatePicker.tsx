@@ -9,10 +9,7 @@ interface CustomDatePickerProps {
   actionCreator: Function;
 }
 
-export default function CustomDatePicker({
-  value,
-  actionCreator,
-}: CustomDatePickerProps): JSX.Element {
+export default function CustomDatePicker({ value, actionCreator }: CustomDatePickerProps): JSX.Element {
   const dispatch = useAppDispatch();
   return (
     <LocalizationProvider

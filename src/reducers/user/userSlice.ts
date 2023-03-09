@@ -80,9 +80,12 @@ export const userSlice = createSlice({
       }
     },
     setHydration: (state, action: PayloadAction<dataHydrationApi>) => {
-      return { ...state, hydratations: [...state.hydratations, { ...action.payload }].sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      ), };
+      return {
+        ...state,
+        hydratations: [...state.hydratations, { ...action.payload }].sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        ),
+      };
     },
     removeHydration: (state, action: PayloadAction<number>) => {
       return {
@@ -97,9 +100,12 @@ export const userSlice = createSlice({
       }
     },
     setDrug: (state, action: PayloadAction<dataDrugApi>) => {
-      return { ...state, medicalTreatments: [...state.medicalTreatments, { ...action.payload }].sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      ), };
+      return {
+        ...state,
+        medicalTreatments: [...state.medicalTreatments, { ...action.payload }].sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        ),
+      };
     },
     removeDrug: (state, action: PayloadAction<number>) => {
       return {
@@ -114,9 +120,12 @@ export const userSlice = createSlice({
       }
     },
     setSmoke: (state, action: PayloadAction<dataSmokeApi>) => {
-      return { ...state, cigarettes: [...state.cigarettes, { ...action.payload }].sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      ), };
+      return {
+        ...state,
+        cigarettes: [...state.cigarettes, { ...action.payload }].sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        ),
+      };
     },
     removeSmoke: (state, action: PayloadAction<number>) => {
       return {
@@ -131,9 +140,12 @@ export const userSlice = createSlice({
       }
     },
     setSport: (state, action: PayloadAction<dataSportApi>) => {
-      return { ...state, activities: [...state.activities, { ...action.payload }].sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      ), };
+      return {
+        ...state,
+        activities: [...state.activities, { ...action.payload }].sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        ),
+      };
     },
     removeSport: (state, action: PayloadAction<number>) => {
       return {
@@ -150,15 +162,13 @@ export const userSlice = createSlice({
     setFood: (state, action: PayloadAction<dataFoodApi>) => {
       return {
         ...state,
-        caloricAlimentations: [...state.caloricAlimentations, { ...action.payload }]
+        caloricAlimentations: [...state.caloricAlimentations, { ...action.payload }],
       };
     },
     removeFood: (state, action: PayloadAction<number>) => {
       return {
         ...state,
-        caloricAlimentations: state.caloricAlimentations.filter(
-          (food) => food.id !== action.payload
-        ),
+        caloricAlimentations: state.caloricAlimentations.filter((food) => food.id !== action.payload),
       };
     },
     updateFood: (state, action: PayloadAction<dataFoodApi>) => {
@@ -170,7 +180,7 @@ export const userSlice = createSlice({
     setProperties: (state, action: PayloadAction<dataProfilApi>) => {
       return {
         ...state,
-        properties: [...state.properties, { ...action.payload }]
+        properties: [...state.properties, { ...action.payload }],
       };
     },
     updateProperties: (state, action: PayloadAction<dataProfilApi>) => {
@@ -182,14 +192,16 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(registerLoginUser.pending, (state) => {
+        // todo
+      })
       .addCase(registerLoginUser.fulfilled, (state, action) => {
-        localStorage.setItem('token', action.payload);
-        if (action.payload === undefined) return;
         return { ...state, isLogged: true, token: action.payload };
       })
       .addCase(registerLoginUser.rejected, (state) => {
         return { ...state, isLogged: false };
       })
+
       .addCase(fetchUser.fulfilled, (state, action) => {
         return {
           ...state,
@@ -230,7 +242,7 @@ export const {
   removeFood,
   updateFood,
   setProperties,
-  updateProperties
+  updateProperties,
 } = userSlice.actions;
 
 export const selectFirstName = (state: RootState) => state.user.firstname;

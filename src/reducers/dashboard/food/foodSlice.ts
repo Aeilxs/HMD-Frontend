@@ -80,39 +80,40 @@ export const FoodSlice = createSlice({
       return { ...state, id: action.payload };
     },
     setConsommedFoods: (state) => {
-      if(state.selectedFood && state.quantity) {
+      if (state.selectedFood && state.quantity) {
         return {
           ...state,
-          consommedFoods: [
-            ...state.consommedFoods,
-            { ...state.selectedFood, quantity: state.quantity },
-          ],
+          consommedFoods: [...state.consommedFoods, { ...state.selectedFood, quantity: state.quantity }],
         };
-        }
-      },
-      resetInputs: (state) => {
-        return { ...state, ...initialState }
       }
+    },
+    resetInputs: (state) => {
+      return { ...state, ...initialState };
+    },
   },
   extraReducers: (builder) => {
     builder
-    .addCase(fetchProducts.fulfilled, (state, action) => {
-      state.foods = action.payload;
-    })
-    .addCase(fetchProducts.rejected, (state, action) => {
-      console.log('foods fetch rejected')
-    })
-    .addCase(postFood.fulfilled, (state, action) => {
-      return {...state, selectedFood: action.payload}
-    })
-    .addCase(postFood.rejected, (state, action) => {
-      console.log('food post rejected')
-    });
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.foods = action.payload;
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {})
+      .addCase(postFood.fulfilled, (state, action) => {
+        return { ...state, selectedFood: action.payload };
+      })
+      .addCase(postFood.rejected, (state, action) => {});
   },
 });
 
-export const { setDate, setCategory, setIsLoading, setSelectedFood, setQuantity, setConsommedFoods, resetInputs, setId } =
-  FoodSlice.actions;
+export const {
+  setDate,
+  setCategory,
+  setIsLoading,
+  setSelectedFood,
+  setQuantity,
+  setConsommedFoods,
+  resetInputs,
+  setId,
+} = FoodSlice.actions;
 
 export const selectDate = (state: RootState) => state.food.date;
 export const selectCategory = (state: RootState) => state.food.category;

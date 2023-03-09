@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import SendIcon from '@mui/icons-material/Send';
 import {
+  Alert,
   Box,
   Button,
   FormControl,
@@ -17,7 +18,7 @@ import {
 import { registerUser } from '../../../reducers/user/userMiddleware';
 
 interface RegistrationFormProps {
-  error: boolean;
+  error: string;
 }
 
 function RegistrationForm({ error }: RegistrationFormProps) {
@@ -42,7 +43,6 @@ function RegistrationForm({ error }: RegistrationFormProps) {
     >
       <FormControl
         sx={{
-          width: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -52,13 +52,21 @@ function RegistrationForm({ error }: RegistrationFormProps) {
       >
         <Typography
           variant="h1"
-          sx={{ fontSize: '3em', mb: 5, textAlign:'center' }}
+          sx={{ fontSize: '3em', mb: 5, textAlign: 'center' }}
         >
           Formulaire d'inscription
         </Typography>
         <FormGroup>
+          {error && (
+            <Alert
+              sx={{ my: 1 }}
+              severity="error"
+            >
+              {error}
+            </Alert>
+          )}
           <TextField
-            error={error}
+            error={error ? true : false}
             sx={{ py: 2 }}
             label="Prenom"
             name="firstname"
@@ -69,7 +77,7 @@ function RegistrationForm({ error }: RegistrationFormProps) {
             onChange={handleChange}
           />
           <TextField
-            error={error}
+            error={error ? true : false}
             sx={{ py: 2 }}
             label="Nom"
             name="lastname"
@@ -80,7 +88,7 @@ function RegistrationForm({ error }: RegistrationFormProps) {
             onChange={handleChange}
           />
           <TextField
-            error={error}
+            error={error ? true : false}
             sx={{ py: 2 }}
             label="Email"
             name="email"
@@ -91,7 +99,7 @@ function RegistrationForm({ error }: RegistrationFormProps) {
             onChange={handleChange}
           />
           <TextField
-            error={error}
+            error={error ? true : false}
             sx={{ py: 2 }}
             label="Mot de passe"
             name="password"

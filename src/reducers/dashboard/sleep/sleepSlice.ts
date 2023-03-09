@@ -17,7 +17,7 @@ export interface dataSleepApi {
 }
 
 const initialState: SleepState = {
-  id:null,
+  id: null,
   date: null,
   quantity: '',
   quality: '',
@@ -36,18 +36,17 @@ export const sleepSlice = createSlice({
     setQuality: (state, action: PayloadAction<number>) => {
       return { ...state, quality: action.payload };
     },
-    setSelectedSleep: (state, action: PayloadAction<dataSleepApi>) =>{
-      console.log(action.payload)
-      return {...state, ...action.payload, quantity: action.payload.time}
+    setSelectedSleep: (state, action: PayloadAction<dataSleepApi>) => {
+      return { ...state, ...action.payload, quantity: action.payload.time };
     },
     resetInputs: (state) => {
-      return { ...state, date: null, quantity:'', quality:'' }
-    }
+      return { ...state, date: null, quantity: '', quality: '' };
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(postSleep.fulfilled, (state, action) => {
-        return {...state, ...action.payload}
+        return { ...state, ...action.payload };
       })
       .addCase(postSleep.rejected, (state, action) => {
         console.error(action.payload);

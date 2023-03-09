@@ -2,11 +2,11 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { selectUser, setValue } from '../../../reducers/UI/uiSlice';
 import { registerLoginUser } from '../../../reducers/user/userMiddleware';
 
-import { Box, Button, FormControl, FormGroup, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, FormControl, FormGroup, TextField, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
 interface LoginFormProps {
-  error: boolean;
+  error: string;
 }
 
 function LoginForm({ error }: LoginFormProps) {
@@ -36,13 +36,21 @@ function LoginForm({ error }: LoginFormProps) {
       >
         <Typography
           variant="h1"
-          sx={{ fontSize: '3em', mb: 5, textAlign:'center' }}
+          sx={{ fontSize: '3em', mb: 5, textAlign: 'center' }}
         >
           Formulaire de connexion
         </Typography>
         <FormGroup>
+          {error && (
+            <Alert
+              sx={{ my: 1 }}
+              severity="error"
+            >
+              {error}
+            </Alert>
+          )}
           <TextField
-            error={error}
+            error={error ? true : false}
             sx={{ py: 2 }}
             label="Email"
             name="email"
@@ -53,7 +61,7 @@ function LoginForm({ error }: LoginFormProps) {
             onChange={handleChange}
           />
           <TextField
-            error={error}
+            error={error ? true : false}
             sx={{ py: 2 }}
             label="Mot de passe"
             name="password"

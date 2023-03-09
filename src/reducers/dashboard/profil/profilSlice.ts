@@ -14,8 +14,8 @@ export interface dataProfilApi {
 export interface ProfilState {
   dateOfBirth: string | null;
   age: number | '';
-  weight: number |'';
-  size: number |'';
+  weight: number | '';
+  size: number | '';
 }
 
 const initialState: ProfilState = {
@@ -48,17 +48,14 @@ export const profilSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(postProfil.fulfilled, (state, action) => {
-        console.log(action.payload);
-      })
+      .addCase(postProfil.fulfilled, (state, action) => {})
       .addCase(postProfil.rejected, () => {
-        console.error('non');
         // en cas d'erreur
       });
   },
 });
 
-export const { setDateOfBirth, setWeight, setHeight,setProfilInputs } = profilSlice.actions;
+export const { setDateOfBirth, setWeight, setHeight, setProfilInputs } = profilSlice.actions;
 
 export const selectDateOfBirth = (state: RootState) => state.profil.dateOfBirth;
 export const selectWeight = (state: RootState) => state.profil.weight;

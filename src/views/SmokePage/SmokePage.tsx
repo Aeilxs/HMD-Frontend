@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from '@mui/material';
+import { Alert, Box, Button, TextField } from '@mui/material';
 import { Container } from '@mui/system';
 import MessageBox from '../../shared/MessageBox/MessageBox';
 import 'dayjs/locale/fr';
@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   resetInputs,
   selectSmokeDate,
+  selectSmokeMessage,
   selectSmokeQuantity,
   setSelectedSmoke,
   setSmokeDate,
@@ -24,8 +25,9 @@ export default function SmokePage(): JSX.Element {
   const smokeDate = useAppSelector(selectSmokeDate);
   const smokes = useAppSelector(selectSmokes);
   const isEdit = useAppSelector(selectIsEdit);
+  const message = useAppSelector(selectSmokeMessage);
   const formRef = useRef(null);
-
+  console.log(message);
   return (
     <Container sx={{ mt: 2 }}>
       <MessageBox
@@ -51,6 +53,7 @@ export default function SmokePage(): JSX.Element {
         }}
         sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}
       >
+        {message.message && <Alert severity={message.severity}>{message.message}</Alert>}
         <TextField
           onChange={(event) => dispatch(setSmokeQuantity(Number(event.target.value)))}
           value={smokeInputAmount}
@@ -64,7 +67,7 @@ export default function SmokePage(): JSX.Element {
           actionCreator={setSmokeDate}
         />
         <Button
-          sx={{ m: 'auto' }}
+          sx={{ mx: 'auto', my: 2 }}
           variant="contained"
           type="submit"
         >

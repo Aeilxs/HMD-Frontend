@@ -31,10 +31,7 @@ export const sportSlice = createSlice({
   name: 'sport',
   initialState,
   reducers: {
-    setType: (
-      state,
-      action: PayloadAction<'course' | 'marche' | 'natation' | 'velo' | 'exercices'>
-    ) => {
+    setType: (state, action: PayloadAction<'course' | 'marche' | 'natation' | 'velo' | 'exercices'>) => {
       return { ...state, type: action.payload };
     },
     setDuration: (state, action: PayloadAction<number>) => {
@@ -54,19 +51,11 @@ export const sportSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(postSport.fulfilled, (state, action) => {
-        console.log(action.payload);
-      })
-      .addCase(postSport.rejected, () => {
-        console.error('non');
-        // en cas d'erreur
-      });
+    builder.addCase(postSport.fulfilled, (state, action) => {}).addCase(postSport.rejected, () => {});
   },
 });
 
-export const { setType, setDuration, setIntensity, setDate, setSelectedSport, resetInputs } =
-  sportSlice.actions;
+export const { setType, setDuration, setIntensity, setDate, setSelectedSport, resetInputs } = sportSlice.actions;
 
 export const selectDate = (state: RootState) => state.sport.date;
 export const selectType = (state: RootState) => state.sport.type;

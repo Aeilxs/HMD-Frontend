@@ -10,8 +10,8 @@ import uiReducer, {
 describe('UI reducer test suites', () => {
   const initialState: UIState = {
     isDark: true,
-    isEdit:false,
-    errors: { login: false, registration: false },
+    isEdit: false,
+    errors: { login: null, registration: null },
     isRegistered: false,
     isDrawerOpen: false,
     user: {
@@ -24,20 +24,7 @@ describe('UI reducer test suites', () => {
   };
 
   it('should handle initial state', () => {
-    expect(uiReducer(initialState, { type: 'unknown' })).toEqual({
-      isDark: true,
-      isEdit:false,
-      errors: { login: false, registration: false },
-      isRegistered: false,
-      isDrawerOpen: false,
-      user: {
-        firstname: '',
-        lastname: '',
-        email: '',
-        password: '',
-        gender: 'Homme',
-      },
-    });
+    expect(uiReducer(initialState, { type: 'unknown' })).toEqual(initialState);
   });
 
   it('should handle toggle theme', () => {
@@ -68,19 +55,13 @@ describe('UI reducer test suites', () => {
   });
 
   it('should handle change event on first email textfield', () => {
-    const newState = uiReducer(
-      initialState,
-      setValue({ value: 'john.doe@gmail.com', name: 'email' })
-    );
+    const newState = uiReducer(initialState, setValue({ value: 'john.doe@gmail.com', name: 'email' }));
     const expectedState = { ...initialState, email: 'john.doe@gmail.com' };
     expect(newState).toEqual(expectedState);
   });
 
   it('should handle change event on first password textfield', () => {
-    const newState = uiReducer(
-      initialState,
-      setValue({ value: 'johnSecurePassword', name: 'password' })
-    );
+    const newState = uiReducer(initialState, setValue({ value: 'johnSecurePassword', name: 'password' }));
     const expectedState = { ...initialState, password: 'johnSecurePassword' };
     expect(newState).toEqual(expectedState);
   });

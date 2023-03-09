@@ -56,13 +56,8 @@ export const drugSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(postDrug.fulfilled, (state, action) => {
-        console.log(action.payload);
-      })
-      .addCase(postDrug.rejected, () => {
-        console.error('post drug rejected');
-        // en cas d'erreur
-      })
+      .addCase(postDrug.fulfilled, (state, action) => {})
+      .addCase(postDrug.rejected, () => {})
       .addCase(editDrug.fulfilled, (state, action) => {
         return { ...state, isEdit: false };
       })
@@ -72,8 +67,7 @@ export const drugSlice = createSlice({
   },
 });
 
-export const { setDate, setName, setUnit, setQuantity, setInfos, setSelectedDrug, resetInputs } =
-  drugSlice.actions;
+export const { setDate, setName, setUnit, setQuantity, setInfos, setSelectedDrug, resetInputs } = drugSlice.actions;
 
 export const selectDate = (state: RootState) => state.drug.date;
 export const selectName = (state: RootState) => state.drug.name;

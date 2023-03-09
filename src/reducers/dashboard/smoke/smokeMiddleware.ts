@@ -1,15 +1,8 @@
 import axios from 'axios';
-import { dataSmokeApi } from './smokeSlice';
 import { calcDate } from '../../../utils/math';
 import { RootState } from '../../../store/store';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { removeSmoke, setSmoke, updateSmoke } from '../../user/userSlice';
-import { AlertColor } from '@mui/material';
-
-interface MessageProps {
-  severity: AlertColor;
-  message: string;
-}
 
 export const postSmoke = createAsyncThunk('smoke/postSmoke', async (_, { getState, dispatch, rejectWithValue }) => {
   const { date, quantity } = (getState() as RootState).smoke;
@@ -32,8 +25,8 @@ export const postSmoke = createAsyncThunk('smoke/postSmoke', async (_, { getStat
   } catch (error: any) {
     if (!axios.isAxiosError(error)) throw error;
     return rejectWithValue({
-      severity: 'info',
-      message: 'Echec',
+      severity: 'error',
+      message: "Echec de l'ajout",
     });
   }
 });

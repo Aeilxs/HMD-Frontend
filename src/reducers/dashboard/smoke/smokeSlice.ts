@@ -48,10 +48,12 @@ export const smokeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(postSmoke.fulfilled, (state, action) => {
-        return { ...state, message: action.payload };
+        const { severity, message } = action.payload as SmokeMessage;
+        return { ...state, message: { severity: severity, message: message } };
       })
       .addCase(postSmoke.rejected, (state, action) => {
-        return { ...state };
+        const { severity, message } = action.payload as SmokeMessage;
+        return { ...state, message: { severity: severity, message: message } };
       })
       .addCase(editSmoke.fulfilled, (state, action) => {
         return { ...state, isEdit: false };

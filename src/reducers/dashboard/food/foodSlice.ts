@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
 import { RootState } from '../../../store/store';
-import { fetchProducts, postFood } from './foodMiddleware';
+import { deleteFood, editFood, fetchProducts, postFood } from './foodMiddleware';
 
 export interface Nutriments {
   'energy-kcal_100g': number;
@@ -32,6 +33,7 @@ export interface Food {
 
 interface FoodState {
   id: number | null;
+  message: AlertMessage;
   date: string | null;
   category: string | null;
   foods: Food[];
@@ -43,6 +45,7 @@ interface FoodState {
 
 const initialState: FoodState = {
   id: null,
+  message: { severity: 'info', message: '' },
   date: null,
   category: null,
   foods: [],
@@ -96,11 +99,36 @@ export const FoodSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.foods = action.payload;
       })
-      .addCase(fetchProducts.rejected, (state, action) => {})
       .addCase(postFood.fulfilled, (state, action) => {
-        return { ...state, selectedFood: action.payload };
+        console.log(action.payload)
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, selectedFood: action.payload.data,  message: { severity: severity, message: message } };
       })
-      .addCase(postFood.rejected, (state, action) => {});
+      .addCase(postFood.rejected, (state, action) => {
+        console.log(action.payload)
+          const { severity, message } = action.payload as AlertMessage;
+          return { ...state,  message: { severity: severity, message: message } };
+        })
+      .addCase(editFood.fulfilled, (state, action) => {
+        console.log(action.payload)
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, selectedFood: action.payload.data,  message: { severity: severity, message: message } };
+      })
+      .addCase(editFood.rejected, (state, action) => {
+        console.log(action.payload)
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state,  message: { severity: severity, message: message } };
+      })
+      .addCase(deleteFood.fulfilled, (state, action) => {
+        console.log(action.payload)
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state,  message: { severity: severity, message: message } };
+      })
+      .addCase(deleteFood.rejected, (state, action) => {
+        console.log(action.payload)
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state,  message: { severity: severity, message: message } };
+      });
   },
 });
 
@@ -123,5 +151,6 @@ export const selectSelectedFood = (state: RootState) => state.food.selectedFood;
 export const selectQuantity = (state: RootState) => state.food.quantity;
 export const selectConsommedFoods = (state: RootState) => state.food.consommedFoods;
 export const selectId = (state: RootState) => state.food.id;
+export const selectFoodMessage = (state: RootState) => state.food.message;
 
 export default FoodSlice.reducer;

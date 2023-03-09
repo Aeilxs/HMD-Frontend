@@ -30,10 +30,10 @@ export const postHydration = createAsyncThunk(
   }
 );
 
-export const editHydration = createAsyncThunk('hydration/editHydration', async (_, { getState, dispatch }) => {
+export const editHydration = createAsyncThunk('hydration/editHydration', async (_, { getState, dispatch, rejectWithValue }) => {
+  const { date, quantity, id } = (getState() as RootState).hydration;
+  const token = (getState() as RootState).user.token;
   try {
-    const { date, quantity, id } = (getState() as RootState).hydration;
-    const token = (getState() as RootState).user.token;
     const response = await axios.patch(
       `http://localhost:8000/api/users/hydrations/${id}`,
       {
@@ -43,24 +43,32 @@ export const editHydration = createAsyncThunk('hydration/editHydration', async (
       { headers: { Authorization: `Bearer ${token}` } }
     );
     dispatch(updateHydration(response.data));
-    return response.data;
-  } catch (error) {
-    console.error(error);
+    return {
+      severity: 'info',
+      message: `Votre consommation d'eau du ${calcDate(response.data.date)} a bien été mise à jour`,
+    };
+  }  catch (error:any) {
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue({ severity: 'error', message: "Echec de la modification" });
   }
 });
 
 export const deleteHydration = createAsyncThunk(
   'hydration/editHydration',
-  async (id: number, { getState, dispatch }) => {
+  async (id: number, { getState, dispatch, rejectWithValue }) => {
     try {
-      const token = (getState() as RootState).user.token;
+    const token = (getState() as RootState).user.token;
       const response = await axios.delete(`http://localhost:8000/api/users/hydrations/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       dispatch(removeHydration(id));
-      return response.data;
+      return {
+        severity: 'info',
+        message: `Votre consommation a bien été supprimée`,
+      };
     } catch (error) {
-      console.error(error);
+      if (!axios.isAxiosError(error)) throw error;
+      return rejectWithValue({ severity: 'error', message: "Echec de la suppression" });
     }
   }
 );

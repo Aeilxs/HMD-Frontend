@@ -32,7 +32,7 @@ export const postSport = createAsyncThunk('sport/postSport', async (_, { getStat
   }
 });
 
-export const editSport = createAsyncThunk('sport/editSport', async (_, { getState, dispatch }) => {
+export const editSport = createAsyncThunk('sport/editSport', async (_, { getState, dispatch, rejectWithValue }) => {
   try {
     const { type, time, intensity, date, id } = (getState() as RootState).sport;
     const token = (getState() as RootState).user.token;
@@ -48,21 +48,29 @@ export const editSport = createAsyncThunk('sport/editSport', async (_, { getStat
       { headers: { Authorization: `Bearer ${token}` } }
     );
     dispatch(updateSport(response.data));
-    return response.data;
+    return {
+      severity: 'info',
+      message: `Votre session du ${calcDate(response.data.date)} a bien été modifiée !`,
+    };
   } catch (error) {
-    console.error(error);
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue({ severity: 'error', message: "Echec de la modification" });
   }
 });
 
-export const deleteSport = createAsyncThunk('sport/deleteSport', async (id: number, { getState, dispatch }) => {
+export const deleteSport = createAsyncThunk('sport/deleteSport', async (id: number, { getState, dispatch,rejectWithValue }) => {
   try {
     const token = (getState() as RootState).user.token;
     const response = await axios.delete(`http://localhost:8000/api/users/activities/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     dispatch(removeSport(id));
-    return response.data;
+    return {
+      severity: 'info',
+      message: `Votre session a bien été supprimée !`,
+    };
   } catch (error) {
-    console.error(error);
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue({ severity: 'error', message: "Echec de la suppression" });
   }
 });

@@ -28,7 +28,7 @@ export const postDrug = createAsyncThunk('drug/postDrug', async (_, { getState, 
   }
 });
 
-export const editDrug = createAsyncThunk('drug/editDrug', async (_, { getState, dispatch }) => {
+export const editDrug = createAsyncThunk('drug/editDrug', async (_, { getState, dispatch, rejectWithValue }) => {
   try {
     const { quantity, name, unit, date, id } = (getState() as RootState).drug;
     const token = (getState() as RootState).user.token;
@@ -43,21 +43,23 @@ export const editDrug = createAsyncThunk('drug/editDrug', async (_, { getState, 
       { headers: { Authorization: `Bearer ${token}` } }
     );
     dispatch(updateDrug(response.data));
-    return response.data;
+    return { severity: 'info', message: `Modification du traitement médical en date du ${calcDate(response.data.date)}` };
   } catch (error) {
-    console.error(error);
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue({ severity: 'error', message: "Echec de la modification" });
   }
 });
 
-export const deleteDrug = createAsyncThunk('sleep/deleteDrug', async (id: number, { getState, dispatch }) => {
+export const deleteDrug = createAsyncThunk('sleep/deleteDrug', async (id: number, { getState, dispatch, rejectWithValue }) => {
   try {
     const token = (getState() as RootState).user.token;
     const response = await axios.delete(`http://localhost:8000/api/users/drugs/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     dispatch(removeDrug(id));
-    return response.data;
+    return { severity: 'info', message: `Votre traitement médical a bien été supprimé` };
   } catch (error) {
-    console.error(error);
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue({ severity: 'error', message: "Echec de la suppression" });
   }
 });

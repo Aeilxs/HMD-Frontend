@@ -28,7 +28,7 @@ export const postSleep = createAsyncThunk('sleep/postSleep', async (_, { getStat
   }
 });
 
-export const editSleep = createAsyncThunk('sleep/editSleep', async (_, { getState, dispatch }) => {
+export const editSleep = createAsyncThunk('sleep/editSleep', async (_, { getState, dispatch, rejectWithValue }) => {
   try {
     const { date, quantity, quality, id } = (getState() as RootState).sleep;
     const token = (getState() as RootState).user.token;
@@ -42,21 +42,29 @@ export const editSleep = createAsyncThunk('sleep/editSleep', async (_, { getStat
       { headers: { Authorization: `Bearer ${token}` } }
     );
     dispatch(updateSleeps(response.data));
-    return response.data;
+    return {
+      severity: 'info',
+      message: `Votre nuit de sommeil du ${calcDate(response.data.date)} a bien été modifiée`,
+    };
   } catch (error) {
-    console.error(error);
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue({ severity: 'error', message: "Echec de la modification" });
   }
 });
 
-export const deleteSleep = createAsyncThunk('sleep/deleteSleep', async (id: number, { getState, dispatch }) => {
+export const deleteSleep = createAsyncThunk('sleep/deleteSleep', async (id: number, { getState, dispatch, rejectWithValue }) => {
   try {
     const token = (getState() as RootState).user.token;
     const response = await axios.delete(`http://localhost:8000/api/users/sleeps/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     dispatch(removeSleeps(id));
-    return response.data;
+    return {
+      severity: 'info',
+      message: `Votre nuit de sommeil a bien été supprimée`,
+    };
   } catch (error) {
-    console.error(error);
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue({ severity: 'error', message: "Echec de la suppression" });
   }
 });

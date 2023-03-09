@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
 import { RootState } from '../../../store/store';
-import { postSport } from './sportMiddleware';
+import { deleteSport, editSport, postSport } from './sportMiddleware';
 
 export interface sportState {
   id: number | null;
@@ -62,7 +62,23 @@ export const sportSlice = createSlice({
       .addCase(postSport.rejected, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
         return { ...state, message: { severity: severity, message: message } };
-      });
+      })
+      .addCase(editSport.fulfilled, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
+      })
+      .addCase(editSport.rejected, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
+      })
+      .addCase(deleteSport.fulfilled, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
+      })
+      .addCase(deleteSport.rejected, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
+      })
   },
 });
 

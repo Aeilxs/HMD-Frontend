@@ -30,7 +30,7 @@ export const postSmoke = createAsyncThunk('smoke/postSmoke', async (_, { getStat
   }
 });
 
-export const editSmoke = createAsyncThunk('smoke/editSmoke', async (_, { getState, dispatch }) => {
+export const editSmoke = createAsyncThunk('smoke/editSmoke', async (_, { getState, dispatch, rejectWithValue }) => {
   try {
     const { date, quantity, id } = (getState() as RootState).smoke;
     const token = (getState() as RootState).user.token;
@@ -43,21 +43,29 @@ export const editSmoke = createAsyncThunk('smoke/editSmoke', async (_, { getStat
       { headers: { Authorization: `Bearer ${token}` } }
     );
     dispatch(updateSmoke(response.data));
-    return response.data;
-  } catch (error) {
-    console.error(error);
+    return {
+      severity: 'info',
+      message: `Votre consommation de cigarette du ${calcDate(response.data.date)} a bien été modifiée`,
+    };
+  } catch (error: any) {
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue({
+      severity: 'error',
+      message: "Echec de la modification",
+    });
   }
 });
 
-export const deleteSmoke = createAsyncThunk('smoke/deleteSmoke', async (id: number, { getState, dispatch }) => {
+export const deleteSmoke = createAsyncThunk('smoke/deleteSmoke', async (id: number, { getState, dispatch, rejectWithValue }) => {
   try {
     const token = (getState() as RootState).user.token;
     const response = await axios.delete(`http://localhost:8000/api/users/cigarettes/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     dispatch(removeSmoke(id));
-    return response.data;
+    return { severity: 'info', message: `Votre consommation a bien été supprimée` };
   } catch (error) {
-    console.error(error);
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue({ severity: 'error', message: "Echec de la suppression" });
   }
 });

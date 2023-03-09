@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
 import { RootState } from '../../../store/store';
-import { editSleep, postSleep } from './sleepMiddleware';
+import { deleteSleep, editSleep, postSleep } from './sleepMiddleware';
 
 export interface SleepState {
   id: number | null;
@@ -57,10 +57,20 @@ export const sleepSlice = createSlice({
         return { ...state, message: { severity: severity, message: message } };
       })
       .addCase(editSleep.fulfilled, (state, action) => {
-        return { ...state, isEdit: false };
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
       })
       .addCase(editSleep.rejected, (state, action) => {
-        console.error(action.payload);
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };;
+      })
+      .addCase(deleteSleep.fulfilled, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
+      })
+      .addCase(deleteSleep.rejected, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };;
       });
   },
 });

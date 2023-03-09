@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
 import { RootState } from '../../../store/store';
-import { editSmoke, postSmoke } from './smokeMiddleware';
+import { deleteSmoke, editSmoke, postSmoke } from './smokeMiddleware';
 
 export interface SmokeState {
   id: number | null;
@@ -51,10 +51,20 @@ export const smokeSlice = createSlice({
         return { ...state, message: { severity: severity, message: message } };
       })
       .addCase(editSmoke.fulfilled, (state, action) => {
-        return { ...state, isEdit: false };
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
       })
       .addCase(editSmoke.rejected, (state, action) => {
-        console.error(action.payload);
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
+      })
+      .addCase(deleteSmoke.fulfilled, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state,  message: { severity: severity, message: message } };
+      })
+      .addCase(deleteSmoke.rejected, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state,  message: { severity: severity, message: message } };
       });
   },
 });

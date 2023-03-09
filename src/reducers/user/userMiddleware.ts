@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
+import { setProfilInputs } from '../dashboard/profil/profilSlice';
 interface ResponseData {
   token: string;
 }
@@ -15,6 +16,7 @@ export const registerLoginUser = createAsyncThunk(
         password: password,
       });
       dispatch(fetchUser(response.data.token));
+      console.log(response.data)
       localStorage.setItem('token', response.data.token);
       return response.data.token;
     } catch (error: any) {

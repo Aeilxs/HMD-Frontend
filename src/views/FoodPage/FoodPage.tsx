@@ -1,10 +1,11 @@
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-
+import { useNavigate } from 'react-router-dom';
 import { getFoodNameById, getUniqueFoods } from '../../utils/math';
 
 import {
   resetInputs,
   selectDate,
+  selectFoodMessage,
   selectFoodsList,
   selectIsLoading,
   selectSelectedFood,
@@ -21,8 +22,9 @@ import FoodSelector from './FoodSelector/FoodSelector';
 import CategorySelector from './CategorySelector/CategorySelector';
 import QuantitySelector from './QuantitySelector/QuantitySelector';
 
-import { Box, Container, Button, Typography, CircularProgress } from '@mui/material';
-import { selectFoods } from '../../reducers/user/userSlice';
+import { Box, Container, Button, Typography, CircularProgress, Alert } from '@mui/material';
+import { selectFoods, selectProperties } from '../../reducers/user/userSlice';
+import { Navigate } from 'react-router-dom';
 
 export default function FoodPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -33,6 +35,9 @@ export default function FoodPage(): JSX.Element {
   const date = useAppSelector(selectDate);
   const uniqueFoods = getUniqueFoods(foodsList);
   const foods = useAppSelector(selectFoods);
+  const message = useAppSelector(selectFoodMessage)
+  const properties = useAppSelector(selectProperties)
+  const navigate = useNavigate();
 
   const aliments = [
     'Fruits frais',
@@ -45,7 +50,6 @@ export default function FoodPage(): JSX.Element {
     'Boissons',
     'Sauces',
   ];
-
   return (
     <Container>
       <Typography
@@ -71,11 +75,15 @@ export default function FoodPage(): JSX.Element {
         }}
         onSubmit={(event) => {
           event.preventDefault();
+          if(properties.length === 0) {
+            navigate('/profil');
+          }
           isEdit ? dispatch(editFood(selectedFood)) : dispatch(postFood(selectedFood));
           dispatch(resetInputs());
           dispatch(setIsEdit(false));
         }}
       >
+        {message.message && <Alert severity={message.severity}>{message.message}</Alert>}
         {isEdit ? (
           <Typography
             variant="h5"

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
 import { RootState } from '../../../store/store';
-import { postHydration } from './hydrationMiddleware';
+import { deleteHydration, postHydration } from './hydrationMiddleware';
 
 export interface HydrationState {
   id: number | null;
@@ -49,6 +49,16 @@ export const hydrationSlice = createSlice({
       .addCase(postHydration.rejected, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
         return { ...state, message: { severity: severity, message: message } };
+      })
+      .addCase(deleteHydration.fulfilled, (state, action) => {
+        console.log(action.payload)
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state,  message: { severity: severity, message: message } };
+      })
+      .addCase(deleteHydration.rejected, (state, action) => {
+        console.log(action.payload)
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state,  message: { severity: severity, message: message } };
       });
   },
 });

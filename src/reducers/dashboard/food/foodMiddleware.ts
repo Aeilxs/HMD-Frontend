@@ -22,14 +22,14 @@ export const fetchProducts = createAsyncThunk(
 
 export const postFood = createAsyncThunk(
   'food/postFood',
-  async (selectedFood: Food | null, { getState, dispatch }) => {
+  async (selectedFood: Food | null, { getState, dispatch, rejectWithValue }) => {
+    const { date, quantity } = (getState() as RootState).food;
+    if (!selectedFood) {
+      return rejectWithValue({ severity: 'error', message: "Veuillez saisir un aliment" });
+    }
+    const { name } = selectedFood;
+    const token = (getState() as RootState).user.token;
     try {
-      const { date, quantity } = (getState() as RootState).food;
-      if (!selectedFood) {
-        throw new Error('Selected food is not set');
-      }
-      const { name } = selectedFood;
-      const token = (getState() as RootState).user.token;
       const response = await axios.post(
         'http://localhost:8000/api/users/alimentations',
         {
@@ -46,19 +46,24 @@ export const postFood = createAsyncThunk(
         { headers: { Authorization: `Bearer ${token}` } }
       );
       dispatch(setFood(response.data));
-      return response.data;
+      return {
+        data: response.data,
+        severity: 'info',
+        message: `Vos informations ont bien été mises à jour`,
+      };
     }
-    catch (error) {
-      console.error(error);
+    catch (error:any) {
+      if (!axios.isAxiosError(error)) throw error;
+      return rejectWithValue({ severity: 'error', message: "Echec de l'ajout" });
     }
   }
 );
 
-export const editFood = createAsyncThunk('food/editFood',   async ( selectedFood: Food | null, { getState, dispatch }) => {
+export const editFood = createAsyncThunk('food/editFood',   async ( selectedFood: Food | null, { getState, dispatch,rejectWithValue }) => {
   try {
     const { date, quantity, id } = (getState() as RootState).food;
     if (!selectedFood) {
-      throw new Error('Selected food is not set');
+      return rejectWithValue({ severity: 'error', message: "Veuillez saisir un aliment" });
     }
     const { name } = selectedFood;
     const token = (getState() as RootState).user.token;
@@ -78,15 +83,20 @@ export const editFood = createAsyncThunk('food/editFood',   async ( selectedFood
       { headers: { Authorization: `Bearer ${token}` } }
     );
     dispatch(updateFood(response.data));
-    return response.data;
+    return {
+      data: response.data,
+      severity: 'info',
+      message: `Votre aliment a bien été mis à jour`,
+    };
   }
-  catch (error) {
-    console.error(error);
+  catch (error:any) {
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue({ severity: 'error', message: "Echec de la modification" });
   }
 });
 
 
-export const deleteFood = createAsyncThunk('food/deleteFood', async (id:number, { getState, dispatch }) => {
+export const deleteFood = createAsyncThunk('food/deleteFood', async (id:number, { getState, dispatch, rejectWithValue }) => {
   try {
   const token = (getState() as RootState).user.token;
   const response = await axios.delete(
@@ -94,9 +104,13 @@ export const deleteFood = createAsyncThunk('food/deleteFood', async (id:number, 
     { headers: { Authorization: `Bearer ${token}` } }
   );
   dispatch(removeFood(id));
-  return response.data;
+  return {
+    severity: 'info',
+    message: `Votre aliment a bien été supprimé`,
+  };
   }
   catch (error) {
-    console.error(error);
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue({ severity: 'error', message: "Echec de la suppression" });
   }
 });

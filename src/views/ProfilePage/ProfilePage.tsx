@@ -55,6 +55,7 @@ export default function ProfilePage(): JSX.Element {
         }}
       >
         <CustomDatePicker
+          label="Date de naissance"
           value={dateOfBirth}
           actionCreator={setDateOfBirth}
         />

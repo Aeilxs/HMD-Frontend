@@ -5,14 +5,12 @@ import { useAppDispatch } from '../../store/hooks';
 import 'dayjs/locale/fr';
 
 interface CustomDatePickerProps {
+  label?: string;
   value: null | string;
   actionCreator: Function;
 }
 
-export default function CustomDatePicker({
-  value,
-  actionCreator,
-}: CustomDatePickerProps): JSX.Element {
+export default function CustomDatePicker({ label, value, actionCreator }: CustomDatePickerProps): JSX.Element {
   const dispatch = useAppDispatch();
   return (
     <LocalizationProvider
@@ -20,7 +18,7 @@ export default function CustomDatePicker({
       adapterLocale="fr"
     >
       <DatePicker
-        label="Date"
+        label={label ?? 'Date'}
         value={value}
         onChange={(event) => dispatch(actionCreator(event?.toString()))}
         renderInput={(params) => <TextField {...params} />}

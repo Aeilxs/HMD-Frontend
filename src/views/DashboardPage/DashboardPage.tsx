@@ -11,23 +11,40 @@ import {
   hydrationsChartData,
   activitiesChartData,
   drugsChartData,
+  foodChartData,
 } from '../../utils/chartsData';
-import { selectDrugs, selectHydrations, selectSleeps, selectSmokes, selectSports } from '../../reducers/user/userSlice';
+import {
+  selectDrugs,
+  selectFoods,
+  selectHydrations,
+  selectSleeps,
+  selectSmokes,
+  selectSports,
+} from '../../reducers/user/userSlice';
 import { useAppSelector } from '../../store/hooks';
 import AddBox from './AddBox/AddBox';
 
 export default function DashboardPage(): JSX.Element {
-  const { activitiesPercentages, activitiesLabels } = activitiesChartData(useAppSelector(selectSports));
+  const { activitiesPercentages, activitiesLabels } = activitiesChartData(
+    useAppSelector(selectSports)
+  );
   const { sleepDates, sleepQualities, sleepAmounts } = sleepChartData(useAppSelector(selectSleeps));
   const hydrationData = hydrationsChartData(useAppSelector(selectHydrations));
   const smokeData = smokeChartData(useAppSelector(selectSmokes));
   const drugData = drugsChartData(useAppSelector(selectDrugs));
+  const { foodLabels, foodIntakes, foodNeeds } = foodChartData(useAppSelector(selectFoods));
 
   const displayAddBox = drugData.length === 0 || smokeData.dates.length === 0;
 
   return (
     <Grid>
-      <FoodGraph />
+      {foodLabels.length !== 0 && (
+        <FoodGraph
+          dates={foodLabels}
+          foodIntakes={foodIntakes.data}
+          foodNeeds={foodNeeds.data}
+        />
+      )}
       {activitiesPercentages && (
         <ActivitiesGraph
           labels={activitiesLabels}

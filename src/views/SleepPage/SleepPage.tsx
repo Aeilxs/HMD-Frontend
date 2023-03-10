@@ -109,7 +109,7 @@ export default function SleepPage(): JSX.Element {
           actionCreator={setDate}
         />
         <Button
-          sx={{ m: 'auto' }}
+          sx={{ m: 'auto', my: 1 }}
           variant="contained"
           type="submit"
         >

@@ -49,12 +49,7 @@ export const userSlice = createSlice({
         age: calcAge(action.payload),
       };
     },
-    setWeight: (state, action: PayloadAction<number>) => {
-      return { ...state, weight: action.payload };
-    },
-    setHeight: (state, action: PayloadAction<number>) => {
-      return { ...state, height: action.payload };
-    },
+
     setIsLogged: (state) => {
       return { ...state, isLogged: true };
     },
@@ -219,8 +214,6 @@ export const userSlice = createSlice({
 
 export const {
   setDateOfBirth,
-  setWeight,
-  setHeight,
   onLogout,
   setIsLogged,
   setSleeps,

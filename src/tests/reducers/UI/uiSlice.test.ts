@@ -34,7 +34,7 @@ describe('UI reducer test suites', () => {
 
   it('should handle toggle form', () => {
     const actual = uiReducer(initialState, toggleForm(false));
-    expect(actual.isRegistered).toBe(true);
+    expect(actual.isRegistered).toBe(false);
   });
 
   it('should handle toggle drawer', () => {
@@ -44,25 +44,25 @@ describe('UI reducer test suites', () => {
 
   it('should handle change event on first firstname textfield', () => {
     const newState = uiReducer(initialState, setValue({ value: 'john', name: 'firstname' }));
-    const expectedState = { ...initialState, firstname: 'john' };
+    const expectedState = { ...initialState, user: { ...initialState.user, firstname: 'john' } };
     expect(newState).toEqual(expectedState);
   });
 
   it('should handle change event on first name textfield', () => {
     const newState = uiReducer(initialState, setValue({ value: 'doe', name: 'name' }));
-    const expectedState = { ...initialState, name: 'doe' };
+    const expectedState = { ...initialState, user: { ...initialState.user, name: 'doe' } };
     expect(newState).toEqual(expectedState);
   });
 
   it('should handle change event on first email textfield', () => {
     const newState = uiReducer(initialState, setValue({ value: 'john.doe@gmail.com', name: 'email' }));
-    const expectedState = { ...initialState, email: 'john.doe@gmail.com' };
+    const expectedState = { ...initialState, user: { ...initialState.user, email: 'john.doe@gmail.com' } };
     expect(newState).toEqual(expectedState);
   });
 
   it('should handle change event on first password textfield', () => {
     const newState = uiReducer(initialState, setValue({ value: 'johnSecurePassword', name: 'password' }));
-    const expectedState = { ...initialState, password: 'johnSecurePassword' };
+    const expectedState = { ...initialState, user: { ...initialState.user, password: 'johnSecurePassword' } };
     expect(newState).toEqual(expectedState);
   });
 

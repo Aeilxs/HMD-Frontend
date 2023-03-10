@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-, "src/tests/components/App/App.test.tsx", "src/setupTests.ts", "src/tests/features/counter/counterSlice.test.ts"  ]
+, "src/tests/components/App/App.test.tsx", "src/setupTests.ts", "src/tests/reducers/counter/counterSlice.test.ts"  ]
 }

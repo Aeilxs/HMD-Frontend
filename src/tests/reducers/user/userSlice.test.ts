@@ -1,8 +1,8 @@
-import userReducer, { UserState } from '../../reducers/user/userSlice';
+import userReducer, { UserState } from '../../../reducers/user/userSlice';
 
 describe('user reducer test suite', () => {
   const initialState: UserState = {
-    firstname:'',
+    firstname: '',
     gender: '',
     isLogged: false,
     token: '',
@@ -17,7 +17,7 @@ describe('user reducer test suite', () => {
 
   it('should handle initial state', () => {
     expect(userReducer(initialState, { type: 'unknown' })).toEqual({
-      firstname:'',
+      firstname: '',
       gender: '',
       isLogged: false,
       token: '',
@@ -29,5 +29,11 @@ describe('user reducer test suite', () => {
       activities: [],
       sleeps: [],
     });
+  });
+
+  // missing: date of birth test
+
+  it('should handle ...', () => {
+    //
   });
 });

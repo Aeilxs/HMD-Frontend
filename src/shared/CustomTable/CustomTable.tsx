@@ -10,15 +10,15 @@ import { Button, IconButton } from '@mui/material';
 import { Edit, Delete, Add } from '@mui/icons-material/';
 import { dataSleepApi } from '../../reducers/dashboard/sleep/sleepSlice';
 import { dataDrugApi } from '../../reducers/dashboard/drug/drugSlice';
-import { dataProfilApi } from '../../reducers/dashboard/profil/profilSlice';
 import { dataHydrationApi } from '../../reducers/dashboard/hydration/hydrationSlice';
 import { dataSmokeApi } from '../../reducers/dashboard/smoke/smokeSlice';
 import { dataSportApi } from '../../reducers/dashboard/sport/sportSlice';
 import { setIsEdit } from '../../reducers/UI/uiSlice';
-import { RefObject, useState } from 'react';
+import { RefObject } from 'react';
 import { themeLight } from '../../theme/theme';
+import { calcDate } from '../../utils/math';
 
-type GenericProps = dataSleepApi | dataDrugApi | dataProfilApi | dataHydrationApi | dataSmokeApi | dataSportApi;
+type GenericProps = dataSleepApi | dataDrugApi | dataHydrationApi | dataSmokeApi | dataSportApi;
 
 type TableProps<GenericProps> = {
   array: GenericProps[];
@@ -70,7 +70,7 @@ export default function CustomTable({ array, onSelect, onDelete, resetInput, for
                   key={key}
                   sx={{ textAlign: 'center' }}
                 >
-                  {element[key as keyof GenericProps]}
+                  {key === 'date' ? calcDate(element.date) : element[key as keyof GenericProps]}
                 </TableCell>
               ))}
               <TableCell sx={{ textAlign: 'right' }}>

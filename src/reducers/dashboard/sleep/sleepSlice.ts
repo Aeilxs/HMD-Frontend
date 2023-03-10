@@ -50,27 +50,27 @@ export const sleepSlice = createSlice({
     builder
       .addCase(postSleep.fulfilled, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(postSleep.rejected, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(editSleep.fulfilled, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(editSleep.rejected, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };;
+        return { ...state, message: { severity, message } };
       })
       .addCase(deleteSleep.fulfilled, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(deleteSleep.rejected, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };;
+        return { ...state, message: { severity, message } };
       });
   },
 });

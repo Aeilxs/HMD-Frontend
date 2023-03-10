@@ -57,28 +57,28 @@ export const sportSlice = createSlice({
     builder
       .addCase(postSport.fulfilled, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(postSport.rejected, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(editSport.fulfilled, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(editSport.rejected, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(deleteSport.fulfilled, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(deleteSport.rejected, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
-      })
+        return { ...state, message: { severity, message } };
+      });
   },
 });
 

@@ -44,21 +44,21 @@ export const hydrationSlice = createSlice({
     builder
       .addCase(postHydration.fulfilled, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(postHydration.rejected, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(deleteHydration.fulfilled, (state, action) => {
-        console.log(action.payload)
+        console.log(action.payload);
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state,  message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(deleteHydration.rejected, (state, action) => {
-        console.log(action.payload)
+        console.log(action.payload);
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state,  message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       });
   },
 });

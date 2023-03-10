@@ -51,22 +51,22 @@ export const profilSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(postProfil.fulfilled, (state, action) => {
-      const { severity, message } = action.payload as AlertMessage;
-      return { ...state, message: { severity: severity, message: message } };
-    })
-    .addCase(postProfil.rejected , (state, action) => {
-      const { severity, message } = action.payload as AlertMessage;
-      return { ...state, message: { severity: severity, message: message } };
-    })
-    .addCase(editProfil.fulfilled , (state, action) => {
-      const { severity, message } = action.payload as AlertMessage;
-      return { ...state, message: { severity: severity, message: message } };
-    })
-    .addCase(editProfil.rejected , (state, action) => {
-      const { severity, message } = action.payload as AlertMessage;
-      return { ...state, message: { severity: severity, message: message } };
-    });
+      .addCase(postProfil.fulfilled, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
+      })
+      .addCase(postProfil.rejected, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
+      })
+      .addCase(editProfil.fulfilled, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
+      })
+      .addCase(editProfil.rejected, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
+      });
   },
 });
 

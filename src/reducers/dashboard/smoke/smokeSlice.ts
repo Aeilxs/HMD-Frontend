@@ -44,27 +44,27 @@ export const smokeSlice = createSlice({
     builder
       .addCase(postSmoke.fulfilled, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(postSmoke.rejected, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(editSmoke.fulfilled, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(editSmoke.rejected, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state, message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(deleteSmoke.fulfilled, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state,  message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       })
       .addCase(deleteSmoke.rejected, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state,  message: { severity: severity, message: message } };
+        return { ...state, message: { severity, message } };
       });
   },
 });

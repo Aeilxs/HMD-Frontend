@@ -47,7 +47,7 @@ export default function ProfilePage(): JSX.Element {
         content="Afin de fournir des données précises et personnalisées pour votre santé, nous avons besoin de certaines informations de base, telles que votre âge, votre taille et votre date de naissance. Ces informations sont utilisées pour effectuer des calculs et des analyses qui nous permettent de surveiller votre santé de manière efficace. Nous prenons la protection de vos données personnelles très au sérieux et nous utilisons ces informations uniquement à des fins de santé et de bien-être."
       />
       <Box
-        sx={{ display: 'flex', flexDirection: 'column' }}
+        sx={{ my: 2, display: 'flex', flexDirection: 'column' }}
         component="form"
         onSubmit={(event) => {
           event.preventDefault();

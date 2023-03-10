@@ -6,6 +6,7 @@ import {
   selectWeight,
   setHeight,
   setWeight,
+  selectProfilMessage,
 } from '../../reducers/dashboard/profil/profilSlice';
 
 import MessageBox from '../../shared/MessageBox/MessageBox';
@@ -22,6 +23,7 @@ export default function ProfilePage(): JSX.Element {
   const weight = useAppSelector(selectWeight);
   const height = useAppSelector(selectHeight);
   const properties = useAppSelector(selectProperties);
+  const message = useAppSelector(selectProfilMessage);
 
   return (
     <Container sx={{ mt: 2 }}>
@@ -54,6 +56,7 @@ export default function ProfilePage(): JSX.Element {
           properties.length > 0 ? dispatch(editProfil(properties[0].id)) : dispatch(postProfil());
         }}
       >
+        {message.message && <Alert severity={message.severity}>{message.message}</Alert>}
         <CustomDatePicker
           label="Date de naissance"
           value={dateOfBirth}

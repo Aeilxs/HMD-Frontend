@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
 import { RootState } from '../../../store/store';
-import { editSmoke, postSmoke } from './smokeMiddleware';
+import { deleteSmoke, editSmoke, postSmoke } from './smokeMiddleware';
 
 export interface SmokeState {
   id: number | null;
+  message: AlertMessage;
   date: string | null;
   quantity: number | '';
 }
@@ -16,6 +18,7 @@ export interface dataSmokeApi {
 
 const initialState: SmokeState = {
   id: null,
+  message: { severity: 'info', message: '' },
   date: null,
   quantity: '',
 };
@@ -40,16 +43,28 @@ export const smokeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(postSmoke.fulfilled, (state, action) => {
-        console.log(action.payload);
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
       })
       .addCase(postSmoke.rejected, (state, action) => {
-        console.error(action.payload);
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
       })
       .addCase(editSmoke.fulfilled, (state, action) => {
-        return { ...state, isEdit: false };
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
       })
       .addCase(editSmoke.rejected, (state, action) => {
-        console.error(action.payload);
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
+      })
+      .addCase(deleteSmoke.fulfilled, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
+      })
+      .addCase(deleteSmoke.rejected, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
       });
   },
 });
@@ -58,5 +73,6 @@ export const { setSmokeDate, setSmokeQuantity, setSelectedSmoke, resetInputs } =
 
 export const selectSmokeDate = (state: RootState) => state.smoke.date;
 export const selectSmokeQuantity = (state: RootState) => state.smoke.quantity;
+export const selectSmokeMessage = (state: RootState) => state.smoke.message;
 
 export default smokeSlice.reducer;

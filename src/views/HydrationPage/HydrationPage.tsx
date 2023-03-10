@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material';
+import { Alert, Button, TextField } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import {
   selectHydrationDate,
@@ -7,17 +7,14 @@ import {
   selectHydrationQuantity,
   setSelectedHydration,
   resetInputs,
+  selectHydrationMessage,
 } from '../../reducers/dashboard/hydration/hydrationSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';
-import {
-  deleteHydration,
-  editHydration,
-  postHydration,
-} from '../../reducers/dashboard/hydration/hydrationMiddleware';
+import { deleteHydration, editHydration, postHydration } from '../../reducers/dashboard/hydration/hydrationMiddleware';
 import CustomTable from '../../shared/CustomTable/CustomTable';
-import { removeHydration, selectHydrations } from '../../reducers/user/userSlice';
+import { selectHydrations } from '../../reducers/user/userSlice';
 import { selectIsEdit } from '../../reducers/UI/uiSlice';
 import { useRef } from 'react';
 
@@ -27,6 +24,7 @@ export default function HydrationPage(): JSX.Element {
   const quantity = useAppSelector(selectHydrationQuantity);
   const hydrations = useAppSelector(selectHydrations);
   const isEdit = useAppSelector(selectIsEdit);
+  const { message, severity } = useAppSelector(selectHydrationMessage);
   const formRef = useRef(null);
 
   return (
@@ -54,6 +52,7 @@ export default function HydrationPage(): JSX.Element {
         }}
         sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}
       >
+        {message && <Alert severity={severity}>{message}</Alert>}
         <TextField
           onChange={(event) => dispatch(setQuantity(Number(event.target.value)))}
           value={quantity}
@@ -67,7 +66,7 @@ export default function HydrationPage(): JSX.Element {
           actionCreator={setDate}
         />
         <Button
-          sx={{ m: 'auto' }}
+          sx={{ m: 'auto', my: 1 }}
           variant="contained"
           type="submit"
         >

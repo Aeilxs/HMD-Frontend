@@ -41,6 +41,7 @@ function App(): JSX.Element {
     { path: '/tabagisme', component: <SmokePage /> },
     { path: '/sommeil', component: <SleepPage /> },
     { path: '/hydratation', component: <HydrationPage /> },
+    { path: '/alimentation', component: <FoodPage /> },
     { path: '/dashboard', component: <DashboardPage /> },
   ];
 
@@ -77,10 +78,6 @@ function App(): JSX.Element {
               element={localStorage.getItem('token') || isLogged ? route.component : <Navigate to="/authentification" />}
             />
           ))}
-           <Route
-            path="/alimentation"
-            element={properties.length <= 0 ? <Navigate to='/profil' /> : <FoodPage />}
-          />
           <Route
             path="*"
             element={

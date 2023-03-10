@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
+import { registerLoginUser, registerUser } from '../user/userMiddleware';
 export interface dataUserApi {
   firstname: string;
   lastname: string;
@@ -16,8 +17,8 @@ export interface User {
 }
 
 export interface ErrorsForm {
-  login: boolean;
-  registration: boolean;
+  login: any;
+  registration: any;
 }
 
 export interface UIState {
@@ -31,7 +32,7 @@ export interface UIState {
 
 const initialState: UIState = {
   isDark: JSON.parse(localStorage.getItem('isDark') || 'false'),
-  errors: { login: false, registration: false },
+  errors: { login: null, registration: null },
   isRegistered: false,
   isDrawerOpen: false,
   isEdit: false,
@@ -77,27 +78,33 @@ export const UISlice = createSlice({
         },
       };
     },
-    setLoginError: (state, action: PayloadAction<boolean>) => {
-      return { ...state, errors: { ...state.errors, login: action.payload } };
-    },
-    setSubscribeError: (state, action: PayloadAction<boolean>) => {
-      return { ...state, errors: { ...state.errors, registration: action.payload } };
-    },
     setIsEdit: (state, action: PayloadAction<boolean>) => {
       return { ...state, isEdit: action.payload };
     },
   },
+  extraReducers(builder) {
+    builder
+      .addCase(registerUser.fulfilled, (state) => {
+        return {
+          ...state,
+          isRegistered: true,
+          user: { ...state.user, password: '' },
+          errors: { ...state.errors, registration: '' },
+        };
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        return { ...state, errors: { ...state.errors, registration: action.payload } };
+      })
+      .addCase(registerLoginUser.fulfilled, (state, action) => {
+        return { ...state, errors: { ...state.errors, login: '' } };
+      })
+      .addCase(registerLoginUser.rejected, (state, action) => {
+        return { ...state, errors: { ...state.errors, login: action.payload } };
+      });
+  },
 });
 
-export const {
-  toggleTheme,
-  toggleDrawer,
-  toggleForm,
-  setValue,
-  setGender,
-  setLoginError,
-  setIsEdit,
-} = UISlice.actions;
+export const { toggleTheme, toggleDrawer, toggleForm, setValue, setGender, setIsEdit } = UISlice.actions;
 
 export const selectTheme = (state: RootState) => state.ui.isDark;
 export const selectDrawerState = (state: RootState) => state.ui.isDrawerOpen;

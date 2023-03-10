@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
 import { RootState } from '../../../store/store';
-import { editDrug, postDrug } from './drugMiddleware';
+import { deleteDrug, editDrug, postDrug } from './drugMiddleware';
 
 export interface drugState {
   id: null | number;
+  message: AlertMessage;
   date: string | null;
   name: string;
   unit: string;
@@ -21,6 +23,7 @@ export interface dataDrugApi {
 
 const initialState: drugState = {
   id: null,
+  message: { severity: 'info', message: '' },
   date: null,
   name: '',
   unit: '',
@@ -57,28 +60,39 @@ export const drugSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(postDrug.fulfilled, (state, action) => {
-        console.log(action.payload);
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
       })
-      .addCase(postDrug.rejected, () => {
-        console.error('post drug rejected');
-        // en cas d'erreur
+      .addCase(postDrug.rejected, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
       })
       .addCase(editDrug.fulfilled, (state, action) => {
-        return { ...state, isEdit: false };
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
       })
       .addCase(editDrug.rejected, (state, action) => {
-        console.error(action.payload);
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity: severity, message: message } };
+      })
+      .addCase(deleteDrug.fulfilled, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state,  message: { severity: severity, message: message } };
+      })
+      .addCase(deleteDrug.rejected, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state,  message: { severity: severity, message: message } };
       });
   },
 });
 
-export const { setDate, setName, setUnit, setQuantity, setInfos, setSelectedDrug, resetInputs } =
-  drugSlice.actions;
+export const { setDate, setName, setUnit, setQuantity, setInfos, setSelectedDrug, resetInputs } = drugSlice.actions;
 
 export const selectDate = (state: RootState) => state.drug.date;
 export const selectName = (state: RootState) => state.drug.name;
 export const selectUnit = (state: RootState) => state.drug.unit;
 export const selectQuantity = (state: RootState) => state.drug.quantity;
 export const selectInfos = (state: RootState) => state.drug.infos;
+export const selectDrugMessage = (state: RootState) => state.drug.message;
 
 export default drugSlice.reducer;

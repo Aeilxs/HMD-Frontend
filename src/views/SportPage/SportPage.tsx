@@ -3,11 +3,12 @@ import DurationSport from './DurationSport/DurationSport';
 import IntensitySport from './IntensitySport/IntensitySport';
 import TypeSport from './TypeSport/TypeSport';
 
-import { Box, Button, Container } from '@mui/material';
+import { Alert, Box, Button, Container } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   resetInputs,
   selectDate,
+  selectSportMessage,
   setDate,
   setSelectedSport,
 } from '../../reducers/dashboard/sport/sportSlice';
@@ -23,6 +24,7 @@ export default function SportPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const sports = useAppSelector(selectSports);
   const isEdit = useAppSelector(selectIsEdit);
+  const { message, severity } = useAppSelector(selectSportMessage);
   const formRef = useRef(null);
 
   return (
@@ -49,6 +51,14 @@ export default function SportPage(): JSX.Element {
         }}
         sx={{ display: 'flex', flexDirection: 'column', mx: 'auto', my: 2 }}
       >
+        {message && (
+          <Alert
+            sx={{ my: 1 }}
+            severity={severity}
+          >
+            {message}
+          </Alert>
+        )}
         <TypeSport />
         <DurationSport />
         <IntensitySport />

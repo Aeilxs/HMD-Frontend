@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
 import { RootState } from '../../../store/store';
 import { calcAge } from '../../../utils/math';
-import { postProfil } from './profilMiddleware';
+import { editProfil, postProfil } from './profilMiddleware';
 
 export interface dataProfilApi {
   id: number;
@@ -13,13 +14,15 @@ export interface dataProfilApi {
 
 export interface ProfilState {
   dateOfBirth: string | null;
+  message: AlertMessage;
   age: number | '';
-  weight: number |'';
-  size: number |'';
+  weight: number | '';
+  size: number | '';
 }
 
 const initialState: ProfilState = {
   dateOfBirth: null,
+  message: { severity: 'info', message: '' },
   age: '',
   weight: '',
   size: '',
@@ -40,7 +43,7 @@ export const profilSlice = createSlice({
       return { ...state, weight: action.payload };
     },
     setHeight: (state, action: PayloadAction<number>) => {
-      return { ...state, height: action.payload };
+      return { ...state, size: action.payload };
     },
     setProfilInputs: (state, action: PayloadAction<dataProfilApi>) => {
       return { ...state, ...action.payload };
@@ -49,20 +52,30 @@ export const profilSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(postProfil.fulfilled, (state, action) => {
-        console.log(action.payload);
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
       })
-      .addCase(postProfil.rejected, () => {
-        console.error('non');
-        // en cas d'erreur
+      .addCase(postProfil.rejected, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
+      })
+      .addCase(editProfil.fulfilled, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
+      })
+      .addCase(editProfil.rejected, (state, action) => {
+        const { severity, message } = action.payload as AlertMessage;
+        return { ...state, message: { severity, message } };
       });
   },
 });
 
-export const { setDateOfBirth, setWeight, setHeight,setProfilInputs } = profilSlice.actions;
+export const { setDateOfBirth, setWeight, setHeight, setProfilInputs } = profilSlice.actions;
 
 export const selectDateOfBirth = (state: RootState) => state.profil.dateOfBirth;
 export const selectWeight = (state: RootState) => state.profil.weight;
 export const selectHeight = (state: RootState) => state.profil.size;
 export const selectAge = (state: RootState) => state.profil.age;
+export const selectProfilMessage = (state: RootState) => state.profil.message;
 
 export default profilSlice.reducer;

@@ -15,7 +15,8 @@ import { dataHydrationApi } from '../../reducers/dashboard/hydration/hydrationSl
 import { dataSmokeApi } from '../../reducers/dashboard/smoke/smokeSlice';
 import { dataSportApi } from '../../reducers/dashboard/sport/sportSlice';
 import { setIsEdit } from '../../reducers/UI/uiSlice';
-import { RefObject } from 'react';
+import { RefObject, useState } from 'react';
+import { themeLight } from '../../theme/theme';
 
 type GenericProps = dataSleepApi | dataDrugApi | dataProfilApi | dataHydrationApi | dataSmokeApi | dataSportApi;
 
@@ -28,6 +29,8 @@ type TableProps<GenericProps> = {
 };
 
 export default function CustomTable({ array, onSelect, onDelete, resetInput, formRef }: TableProps<GenericProps>) {
+  const editColor = themeLight.palette.warning.main;
+  const deleteColor = themeLight.palette.error.dark;
   const dispatch = useAppDispatch();
 
   return (
@@ -75,7 +78,11 @@ export default function CustomTable({ array, onSelect, onDelete, resetInput, for
               <TableCell sx={{ textAlign: 'right' }}>
                 <IconButton
                   aria-label="edit"
-                  sx={{ backgroundColor: '#f79829', mr: 2 }}
+                  sx={{
+                    mr: 2,
+                    backgroundColor: themeLight.palette.warning.light,
+                    '&:hover': { backgroundColor: themeLight.palette.warning.main },
+                  }}
                   onClick={() => {
                     dispatch(setIsEdit(true));
                     dispatch(onSelect(element as GenericProps));
@@ -86,7 +93,10 @@ export default function CustomTable({ array, onSelect, onDelete, resetInput, for
                 </IconButton>
                 <IconButton
                   aria-label="delete"
-                  sx={{ backgroundColor: 'red' }}
+                  sx={{
+                    backgroundColor: themeLight.palette.error.light,
+                    '&:hover': { backgroundColor: themeLight.palette.error.dark },
+                  }}
                   onClick={() => dispatch(onDelete(element.id))}
                 >
                   <Delete />

@@ -1,4 +1,5 @@
 import { dataDrugApi } from '../reducers/dashboard/drug/drugSlice';
+import { dataFoodApi } from '../reducers/dashboard/food/foodSlice';
 import { dataHydrationApi } from '../reducers/dashboard/hydration/hydrationSlice';
 import { dataSleepApi } from '../reducers/dashboard/sleep/sleepSlice';
 import { dataSmokeApi } from '../reducers/dashboard/smoke/smokeSlice';
@@ -60,7 +61,9 @@ export const activitiesChartData = (activities: dataSportApi[]) => {
 
   const percentages = labels.map((label) => {
     const time = data[label.toLowerCase()];
-    const percentage = Math.round((time / activities.reduce((acc, cur) => acc + cur.time, 0)) * 100);
+    const percentage = Math.round(
+      (time / activities.reduce((acc, cur) => acc + cur.time, 0)) * 100
+    );
     return percentage;
   });
   return { activitiesLabels: labels, activitiesPercentages: percentages };
@@ -83,7 +86,21 @@ export const drugsChartData = (drugs: dataDrugApi[]) => {
   return rows;
 };
 
-export const foodChartData = () => {};
+export const foodChartData = (foods: dataFoodApi[]) => {
+  const dates: string[] = [];
+  const caloricIntakes: number[] = [];
+  const caloricNeeds: number[] = [];
+  foods.forEach((food) => {
+    caloricIntakes.push(food.caloricIntake);
+    caloricNeeds.push(food.caloricNeed);
+    dates.push(calcDate(food.date));
+  });
+  return {
+    foodLabels: dates,
+    foodIntakes: mergeData(dates, caloricIntakes),
+    foodNeeds: mergeData(dates, caloricNeeds),
+  };
+};
 
 const mergeData = (dates: string[], data: number[]) => {
   const mergedData: Record<string, number> = {};

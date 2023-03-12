@@ -15,6 +15,7 @@ import {
 } from '../../utils/chartsData';
 import {
   selectDrugs,
+  selectFirstName,
   selectFoods,
   selectHydrations,
   selectSleeps,
@@ -22,7 +23,8 @@ import {
   selectSports,
 } from '../../reducers/user/userSlice';
 import { useAppSelector } from '../../store/hooks';
-import AddBox from './AddBox/AddBox';
+import IndicatorsPage from './IndicatorBoxes/IndicatorBoxes';
+import WelcomeMessage from './WelcomeMessage/WelcomeMessage';
 
 export default function DashboardPage(): JSX.Element {
   const { activitiesPercentages, activitiesLabels } = activitiesChartData(
@@ -34,10 +36,17 @@ export default function DashboardPage(): JSX.Element {
   const drugData = drugsChartData(useAppSelector(selectDrugs));
   const { foodLabels, foodIntakes, foodNeeds } = foodChartData(useAppSelector(selectFoods));
 
-  const displayAddBox = drugData.length === 0 || smokeData.dates.length === 0;
+  const displayMessage =
+    drugData.length === 0 &&
+    smokeData.dates.length === 0 &&
+    foodLabels.length === 0 &&
+    !activitiesLabels &&
+    hydrationData.dates.length === 0 &&
+    sleepDates.length === 0;
 
   return (
     <Grid>
+      <IndicatorsPage />
       {foodLabels.length !== 0 && (
         <FoodGraph
           dates={foodLabels}
@@ -71,12 +80,7 @@ export default function DashboardPage(): JSX.Element {
           amounts={smokeData.data}
         />
       )}
-      {displayAddBox && (
-        <AddBox
-          drugOption={drugData.length}
-          smokeOption={smokeData.dates.length}
-        />
-      )}
+      {displayMessage && <WelcomeMessage />}
     </Grid>
   );
 }

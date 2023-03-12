@@ -24,7 +24,7 @@ import QuantitySelector from './QuantitySelector/QuantitySelector';
 
 import { Box, Container, Button, Typography, CircularProgress, Alert } from '@mui/material';
 import { selectFoods, selectProperties } from '../../reducers/user/userSlice';
-import { Navigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function FoodPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -35,8 +35,8 @@ export default function FoodPage(): JSX.Element {
   const date = useAppSelector(selectDate);
   const uniqueFoods = getUniqueFoods(foodsList);
   const foods = useAppSelector(selectFoods);
-  const message = useAppSelector(selectFoodMessage)
-  const properties = useAppSelector(selectProperties)
+  const message = useAppSelector(selectFoodMessage);
+  const properties = useAppSelector(selectProperties);
   const navigate = useNavigate();
 
   const aliments = [
@@ -51,7 +51,15 @@ export default function FoodPage(): JSX.Element {
     'Sauces',
   ];
   return (
-    <Container>
+    <Container sx={{ position: 'relative' }}>
+      <Button
+        variant="text"
+        startIcon={<ArrowBackIcon />}
+        onClick={() => navigate('/dashboard')}
+        sx={{ position: 'absolute' }}
+      >
+        dashboard
+      </Button>
       <Typography
         variant="h1"
         sx={{ fontSize: '3em', textAlign: 'center', my: 5 }}
@@ -75,7 +83,7 @@ export default function FoodPage(): JSX.Element {
         }}
         onSubmit={(event) => {
           event.preventDefault();
-          if(properties.length === 0) {
+          if (properties.length === 0) {
             navigate('/profil');
           }
           isEdit ? dispatch(editFood(selectedFood)) : dispatch(postFood(selectedFood));

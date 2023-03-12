@@ -8,6 +8,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Typography,
 } from '@mui/material';
 import {
   resetInputs,
@@ -32,9 +33,12 @@ import { selectIsEdit } from '../../reducers/UI/uiSlice';
 import CustomTable from '../../shared/CustomTable/CustomTable';
 import { selectDrugs } from '../../reducers/user/userSlice';
 import { useRef } from 'react';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
 export default function DrugPage(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const date = useAppSelector(selectDate);
   const name = useAppSelector(selectName);
   const unit = useAppSelector(selectUnit);
@@ -46,7 +50,21 @@ export default function DrugPage(): JSX.Element {
   const formRef = useRef(null);
 
   return (
-    <Container sx={{ mt: 2 }}>
+    <Container sx={{ mt: 2, position: 'relative' }}>
+      <Button
+        variant="text"
+        startIcon={<ArrowBackIcon />}
+        onClick={() => navigate('/dashboard')}
+        sx={{ position: 'absolute' }}
+      >
+        dashboard
+      </Button>
+      <Typography
+        variant="h1"
+        sx={{ fontSize: '3em', textAlign: 'center', my: 5 }}
+      >
+        Traitement médical
+      </Typography>
       <MessageBox
         title="L'importance de suivre ses traitements médicaux"
         content="Lorsqu'un professionnel de la santé prescrit un traitement médical, il est important de suivre attentivement les instructions pour maximiser les chances de guérison ou d'amélioration de votre santé. Cela peut inclure la prise régulière de médicaments, le suivi d'un régime alimentaire spécifique ou la participation à des séances de thérapie ou de réadaptation. Le non-respect de ces instructions peut entraîner des complications et des conséquences négatives sur la santé, y compris des effets secondaires indésirables ou une aggravation de l'état de santé. Si vous avez des préoccupations ou des questions concernant votre traitement, n'hésitez pas à en discuter avec votre médecin ou votre professionnel de la santé. Ensemble, vous pouvez travailler pour trouver un traitement efficace et adapté à votre situation individuelle."

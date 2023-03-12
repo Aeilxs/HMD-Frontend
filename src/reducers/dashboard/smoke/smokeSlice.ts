@@ -36,8 +36,8 @@ export const smokeSlice = createSlice({
     setSelectedSmoke: (state, action: PayloadAction<dataSmokeApi>) => {
       return { ...state, ...action.payload };
     },
-    resetInputs: (state) => {
-      return { ...state, date: null, quantity: '' };
+    resetSmokeInputs: (state) => {
+      return { ...initialState };
     },
   },
   extraReducers: (builder) => {
@@ -69,7 +69,8 @@ export const smokeSlice = createSlice({
   },
 });
 
-export const { setSmokeDate, setSmokeQuantity, setSelectedSmoke, resetInputs } = smokeSlice.actions;
+export const { setSmokeDate, setSmokeQuantity, setSelectedSmoke, resetSmokeInputs } =
+  smokeSlice.actions;
 
 export const selectSmokeDate = (state: RootState) => state.smoke.date;
 export const selectSmokeQuantity = (state: RootState) => state.smoke.quantity;

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getFoodNameById, getUniqueFoods } from '../../utils/math';
 
 import {
-  resetInputs,
+  resetFoodInputs,
   selectDate,
   selectFoodMessage,
   selectFoodsList,
@@ -87,7 +87,7 @@ export default function FoodPage(): JSX.Element {
             navigate('/profil');
           }
           isEdit ? dispatch(editFood(selectedFood)) : dispatch(postFood(selectedFood));
-          dispatch(resetInputs());
+          dispatch(resetFoodInputs());
           dispatch(setIsEdit(false));
         }}
       >

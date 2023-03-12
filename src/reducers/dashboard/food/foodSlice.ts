@@ -86,12 +86,15 @@ export const FoodSlice = createSlice({
       if (state.selectedFood && state.quantity) {
         return {
           ...state,
-          consommedFoods: [...state.consommedFoods, { ...state.selectedFood, quantity: state.quantity }],
+          consommedFoods: [
+            ...state.consommedFoods,
+            { ...state.selectedFood, quantity: state.quantity },
+          ],
         };
       }
     },
-    resetInputs: (state) => {
-      return { ...state, ...initialState };
+    resetFoodInputs: (state) => {
+      return { ...initialState };
     },
   },
   extraReducers: (builder) => {
@@ -139,7 +142,7 @@ export const {
   setSelectedFood,
   setQuantity,
   setConsommedFoods,
-  resetInputs,
+  resetFoodInputs,
   setId,
 } = FoodSlice.actions;
 

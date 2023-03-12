@@ -6,7 +6,7 @@ import {
   setQuantity,
   selectHydrationQuantity,
   setSelectedHydration,
-  resetInputs,
+  resetHydrationInputs,
   selectHydrationMessage,
 } from '../../reducers/dashboard/hydration/hydrationSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -60,7 +60,7 @@ export default function HydrationPage(): JSX.Element {
           array={hydrations}
           onSelect={setSelectedHydration}
           onDelete={deleteHydration}
-          resetInput={resetInputs}
+          resetInput={resetHydrationInputs}
           formRef={formRef}
         />
       )}

@@ -3,7 +3,7 @@ import { RootState } from '../../../store/store';
 import axios from 'axios';
 import { removeSleeps, setSleeps, updateSleeps } from '../../user/userSlice';
 import { calcDate } from '../../../utils/math';
-import { resetInputs } from './sleepSlice';
+import { resetSleepInputs } from './sleepSlice';
 
 export const postSleep = createAsyncThunk(
   'sleep/postSleep',
@@ -21,7 +21,7 @@ export const postSleep = createAsyncThunk(
         { headers: { Authorization: `Bearer ${token}` } }
       );
       dispatch(setSleeps(response.data));
-      dispatch(resetInputs());
+      dispatch(resetSleepInputs());
       return {
         severity: 'info',
         message: `Votre nuit de sommeil du ${calcDate(response.data.date)} a bien été enregistrée`,
@@ -49,7 +49,7 @@ export const editSleep = createAsyncThunk(
         { headers: { Authorization: `Bearer ${token}` } }
       );
       dispatch(updateSleeps(response.data));
-      dispatch(resetInputs());
+      dispatch(resetSleepInputs());
       return {
         severity: 'info',
         message: `Votre nuit de sommeil du ${calcDate(response.data.date)} a bien été modifiée`,

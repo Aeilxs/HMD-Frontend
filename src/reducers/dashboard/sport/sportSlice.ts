@@ -34,7 +34,10 @@ export const sportSlice = createSlice({
   name: 'sport',
   initialState,
   reducers: {
-    setType: (state, action: PayloadAction<'course' | 'marche' | 'natation' | 'velo' | 'exercices'>) => {
+    setType: (
+      state,
+      action: PayloadAction<'course' | 'marche' | 'natation' | 'velo' | 'exercices'>
+    ) => {
       return { ...state, type: action.payload };
     },
     setDuration: (state, action: PayloadAction<number>) => {
@@ -49,8 +52,8 @@ export const sportSlice = createSlice({
     setSelectedSport: (state, action: PayloadAction<dataSportApi>) => {
       return { ...state, ...action.payload };
     },
-    resetInputs: (state) => {
-      return { ...state, date: null, type: '', time: '', intensity: '' };
+    resetSportInputs: (state) => {
+      return { ...initialState };
     },
   },
   extraReducers: (builder) => {
@@ -82,7 +85,8 @@ export const sportSlice = createSlice({
   },
 });
 
-export const { setType, setDuration, setIntensity, setDate, setSelectedSport, resetInputs } = sportSlice.actions;
+export const { setType, setDuration, setIntensity, setDate, setSelectedSport, resetSportInputs } =
+  sportSlice.actions;
 
 export const selectDate = (state: RootState) => state.sport.date;
 export const selectType = (state: RootState) => state.sport.type;

@@ -6,7 +6,7 @@ import TypeSport from './TypeSport/TypeSport';
 import { Alert, Box, Button, Container, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  resetInputs,
+  resetSportInputs,
   selectDate,
   selectSportMessage,
   setDate,
@@ -55,7 +55,7 @@ export default function SportPage(): JSX.Element {
           array={sports}
           onSelect={setSelectedSport}
           onDelete={deleteSport}
-          resetInput={resetInputs}
+          resetInput={resetSportInputs}
           formRef={formRef}
         />
       )}

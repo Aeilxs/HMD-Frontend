@@ -48,6 +48,9 @@ export const profilSlice = createSlice({
     setProfilInputs: (state, action: PayloadAction<dataProfilApi>) => {
       return { ...state, ...action.payload };
     },
+    resetProfilInputs: (state) => {
+      return { ...initialState };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -70,7 +73,8 @@ export const profilSlice = createSlice({
   },
 });
 
-export const { setDateOfBirth, setWeight, setHeight, setProfilInputs } = profilSlice.actions;
+export const { setDateOfBirth, setWeight, setHeight, setProfilInputs, resetProfilInputs } =
+  profilSlice.actions;
 
 export const selectDateOfBirth = (state: RootState) => state.profil.dateOfBirth;
 export const selectWeight = (state: RootState) => state.profil.weight;

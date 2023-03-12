@@ -5,7 +5,7 @@ import 'dayjs/locale/fr';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  resetInputs,
+  resetSmokeInputs,
   selectSmokeDate,
   selectSmokeMessage,
   selectSmokeQuantity,
@@ -55,7 +55,7 @@ export default function SmokePage(): JSX.Element {
           array={smokes}
           onSelect={setSelectedSmoke}
           onDelete={deleteSmoke}
-          resetInput={resetInputs}
+          resetInput={resetSmokeInputs}
           formRef={formRef}
         />
       )}

@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import {
-  resetInputs,
+  resetDrugsInputs,
   selectDate,
   selectDrugMessage,
   selectInfos,
@@ -74,7 +74,7 @@ export default function DrugPage(): JSX.Element {
           array={drugs}
           onSelect={setSelectedDrug}
           onDelete={deleteDrug}
-          resetInput={resetInputs}
+          resetInput={resetDrugsInputs}
           formRef={formRef}
         />
       )}

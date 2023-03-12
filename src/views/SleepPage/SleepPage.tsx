@@ -8,7 +8,7 @@ import {
   setDate,
   setQuality,
   setSelectedSleep,
-  resetInputs,
+  resetSleepInputs,
   selectSleepMessage,
 } from '../../reducers/dashboard/sleep/sleepSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -57,7 +57,7 @@ export default function SleepPage(): JSX.Element {
           array={sleeps}
           onSelect={setSelectedSleep}
           onDelete={deleteSleep}
-          resetInput={resetInputs}
+          resetInput={resetSleepInputs}
           formRef={formRef}
         />
       )}

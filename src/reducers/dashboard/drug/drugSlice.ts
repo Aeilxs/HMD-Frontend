@@ -53,8 +53,8 @@ export const drugSlice = createSlice({
     setSelectedDrug: (state, action: PayloadAction<dataDrugApi>) => {
       return { ...state, ...action.payload };
     },
-    resetInputs: (state) => {
-      return { ...state, date: null, name: '', unit: '', quantity: '', infos: '' };
+    resetDrugsInputs: (state) => {
+      return { ...initialState };
     },
   },
   extraReducers: (builder) => {
@@ -77,16 +77,24 @@ export const drugSlice = createSlice({
       })
       .addCase(deleteDrug.fulfilled, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state,  message: { severity: severity, message: message } };
+        return { ...state, message: { severity: severity, message: message } };
       })
       .addCase(deleteDrug.rejected, (state, action) => {
         const { severity, message } = action.payload as AlertMessage;
-        return { ...state,  message: { severity: severity, message: message } };
+        return { ...state, message: { severity: severity, message: message } };
       });
   },
 });
 
-export const { setDate, setName, setUnit, setQuantity, setInfos, setSelectedDrug, resetInputs } = drugSlice.actions;
+export const {
+  setDate,
+  setName,
+  setUnit,
+  setQuantity,
+  setInfos,
+  setSelectedDrug,
+  resetDrugsInputs,
+} = drugSlice.actions;
 
 export const selectDate = (state: RootState) => state.drug.date;
 export const selectName = (state: RootState) => state.drug.name;

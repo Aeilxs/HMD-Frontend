@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
+import { setProfilInputs } from '../dashboard/profil/profilSlice';
 interface ResponseData {
   token: string;
 }
@@ -33,29 +34,33 @@ export const registerLoginUser = createAsyncThunk(
   }
 );
 
-export const registerUser = createAsyncThunk('user/registerUser', async (_, { getState, rejectWithValue }) => {
-  const { firstname, lastname, email, password, gender } = (getState() as RootState).ui.user;
-  try {
-    const response = await axios.post('http://localhost:8000/api/users', {
-      firstname: firstname,
-      lastname: lastname,
-      email: email,
-      password: password,
-      gender: gender,
-    });
-    return response.data;
-  } catch (error) {
-    if (!axios.isAxiosError(error)) throw error;
-    switch (error.response?.status) {
-      case 500:
-        return rejectWithValue('Erreur du serveur');
+export const registerUser = createAsyncThunk(
+  'user/registerUser',
+  async (_, { getState, rejectWithValue }) => {
+    const { firstname, lastname, email, password, gender } = (getState() as RootState).ui.user;
+    try {
+      const response = await axios.post('http://localhost:8000/api/users', {
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        password: password,
+        gender: gender,
+      });
+      return response.data;
+    } catch (error) {
+      if (!axios.isAxiosError(error)) throw error;
+      switch (error.response?.status) {
+        case 500:
+          return rejectWithValue('Erreur du serveur');
+      }
     }
   }
-});
+);
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string, { dispatch }) => {
   const response = await axios.get(`http://localhost:8000/api/users/user`, {
     headers: { Authorization: `Bearer ${token}` },
   });
+  dispatch(setProfilInputs(response.data.properties[0]));
   return response.data;
 });

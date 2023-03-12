@@ -16,9 +16,12 @@ import { Box } from '@mui/system';
 import { Alert, AlertTitle, Button, Container, TextField, Typography } from '@mui/material';
 import { editProfil, postProfil } from '../../reducers/dashboard/profil/profilMiddleware';
 import { selectProperties } from '../../reducers/user/userSlice';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfilePage(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const dateOfBirth = useAppSelector(selectDateOfBirth);
   const weight = useAppSelector(selectWeight);
   const height = useAppSelector(selectHeight);
@@ -26,7 +29,16 @@ export default function ProfilePage(): JSX.Element {
   const message = useAppSelector(selectProfilMessage);
 
   return (
-    <Container sx={{ mt: 2 }}>
+    <Container sx={{ mt: 2, position: 'relative' }}>
+      <Button
+        variant="text"
+        startIcon={<ArrowBackIcon />}
+        onClick={() => navigate('/dashboard')}
+        sx={{ position: 'absolute' }}
+      >
+        dashboard
+      </Button>
+
       {properties.length === 0 && (
         <Alert
           severity="info"

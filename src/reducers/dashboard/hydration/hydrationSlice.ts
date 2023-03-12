@@ -36,8 +36,8 @@ export const hydrationSlice = createSlice({
     setSelectedHydration: (state, action: PayloadAction<dataHydrationApi>) => {
       return { ...state, ...action.payload };
     },
-    resetInputs: (state) => {
-      return { ...state, date: null, quantity: '' };
+    resetHydrationInputs: (state) => {
+      return { ...initialState };
     },
   },
   extraReducers: (builder) => {
@@ -63,7 +63,8 @@ export const hydrationSlice = createSlice({
   },
 });
 
-export const { setDate, setQuantity, setSelectedHydration, resetInputs } = hydrationSlice.actions;
+export const { setDate, setQuantity, setSelectedHydration, resetHydrationInputs } =
+  hydrationSlice.actions;
 
 export const selectHydrationDate = (state: RootState) => state.hydration.date;
 export const selectHydrationQuantity = (state: RootState) => state.hydration.quantity;

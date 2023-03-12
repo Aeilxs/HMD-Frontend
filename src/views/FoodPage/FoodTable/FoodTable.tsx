@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { setIsEdit } from '../../../reducers/UI/uiSlice';
 import { selectFoods } from '../../../reducers/user/userSlice';
 import { deleteFood } from '../../../reducers/dashboard/food/foodMiddleware';
-import { resetInputs, setId } from '../../../reducers/dashboard/food/foodSlice';
+import { resetFoodInputs, setId } from '../../../reducers/dashboard/food/foodSlice';
 import { themeLight } from '../../../theme/theme';
 import {
   Table,
@@ -32,7 +32,7 @@ export default function FoodTable(): JSX.Element {
         sx={{ position: 'absolute', right: 0 }}
         onClick={() => {
           dispatch(setIsEdit(false));
-          dispatch(resetInputs());
+          dispatch(resetFoodInputs());
         }}
       >
         Add

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { RootState } from '../../../store/store';
 import { calcDate } from '../../../utils/math';
 import { removeHydration, setHydration, updateHydration } from '../../user/userSlice';
-import { resetInputs } from './hydrationSlice';
+import { resetHydrationInputs } from './hydrationSlice';
 
 export const postHydration = createAsyncThunk(
   'hydration/postHydration',
@@ -20,7 +20,7 @@ export const postHydration = createAsyncThunk(
         { headers: { Authorization: `Bearer ${token}` } }
       );
       dispatch(setHydration(response.data));
-      dispatch(resetInputs());
+      dispatch(resetHydrationInputs());
       return {
         severity: 'info',
         message: `Votre consommation d'eau du ${calcDate(response.data.date)} a bien été ajoutée`,
@@ -47,10 +47,12 @@ export const editHydration = createAsyncThunk(
         { headers: { Authorization: `Bearer ${token}` } }
       );
       dispatch(updateHydration(response.data));
-      dispatch(resetInputs());
+      dispatch(resetHydrationInputs());
       return {
         severity: 'info',
-        message: `Votre consommation d'eau du ${calcDate(response.data.date)} a bien été mise à jour`,
+        message: `Votre consommation d'eau du ${calcDate(
+          response.data.date
+        )} a bien été mise à jour`,
       };
     } catch (error: any) {
       if (!axios.isAxiosError(error)) throw error;
@@ -68,7 +70,7 @@ export const deleteHydration = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
       dispatch(removeHydration(id));
-      dispatch(resetInputs());
+      dispatch(resetHydrationInputs());
       return {
         severity: 'info',
         message: `Votre consommation a bien été supprimée`,

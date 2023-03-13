@@ -26,7 +26,7 @@ export const registerLoginUser = createAsyncThunk(
         case 404:
           return rejectWithValue('Erreur 404');
         case 500:
-          return rejectWithValue('Erreur du serveur');
+          return rejectWithValue('Tous les champs doivent être remplis');
         default:
           throw error;
       }
@@ -51,7 +51,7 @@ export const registerUser = createAsyncThunk(
       if (!axios.isAxiosError(error)) throw error;
       switch (error.response?.status) {
         case 500:
-          return rejectWithValue('Erreur du serveur');
+          return rejectWithValue('Tous les champs doivent être remplis');
       }
     }
   }

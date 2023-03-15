@@ -7,7 +7,6 @@ import hydrationReducer from '../reducers/dashboard/hydration/hydrationSlice';
 import sleepReducer from '../reducers/dashboard/sleep/sleepSlice';
 import smokeReducer from '../reducers/dashboard/smoke/smokeSlice';
 import sportReducer from '../reducers/dashboard/sport/sportSlice';
-import profilReducer from '../reducers/dashboard/profil/profilSlice';
 
 export const store = configureStore({
   reducer: {
@@ -19,15 +18,9 @@ export const store = configureStore({
     sleep: sleepReducer,
     smoke: smokeReducer,
     sport: sportReducer,
-    profil: profilReducer,
   },
 });
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;

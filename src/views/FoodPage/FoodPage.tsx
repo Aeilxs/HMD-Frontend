@@ -23,7 +23,7 @@ import CategorySelector from './CategorySelector/CategorySelector';
 import QuantitySelector from './QuantitySelector/QuantitySelector';
 
 import { Box, Container, Button, Typography, CircularProgress, Alert } from '@mui/material';
-import { selectFoods, selectProperties } from '../../reducers/user/userSlice';
+import { selectFoods } from '../../reducers/user/userSlice';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function FoodPage(): JSX.Element {
@@ -36,7 +36,6 @@ export default function FoodPage(): JSX.Element {
   const uniqueFoods = getUniqueFoods(foodsList);
   const foods = useAppSelector(selectFoods);
   const message = useAppSelector(selectFoodMessage);
-  const properties = useAppSelector(selectProperties);
   const navigate = useNavigate();
 
   const aliments = [
@@ -83,9 +82,6 @@ export default function FoodPage(): JSX.Element {
         }}
         onSubmit={(event) => {
           event.preventDefault();
-          if (properties.length === 0) {
-            navigate('/profil');
-          }
           isEdit ? dispatch(editFood(selectedFood)) : dispatch(postFood(selectedFood));
           dispatch(resetFoodInputs());
           dispatch(setIsEdit(false));

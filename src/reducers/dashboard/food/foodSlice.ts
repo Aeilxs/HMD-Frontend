@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
+import { AlertMessage } from '../../../Interfaces/AlertMessage';
 import { RootState } from '../../../store/store';
 import { deleteFood, editFood, fetchProducts, postFood } from './foodMiddleware';
 
@@ -11,13 +11,7 @@ export interface ApiProps {
   product_name_fr: string;
   nutriments: Nutriments;
 }
-export interface dataFoodApi {
-  id: number;
-  name: string;
-  caloricNeed: number;
-  caloricIntake: number;
-  date: string;
-}
+
 export interface ConsommedFood {
   key: string;
   name: string;
@@ -86,10 +80,7 @@ export const FoodSlice = createSlice({
       if (state.selectedFood && state.quantity) {
         return {
           ...state,
-          consommedFoods: [
-            ...state.consommedFoods,
-            { ...state.selectedFood, quantity: state.quantity },
-          ],
+          consommedFoods: [...state.consommedFoods, { ...state.selectedFood, quantity: state.quantity }],
         };
       }
     },

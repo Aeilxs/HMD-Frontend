@@ -13,7 +13,6 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectTheme, toggleDrawer, toggleTheme } from '../../reducers/UI/uiSlice';
 import { onLogout, selectFirstName, selectIsLogged } from '../../reducers/user/userSlice';
 import { resetSportInputs } from '../../reducers/dashboard/sport/sportSlice';
-import { resetProfilInputs } from '../../reducers/dashboard/profil/profilSlice';
 import { resetSmokeInputs } from '../../reducers/dashboard/smoke/smokeSlice';
 import { resetSleepInputs } from '../../reducers/dashboard/sleep/sleepSlice';
 import { resetHydrationInputs } from '../../reducers/dashboard/hydration/hydrationSlice';
@@ -71,7 +70,6 @@ export default function Nav(): JSX.Element {
             <>
               <Button
                 onClick={() => {
-                  dispatch(resetProfilInputs());
                   dispatch(resetDrugsInputs());
                   dispatch(resetSmokeInputs());
                   dispatch(resetSleepInputs());
@@ -95,9 +93,7 @@ export default function Nav(): JSX.Element {
               </Avatar>
             </>
           )}
-          <IconButton onClick={() => dispatch(toggleTheme())}>
-            {isDark ? <LightModeIcon /> : <DarkMode />}
-          </IconButton>
+          <IconButton onClick={() => dispatch(toggleTheme())}>{isDark ? <LightModeIcon /> : <DarkMode />}</IconButton>
         </Box>
       </AppBar>
     </Box>

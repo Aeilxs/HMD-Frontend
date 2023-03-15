@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
+import { AlertMessage } from '../../../Interfaces/AlertMessage';
+import { SmokeResponse } from '../../../Interfaces/API_Interfaces';
 import { RootState } from '../../../store/store';
 import { deleteSmoke, editSmoke, postSmoke } from './smokeMiddleware';
 
@@ -8,12 +9,6 @@ export interface SmokeState {
   message: AlertMessage;
   date: string | null;
   quantity: number | '';
-}
-
-export interface dataSmokeApi {
-  id: number;
-  quantity: number;
-  date: string;
 }
 
 const initialState: SmokeState = {
@@ -33,7 +28,7 @@ export const smokeSlice = createSlice({
     setSmokeQuantity: (state, action: PayloadAction<number>) => {
       return { ...state, quantity: action.payload };
     },
-    setSelectedSmoke: (state, action: PayloadAction<dataSmokeApi>) => {
+    setSelectedSmoke: (state, action: PayloadAction<SmokeResponse>) => {
       return { ...state, ...action.payload };
     },
     resetSmokeInputs: (state) => {
@@ -69,8 +64,7 @@ export const smokeSlice = createSlice({
   },
 });
 
-export const { setSmokeDate, setSmokeQuantity, setSelectedSmoke, resetSmokeInputs } =
-  smokeSlice.actions;
+export const { setSmokeDate, setSmokeQuantity, setSelectedSmoke, resetSmokeInputs } = smokeSlice.actions;
 
 export const selectSmokeDate = (state: RootState) => state.smoke.date;
 export const selectSmokeQuantity = (state: RootState) => state.smoke.quantity;

@@ -8,17 +8,19 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, IconButton } from '@mui/material';
 import { Edit, Delete, Add } from '@mui/icons-material/';
-import { dataSleepApi } from '../../reducers/dashboard/sleep/sleepSlice';
-import { dataDrugApi } from '../../reducers/dashboard/drug/drugSlice';
-import { dataHydrationApi } from '../../reducers/dashboard/hydration/hydrationSlice';
-import { dataSmokeApi } from '../../reducers/dashboard/smoke/smokeSlice';
-import { dataSportApi } from '../../reducers/dashboard/sport/sportSlice';
 import { setIsEdit } from '../../reducers/UI/uiSlice';
 import { RefObject } from 'react';
 import { themeLight } from '../../theme/theme';
 import { calcDate } from '../../utils/math';
+import {
+  ActivityResponse,
+  DrugResponse,
+  HydrationResponse,
+  SleepResponse,
+  SmokeResponse,
+} from '../../Interfaces/API_Interfaces';
 
-type GenericProps = dataSleepApi | dataDrugApi | dataHydrationApi | dataSmokeApi | dataSportApi;
+type GenericProps = SleepResponse | DrugResponse | HydrationResponse | SmokeResponse | ActivityResponse;
 
 type TableProps<GenericProps> = {
   array: GenericProps[];

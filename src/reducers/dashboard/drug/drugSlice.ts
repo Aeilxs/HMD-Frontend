@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
+import { AlertMessage } from '../../../Interfaces/AlertMessage';
+import { DrugResponse } from '../../../Interfaces/API_Interfaces';
 import { RootState } from '../../../store/store';
 import { deleteDrug, editDrug, postDrug } from './drugMiddleware';
 
@@ -11,14 +12,6 @@ export interface drugState {
   unit: string;
   quantity: number | '';
   infos: string;
-}
-
-export interface dataDrugApi {
-  id: number;
-  name: string;
-  unit: string;
-  quantity: number;
-  date: string;
 }
 
 const initialState: drugState = {
@@ -50,7 +43,7 @@ export const drugSlice = createSlice({
     setInfos: (state, action: PayloadAction<string>) => {
       return { ...state, infos: action.payload };
     },
-    setSelectedDrug: (state, action: PayloadAction<dataDrugApi>) => {
+    setSelectedDrug: (state, action: PayloadAction<DrugResponse>) => {
       return { ...state, ...action.payload };
     },
     resetDrugsInputs: (state) => {
@@ -86,15 +79,8 @@ export const drugSlice = createSlice({
   },
 });
 
-export const {
-  setDate,
-  setName,
-  setUnit,
-  setQuantity,
-  setInfos,
-  setSelectedDrug,
-  resetDrugsInputs,
-} = drugSlice.actions;
+export const { setDate, setName, setUnit, setQuantity, setInfos, setSelectedDrug, resetDrugsInputs } =
+  drugSlice.actions;
 
 export const selectDate = (state: RootState) => state.drug.date;
 export const selectName = (state: RootState) => state.drug.name;

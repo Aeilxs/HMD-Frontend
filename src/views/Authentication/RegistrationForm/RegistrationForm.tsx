@@ -26,11 +26,9 @@ function RegistrationForm({ error }: RegistrationFormProps) {
   const user = useAppSelector(selectUser);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
     if (event.target.value === 'Femme' || event.target.value === 'Homme') {
       dispatch(setGender(event.target.value));
     }
-    dispatch(setValue({ name, value }));
   };
 
   return (

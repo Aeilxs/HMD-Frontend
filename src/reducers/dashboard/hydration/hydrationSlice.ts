@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
+import { AlertMessage } from '../../../Interfaces/AlertMessage';
+import { HydrationResponse } from '../../../Interfaces/API_Interfaces';
 import { RootState } from '../../../store/store';
 import { deleteHydration, postHydration } from './hydrationMiddleware';
 
@@ -8,12 +9,6 @@ export interface HydrationState {
   message: AlertMessage;
   date: string | null;
   quantity: number | '';
-}
-
-export interface dataHydrationApi {
-  id: number;
-  quantity: number;
-  date: string;
 }
 
 const initialState: HydrationState = {
@@ -33,7 +28,7 @@ export const hydrationSlice = createSlice({
     setQuantity: (state, action: PayloadAction<number>) => {
       return { ...state, quantity: action.payload };
     },
-    setSelectedHydration: (state, action: PayloadAction<dataHydrationApi>) => {
+    setSelectedHydration: (state, action: PayloadAction<HydrationResponse>) => {
       return { ...state, ...action.payload };
     },
     resetHydrationInputs: (state) => {
@@ -63,8 +58,7 @@ export const hydrationSlice = createSlice({
   },
 });
 
-export const { setDate, setQuantity, setSelectedHydration, resetHydrationInputs } =
-  hydrationSlice.actions;
+export const { setDate, setQuantity, setSelectedHydration, resetHydrationInputs } = hydrationSlice.actions;
 
 export const selectHydrationDate = (state: RootState) => state.hydration.date;
 export const selectHydrationQuantity = (state: RootState) => state.hydration.quantity;

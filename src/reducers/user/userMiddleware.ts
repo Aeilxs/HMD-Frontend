@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-import { setProfilInputs } from '../dashboard/profil/profilSlice';
 interface ResponseData {
   token: string;
 }
@@ -11,14 +10,15 @@ export const registerLoginUser = createAsyncThunk(
   async (_, { getState, dispatch, rejectWithValue }) => {
     try {
       const { email, password } = (getState() as RootState).ui.user;
-      const response = await axios.post<ResponseData>('http://localhost:8000/api/login', {
-        username: email,
+      const response = await axios.post<ResponseData>('https://localhost:8000/api/login', {
+        email: email,
         password: password,
       });
       dispatch(fetchUser(response.data.token));
       localStorage.setItem('token', response.data.token);
       return response.data.token;
     } catch (error: any) {
+      console.log(error);
       if (!axios.isAxiosError(error)) throw error;
       switch (error.response?.status) {
         case 401:
@@ -34,33 +34,31 @@ export const registerLoginUser = createAsyncThunk(
   }
 );
 
-export const registerUser = createAsyncThunk(
-  'user/registerUser',
-  async (_, { getState, rejectWithValue }) => {
-    const { firstname, lastname, email, password, gender } = (getState() as RootState).ui.user;
-    try {
-      const response = await axios.post('http://localhost:8000/api/users', {
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        password: password,
-        gender: gender,
-      });
-      return response.data;
-    } catch (error) {
-      if (!axios.isAxiosError(error)) throw error;
-      switch (error.response?.status) {
-        case 500:
-          return rejectWithValue('Tous les champs doivent être remplis');
-      }
-    }
+export const registerUser = createAsyncThunk('user/registerUser', async (_, { getState, rejectWithValue }) => {
+  const { firstname, lastname, email, password, gender } = (getState() as RootState).ui.user;
+  try {
+    const response = await axios.post('https://localhost:8000/api/users', {
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      password: password,
+      gender: gender,
+    });
+    return response.data;
+  } catch (error) {
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue('Tous les champs doivent être remplis');
   }
-);
+});
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string, { dispatch }) => {
-  const response = await axios.get(`http://localhost:8000/api/users/user`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  dispatch(setProfilInputs(response.data.properties[0]));
-  return response.data;
+  try {
+    const response = await axios.get(`https://localhost:8000/api/users`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    // dispatch(setProfilInputs(response.data.properties[0]));
+    return response.data.user;
+  } catch (error) {
+    if (!axios.isAxiosError(error)) throw error;
+  }
 });

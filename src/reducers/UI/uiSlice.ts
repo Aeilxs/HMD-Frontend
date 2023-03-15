@@ -1,13 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import { registerLoginUser, registerUser } from '../user/userMiddleware';
-export interface dataUserApi {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  gender: 'Homme' | 'Femme';
-}
+
 export interface User {
   firstname: string;
   lastname: string;
@@ -59,11 +53,11 @@ export const UISlice = createSlice({
     toggleDrawer: (state) => {
       return { ...state, isDrawerOpen: !state.isDrawerOpen };
     },
-    setValue: (state, action: PayloadAction<{ value: string; name: string }>) => {
-      const { value, name } = action.payload;
+    setValue: (state, action: PayloadAction<{ page: string; value: string; name: string }>) => {
+      const { page, value, name } = action.payload;
       return {
         ...state,
-        user: {
+        [page]: {
           ...state.user,
           [name]: value,
         },

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
+import { AlertMessage } from '../../../Interfaces/AlertMessage';
+import { SleepResponse } from '../../../Interfaces/API_Interfaces';
 import { RootState } from '../../../store/store';
 import { deleteSleep, editSleep, postSleep } from './sleepMiddleware';
 
@@ -9,13 +10,6 @@ export interface SleepState {
   date: string | null;
   quantity: number | '';
   quality: number | '';
-}
-
-export interface dataSleepApi {
-  id: number;
-  time: number;
-  quality: number;
-  date: string;
 }
 
 const initialState: SleepState = {
@@ -39,7 +33,7 @@ export const sleepSlice = createSlice({
     setQuality: (state, action: PayloadAction<number>) => {
       return { ...state, quality: action.payload };
     },
-    setSelectedSleep: (state, action: PayloadAction<dataSleepApi>) => {
+    setSelectedSleep: (state, action: PayloadAction<SleepResponse>) => {
       return { ...state, ...action.payload, quantity: action.payload.time };
     },
     resetSleepInputs: (state) => {
@@ -75,8 +69,7 @@ export const sleepSlice = createSlice({
   },
 });
 
-export const { setDate, setQuantity, setQuality, setSelectedSleep, resetSleepInputs } =
-  sleepSlice.actions;
+export const { setDate, setQuantity, setQuality, setSelectedSleep, resetSleepInputs } = sleepSlice.actions;
 
 export const selectSleepDate = (state: RootState) => state.sleep.date;
 export const selectSleepQuantity = (state: RootState) => state.sleep.quantity;

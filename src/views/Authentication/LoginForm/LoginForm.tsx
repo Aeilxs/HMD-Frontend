@@ -12,10 +12,7 @@ interface LoginFormProps {
 function LoginForm({ error }: LoginFormProps) {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    dispatch(setValue({ name, value }));
-  };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {};
 
   return (
     <Box

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AlertMessage } from '../../../shared/Interfaces/AlertMessage';
+import { AlertMessage } from '../../../Interfaces/AlertMessage';
+import { ActivityResponse } from '../../../Interfaces/API_Interfaces';
 import { RootState } from '../../../store/store';
 import { deleteSport, editSport, postSport } from './sportMiddleware';
 
@@ -10,15 +11,6 @@ export interface sportState {
   type: string;
   time: number | '';
   intensity: '' | number;
-}
-
-export interface dataSportApi {
-  id: number;
-  type: string;
-  time: number;
-  intensity: number;
-  caloriesPerSession: number;
-  date: string;
 }
 
 const initialState: sportState = {
@@ -34,10 +26,7 @@ export const sportSlice = createSlice({
   name: 'sport',
   initialState,
   reducers: {
-    setType: (
-      state,
-      action: PayloadAction<'course' | 'marche' | 'natation' | 'velo' | 'exercices'>
-    ) => {
+    setType: (state, action: PayloadAction<'course' | 'marche' | 'natation' | 'velo' | 'exercices'>) => {
       return { ...state, type: action.payload };
     },
     setDuration: (state, action: PayloadAction<number>) => {
@@ -49,7 +38,7 @@ export const sportSlice = createSlice({
     setDate: (state, action: PayloadAction<string>) => {
       return { ...state, date: action.payload };
     },
-    setSelectedSport: (state, action: PayloadAction<dataSportApi>) => {
+    setSelectedSport: (state, action: PayloadAction<ActivityResponse>) => {
       return { ...state, ...action.payload };
     },
     resetSportInputs: (state) => {
@@ -85,8 +74,7 @@ export const sportSlice = createSlice({
   },
 });
 
-export const { setType, setDuration, setIntensity, setDate, setSelectedSport, resetSportInputs } =
-  sportSlice.actions;
+export const { setType, setDuration, setIntensity, setDate, setSelectedSport, resetSportInputs } = sportSlice.actions;
 
 export const selectDate = (state: RootState) => state.sport.date;
 export const selectType = (state: RootState) => state.sport.type;

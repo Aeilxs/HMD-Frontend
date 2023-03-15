@@ -1,4 +1,4 @@
-import { selectUser, setGender, setValue } from '../../../reducers/UI/uiSlice';
+import { selectAuthenticationInputs, setValue } from '../../../reducers/UI/uiSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import SendIcon from '@mui/icons-material/Send';
@@ -23,12 +23,10 @@ interface RegistrationFormProps {
 
 function RegistrationForm({ error }: RegistrationFormProps) {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser);
+  const inputValue = useAppSelector(selectAuthenticationInputs);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value === 'Femme' || event.target.value === 'Homme') {
-      dispatch(setGender(event.target.value));
-    }
+    dispatch(setValue({ path: 'authenticationInputs', name: event.target.name, value: event.target.value }));
   };
 
   return (
@@ -71,7 +69,7 @@ function RegistrationForm({ error }: RegistrationFormProps) {
             placeholder="Entrez votre prénom"
             variant="standard"
             type="text"
-            value={user.firstname}
+            value={inputValue.firstname}
             onChange={handleChange}
           />
           <TextField
@@ -82,7 +80,7 @@ function RegistrationForm({ error }: RegistrationFormProps) {
             placeholder="Entrez votre nom"
             variant="standard"
             type="text"
-            value={user.lastname}
+            value={inputValue.lastname}
             onChange={handleChange}
           />
           <TextField
@@ -93,7 +91,7 @@ function RegistrationForm({ error }: RegistrationFormProps) {
             placeholder="Entrez votre email"
             variant="standard"
             type="email"
-            value={user.email}
+            value={inputValue.email}
             onChange={handleChange}
           />
           <TextField
@@ -104,24 +102,24 @@ function RegistrationForm({ error }: RegistrationFormProps) {
             placeholder="Entrez un mot de passe"
             variant="standard"
             type="password"
-            value={user.password}
+            value={inputValue.password}
             onChange={handleChange}
           />
           <FormControl>
             <FormLabel sx={{ textAlign: 'start' }}>Genre</FormLabel>
             <RadioGroup
               row
-              value={user.gender}
+              value={inputValue.gender}
               onChange={handleChange}
               name="gender"
             >
               <FormControlLabel
-                value="Femme"
+                value="femme"
                 control={<Radio />}
                 label="Femme"
               />
               <FormControlLabel
-                value="Homme"
+                value="homme"
                 control={<Radio />}
                 label="Homme"
               />

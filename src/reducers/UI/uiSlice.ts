@@ -1,14 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  ActivityInputs,
+  AuthenticationInputs,
+  DrugInputs,
+  FoodInputs,
+  HydrationInputs,
+  InputPayload,
+  PropertyPath,
+  SleepInputs,
+  SmokeInputs,
+} from '../../Interfaces/inputs';
+
 import { RootState } from '../../store/store';
 import { registerLoginUser, registerUser } from '../user/userMiddleware';
-
-export interface User {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  gender: 'Homme' | 'Femme';
-}
 
 export interface ErrorsForm {
   login: any;
@@ -20,8 +24,14 @@ export interface UIState {
   errors: ErrorsForm;
   isRegistered: boolean;
   isDrawerOpen: boolean;
-  user: User;
   isEdit: boolean;
+  authenticationInputs: AuthenticationInputs;
+  drugInputs: DrugInputs;
+  foodInputs: FoodInputs;
+  hydrationInputs: HydrationInputs;
+  sleepInputs: SleepInputs;
+  smokeInputs: SmokeInputs;
+  activityInputs: ActivityInputs;
 }
 
 const initialState: UIState = {
@@ -30,12 +40,41 @@ const initialState: UIState = {
   isRegistered: false,
   isDrawerOpen: false,
   isEdit: false,
-  user: {
+  activityInputs: {
+    date: '',
+    duration: '',
+    intensity: '',
+    type: '',
+  },
+  authenticationInputs: {
     firstname: '',
     lastname: '',
     email: '',
     password: '',
-    gender: 'Homme',
+    gender: 'femme',
+  },
+  drugInputs: {
+    date: '',
+    name: '',
+    quantity: '',
+    unit: '',
+  },
+  foodInputs: {
+    date: '',
+    name: '',
+  },
+  hydrationInputs: {
+    date: '',
+    quantity: '',
+  },
+  sleepInputs: {
+    date: '',
+    duration: '',
+    quality: '',
+  },
+  smokeInputs: {
+    date: '',
+    quantity: '',
   },
 };
 
@@ -53,23 +92,11 @@ export const UISlice = createSlice({
     toggleDrawer: (state) => {
       return { ...state, isDrawerOpen: !state.isDrawerOpen };
     },
-    setValue: (state, action: PayloadAction<{ page: string; value: string; name: string }>) => {
-      const { page, value, name } = action.payload;
+    setValue: (state, action: PayloadAction<InputPayload>) => {
+      const { path, name, value } = action.payload;
       return {
         ...state,
-        [page]: {
-          ...state.user,
-          [name]: value,
-        },
-      };
-    },
-    setGender: (state, action: PayloadAction<'Homme' | 'Femme'>) => {
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          gender: action.payload,
-        },
+        [path]: { ...state[path], [name]: value },
       };
     },
     setIsEdit: (state, action: PayloadAction<boolean>) => {
@@ -81,8 +108,6 @@ export const UISlice = createSlice({
       .addCase(registerUser.fulfilled, (state) => {
         return {
           ...state,
-          isRegistered: true,
-          user: { ...state.user, password: '' },
           errors: { ...state.errors, registration: '' },
         };
       })
@@ -98,13 +123,14 @@ export const UISlice = createSlice({
   },
 });
 
-export const { toggleTheme, toggleDrawer, toggleForm, setValue, setGender, setIsEdit } = UISlice.actions;
+export const { toggleTheme, toggleDrawer, toggleForm, setValue, setIsEdit } = UISlice.actions;
 
 export const selectTheme = (state: RootState) => state.ui.isDark;
 export const selectDrawerState = (state: RootState) => state.ui.isDrawerOpen;
 export const selectForm = (state: RootState) => state.ui.isRegistered;
-export const selectUser = (state: RootState) => state.ui.user;
 export const selectAuthErrors = (state: RootState) => state.ui.errors;
 export const selectIsEdit = (state: RootState) => state.ui.isEdit;
+
+export const selectAuthenticationInputs = (state: RootState) => state.ui.authenticationInputs;
 
 export default UISlice.reducer;

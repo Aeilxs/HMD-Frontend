@@ -15,6 +15,7 @@ export interface UserState {
   isLogged: boolean;
   token: string;
   firstname: string;
+  lastname: string;
   gender: 'Femme' | 'Homme' | '';
   activities: ActivityResponse[];
   drugs: DrugResponse[];
@@ -28,6 +29,7 @@ const initialState: UserState = {
   isLogged: false,
   token: localStorage.getItem('token') || '',
   firstname: '',
+  lastname: '',
   gender: '',
   activities: [],
   drugs: [],

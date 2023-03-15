@@ -8,8 +8,8 @@ interface ResponseData {
 export const registerLoginUser = createAsyncThunk(
   'ui/registerLoginUser',
   async (_, { getState, dispatch, rejectWithValue }) => {
+    const { email, password } = (getState() as RootState).ui.authenticationInputs;
     try {
-      const { email, password } = (getState() as RootState).ui.user;
       const response = await axios.post<ResponseData>('https://localhost:8000/api/login', {
         email: email,
         password: password,
@@ -35,7 +35,7 @@ export const registerLoginUser = createAsyncThunk(
 );
 
 export const registerUser = createAsyncThunk('user/registerUser', async (_, { getState, rejectWithValue }) => {
-  const { firstname, lastname, email, password, gender } = (getState() as RootState).ui.user;
+  const { firstname, lastname, email, password, gender } = (getState() as RootState).ui.authenticationInputs;
   try {
     const response = await axios.post('https://localhost:8000/api/users', {
       firstname: firstname,

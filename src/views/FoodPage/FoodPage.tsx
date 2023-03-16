@@ -4,14 +4,12 @@ import { getFoodNameById, getUniqueFoods } from '../../utils/math';
 
 import {
   resetFoodInputs,
-  selectDate,
   selectFoodMessage,
   selectFoodsList,
   selectIsLoading,
   selectSelectedFood,
-  setDate,
 } from '../../reducers/dashboard/food/foodSlice';
-import { selectIsEdit, setIsEdit } from '../../reducers/UI/uiSlice';
+import { selectFoodInputs, selectIsEdit, setIsEdit, setInputValue } from '../../reducers/UI/uiSlice';
 import { editFood, postFood } from '../../reducers/dashboard/food/foodMiddleware';
 
 import MessageBox from '../../shared/MessageBox/MessageBox';
@@ -32,11 +30,15 @@ export default function FoodPage(): JSX.Element {
   const isLoading = useAppSelector(selectIsLoading);
   const foodsList = useAppSelector(selectFoodsList);
   const selectedFood = useAppSelector(selectSelectedFood);
-  const date = useAppSelector(selectDate);
+  const { date, category } = useAppSelector(selectFoodInputs);
   const uniqueFoods = getUniqueFoods(foodsList);
   const foods = useAppSelector(selectFoods);
   const message = useAppSelector(selectFoodMessage);
   const navigate = useNavigate();
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setInputValue({ path: 'foodInputs', name: event.target.name, value: event.target.value }));
+  };
 
   const aliments = [
     'Fruits frais',
@@ -49,6 +51,7 @@ export default function FoodPage(): JSX.Element {
     'Boissons',
     'Sauces',
   ];
+
   return (
     <Container sx={{ position: 'relative' }}>
       <Button
@@ -108,8 +111,10 @@ export default function FoodPage(): JSX.Element {
         {!isLoading && foodsList.length > 0 && <FoodSelector foods={uniqueFoods} />}
         {selectedFood && <QuantitySelector />}
         <CustomDatePicker
+          name="date"
+          path="foodInputs"
           value={date}
-          actionCreator={setDate}
+          actionCreator={setInputValue}
         />
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '2em' }}>
           <Button

@@ -12,12 +12,6 @@ import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectTheme, toggleDrawer, toggleTheme } from '../../reducers/UI/uiSlice';
 import { onLogout, selectFirstName, selectIsLogged } from '../../reducers/user/userSlice';
-import { resetSportInputs } from '../../reducers/dashboard/sport/sportSlice';
-import { resetSmokeInputs } from '../../reducers/dashboard/smoke/smokeSlice';
-import { resetSleepInputs } from '../../reducers/dashboard/sleep/sleepSlice';
-import { resetHydrationInputs } from '../../reducers/dashboard/hydration/hydrationSlice';
-import { resetFoodInputs } from '../../reducers/dashboard/food/foodSlice';
-import { resetDrugsInputs } from '../../reducers/dashboard/drug/drugSlice';
 
 export default function Nav(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
@@ -70,12 +64,12 @@ export default function Nav(): JSX.Element {
             <>
               <Button
                 onClick={() => {
-                  dispatch(resetDrugsInputs());
-                  dispatch(resetSmokeInputs());
-                  dispatch(resetSleepInputs());
-                  dispatch(resetHydrationInputs());
-                  dispatch(resetFoodInputs());
-                  dispatch(resetSportInputs());
+                  // dispatch(resetDrugsInputs());
+                  // dispatch(resetSmokeInputs());
+                  // dispatch(resetSleepInputs());
+                  // dispatch(resetHydrationInputs());
+                  // dispatch(resetFoodInputs());
+                  // dispatch(resetSportInputs());
                   dispatch(onLogout(false));
                 }}
                 sx={{ mr: 2 }}

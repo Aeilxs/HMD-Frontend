@@ -4,7 +4,7 @@ export {};
 //   toggleTheme,
 //   toggleForm,
 //   toggleDrawer,
-//   setValue,
+//     selectDate,
 //   setGender,
 // } from '../../../reducers/UI/uiSlice';
 
@@ -44,25 +44,33 @@ export {};
 //   });
 
 //   it('should handle change event on first firstname textfield', () => {
-//     const newState = uiReducer(initialState, setValue({ value: 'john', name: 'firstname' }));
+//     const newState = uiReducer(initialState,   selectDate,
+//   setDate,
+// ({ value: 'john', name: 'firstname' }));
 //     const expectedState = { ...initialState, user: { ...initialState.user, firstname: 'john' } };
 //     expect(newState).toEqual(expectedState);
 //   });
 
 //   it('should handle change event on first name textfield', () => {
-//     const newState = uiReducer(initialState, setValue({ value: 'doe', name: 'name' }));
+//     const newState = uiReducer(initialState,   selectDate,
+//   setDate,
+// ({ value: 'doe', name: 'name' }));
 //     const expectedState = { ...initialState, user: { ...initialState.user, name: 'doe' } };
 //     expect(newState).toEqual(expectedState);
 //   });
 
 //   it('should handle change event on first email textfield', () => {
-//     const newState = uiReducer(initialState, setValue({ value: 'john.doe@gmail.com', name: 'email' }));
+//     const newState = uiReducer(initialState,   selectDate,
+//   setDate,
+// ({ value: 'john.doe@gmail.com', name: 'email' }));
 //     const expectedState = { ...initialState, user: { ...initialState.user, email: 'john.doe@gmail.com' } };
 //     expect(newState).toEqual(expectedState);
 //   });
 
 //   it('should handle change event on first password textfield', () => {
-//     const newState = uiReducer(initialState, setValue({ value: 'johnSecurePassword', name: 'password' }));
+//     const newState = uiReducer(initialState,   selectDate,
+//   setDate,
+// ({ value: 'johnSecurePassword', name: 'password' }));
 //     const expectedState = { ...initialState, user: { ...initialState.user, password: 'johnSecurePassword' } };
 //     expect(newState).toEqual(expectedState);
 //   });

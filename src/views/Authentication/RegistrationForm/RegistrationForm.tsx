@@ -1,4 +1,4 @@
-import { selectAuthenticationInputs, setValue } from '../../../reducers/UI/uiSlice';
+import { selectAuthenticationInputs, setInputValue } from '../../../reducers/UI/uiSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import SendIcon from '@mui/icons-material/Send';
@@ -26,7 +26,7 @@ function RegistrationForm({ error }: RegistrationFormProps) {
   const inputValue = useAppSelector(selectAuthenticationInputs);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setValue({ path: 'authenticationInputs', name: event.target.name, value: event.target.value }));
+    dispatch(setInputValue({ path: 'authenticationInputs', name: event.target.name, value: event.target.value }));
   };
 
   return (

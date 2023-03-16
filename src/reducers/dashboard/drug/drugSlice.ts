@@ -28,26 +28,8 @@ export const drugSlice = createSlice({
   name: 'drug',
   initialState,
   reducers: {
-    setDate: (state, action: PayloadAction<string>) => {
-      return { ...state, date: action.payload };
-    },
-    setName: (state, action: PayloadAction<string>) => {
-      return { ...state, name: action.payload };
-    },
-    setUnit: (state, action: PayloadAction<string>) => {
-      return { ...state, unit: action.payload };
-    },
-    setQuantity: (state, action: PayloadAction<number>) => {
-      return { ...state, quantity: action.payload };
-    },
-    setInfos: (state, action: PayloadAction<string>) => {
-      return { ...state, infos: action.payload };
-    },
     setSelectedDrug: (state, action: PayloadAction<DrugResponse>) => {
       return { ...state, ...action.payload };
-    },
-    resetDrugsInputs: (state) => {
-      return { ...initialState };
     },
   },
   extraReducers: (builder) => {
@@ -79,14 +61,8 @@ export const drugSlice = createSlice({
   },
 });
 
-export const { setDate, setName, setUnit, setQuantity, setInfos, setSelectedDrug, resetDrugsInputs } =
-  drugSlice.actions;
+export const { setSelectedDrug } = drugSlice.actions;
 
-export const selectDate = (state: RootState) => state.drug.date;
-export const selectName = (state: RootState) => state.drug.name;
-export const selectUnit = (state: RootState) => state.drug.unit;
-export const selectQuantity = (state: RootState) => state.drug.quantity;
-export const selectInfos = (state: RootState) => state.drug.infos;
 export const selectDrugMessage = (state: RootState) => state.drug.message;
 
 export default drugSlice.reducer;

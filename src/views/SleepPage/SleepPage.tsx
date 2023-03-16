@@ -1,11 +1,6 @@
 import { Alert, Button, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import {
-  selectSleepDate,
-  selectSleepQuality,
-  selectSleepQuantity,
-  setQuantity,
-  setDate,
   setQuality,
   setSelectedSleep,
   resetSleepInputs,
@@ -16,22 +11,26 @@ import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';
 import { deleteSleep, editSleep, postSleep } from '../../reducers/dashboard/sleep/sleepMiddleware';
 import { selectSleeps } from '../../reducers/user/userSlice';
-import { selectIsEdit } from '../../reducers/UI/uiSlice';
+import { selectIsEdit, selectSleepInputs, setInputValue } from '../../reducers/UI/uiSlice';
 import CustomTable from '../../shared/CustomTable/CustomTable';
 import { useRef } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
+import SleepQualitySelect from './Select/SleepQualitySelect';
 
 export default function SleepPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const sleepQuality = useAppSelector(selectSleepQuality);
-  const sleepQuantity = useAppSelector(selectSleepQuantity);
-  const sleepDate = useAppSelector(selectSleepDate);
+  const { duration, quality, date } = useAppSelector(selectSleepInputs);
   const isEdit = useAppSelector(selectIsEdit);
   const sleeps = useAppSelector(selectSleeps);
   const { message, severity } = useAppSelector(selectSleepMessage);
   const formRef = useRef(null);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setInputValue({ path: 'sleepInputs', name: event.target.name, value: event.target.value }));
+  };
+
   return (
     <Container sx={{ mt: 2 }}>
       <Button
@@ -79,51 +78,23 @@ export default function SleepPage(): JSX.Element {
           </Alert>
         )}
         <TextField
-          onChange={(event) => dispatch(setQuantity(Number(event.target.value)))}
-          value={sleepQuantity}
+          onChange={handleChange}
+          name="duration"
+          value={duration}
           label="Durée (minutes)"
           type="number"
           variant="outlined"
           sx={{ mb: 1, mt: 1 }}
         />
-        <InputLabel sx={{ my: 1, textAlign: 'center' }}>Qualité du sommeil</InputLabel>
-        <Select
-          value={sleepQuality}
-          onChange={(event) => dispatch(setQuality(Number(event.target.value)))}
-          sx={{
-            width: 'fit-content',
-            m: 'auto',
-            mx: 'auto',
-            my: 1,
-            backgroundColor: '#f2f2f2',
-            color: '#333',
-            border: 'none',
-            borderRadius: '4px',
-            padding: '4px 12px',
-          }}
-        >
-          <MenuItem
-            value={1}
-            sx={{ fontSize: '25px' }}
-          >
-            &#128532;
-          </MenuItem>
-          <MenuItem
-            value={2}
-            sx={{ fontSize: '25px' }}
-          >
-            &#128528;
-          </MenuItem>
-          <MenuItem
-            value={3}
-            sx={{ fontSize: '25px' }}
-          >
-            &#128512;
-          </MenuItem>
-        </Select>
+        <SleepQualitySelect
+          quality={quality}
+          onChange={handleChange}
+        />
         <CustomDatePicker
-          value={sleepDate}
-          actionCreator={setDate}
+          value={date}
+          name="date"
+          path="sleepInputs"
+          actionCreator={setInputValue}
         />
         <Button
           sx={{ m: 'auto', my: 1 }}

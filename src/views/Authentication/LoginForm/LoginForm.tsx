@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { selectAuthenticationInputs, setValue } from '../../../reducers/UI/uiSlice';
+import { selectAuthenticationInputs, setInputValue } from '../../../reducers/UI/uiSlice';
 import { registerLoginUser } from '../../../reducers/user/userMiddleware';
 
 import { Alert, Box, Button, FormControl, FormGroup, TextField, Typography } from '@mui/material';
@@ -13,7 +13,7 @@ function LoginForm({ error }: LoginFormProps) {
   const dispatch = useAppDispatch();
   const inputValue = useAppSelector(selectAuthenticationInputs);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setValue({ path: 'authenticationInputs', name: event.target.name, value: event.target.value }));
+    dispatch(setInputValue({ path: 'authenticationInputs', name: event.target.name, value: event.target.value }));
   };
 
   return (

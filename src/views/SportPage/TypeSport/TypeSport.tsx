@@ -1,23 +1,20 @@
-import { selectType, setType } from '../../../reducers/dashboard/sport/sportSlice';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-
 import { FormControlLabel, FormLabel, RadioGroup, FormControl, Radio } from '@mui/material';
 
-type Activity = 'course' | 'marche' | 'natation' | 'velo' | 'exercices';
+interface TypeSportProps {
+  handleChange: Function;
+  type: 'footing' | 'marche' | 'natation' | 'velo' | 'autre' | '';
+}
 
-export default function TypeSport(): JSX.Element {
-  const dispatch = useAppDispatch();
-  const type = useAppSelector(selectType);
-  const activities = ['course', 'marche', 'natation', 'velo', 'exercices'];
+export default function TypeSport({ handleChange, type }: TypeSportProps): JSX.Element {
+  const activities = ['course', 'marche', 'natation', 'velo', 'autre'];
   return (
     <FormControl>
       <FormLabel id="radio-group">Type de l'activité</FormLabel>
       <RadioGroup
         row
-        aria-labelledby="radio-group"
-        name="row-radio-group"
+        name="type"
         value={type}
-        onChange={(event) => dispatch(setType(event.target.value as Activity))}
+        onChange={(event) => handleChange(event)}
       >
         {activities.map((activity) => (
           <FormControlLabel

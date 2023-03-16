@@ -51,14 +51,17 @@ export const registerUser = createAsyncThunk('user/registerUser', async (_, { ge
   }
 });
 
-export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string, { dispatch }) => {
+export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string, { dispatch, rejectWithValue }) => {
   try {
     const response = await axios.get(`https://localhost:8000/api/users`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    // dispatch(setProfilInputs(response.data.properties[0]));
     return response.data.user;
   } catch (error) {
     if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue({
+      severity: 'error',
+      message: "Nous n'avons pas pu récupérer vos données, réessayez plus tard.",
+    });
   }
 });

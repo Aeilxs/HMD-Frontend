@@ -16,6 +16,7 @@ export interface UserState {
   token: string;
   firstname: string;
   lastname: string;
+  dateOfBirth: string;
   gender: 'Femme' | 'Homme' | '';
   activities: ActivityResponse[];
   drugs: DrugResponse[];
@@ -31,6 +32,7 @@ const initialState: UserState = {
   firstname: '',
   lastname: '',
   gender: '',
+  dateOfBirth: '',
   activities: [],
   drugs: [],
   foods: [],
@@ -203,7 +205,6 @@ export const userSlice = createSlice({
 });
 
 export const {
-  setDateOfBirth,
   onLogout,
   setIsLogged,
   setSleeps,

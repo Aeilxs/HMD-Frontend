@@ -6,6 +6,7 @@ import {
   FoodInputs,
   HydrationInputs,
   InputPayload,
+  ProfilInputs,
   PropertyPath,
   SleepInputs,
   SmokeInputs,
@@ -29,6 +30,7 @@ export interface UIState {
   drugInputs: DrugInputs;
   foodInputs: FoodInputs;
   hydrationInputs: HydrationInputs;
+  profilInputs: ProfilInputs;
   sleepInputs: SleepInputs;
   smokeInputs: SmokeInputs;
   activityInputs: ActivityInputs;
@@ -41,7 +43,7 @@ const initialState: UIState = {
   isDrawerOpen: false,
   isEdit: false,
   activityInputs: {
-    date: '',
+    date: null,
     duration: '',
     intensity: '',
     type: '',
@@ -54,26 +56,33 @@ const initialState: UIState = {
     gender: 'femme',
   },
   drugInputs: {
-    date: '',
+    date: null,
     name: '',
+    infos: '',
     quantity: '',
     unit: '',
   },
   foodInputs: {
-    date: '',
+    date: null,
+    category: null,
     name: '',
   },
   hydrationInputs: {
-    date: '',
+    date: null,
     quantity: '',
   },
+  profilInputs: {
+    dateOfBirth: null,
+    size: '',
+    weight: '',
+  },
   sleepInputs: {
-    date: '',
+    date: null,
     duration: '',
     quality: '',
   },
   smokeInputs: {
-    date: '',
+    date: null,
     quantity: '',
   },
 };
@@ -92,12 +101,17 @@ export const UISlice = createSlice({
     toggleDrawer: (state) => {
       return { ...state, isDrawerOpen: !state.isDrawerOpen };
     },
-    setValue: (state, action: PayloadAction<InputPayload>) => {
+    setInputValue: (state, action: PayloadAction<InputPayload>) => {
+      console.log(action.payload);
       const { path, name, value } = action.payload;
       return {
         ...state,
         [path]: { ...state[path], [name]: value },
       };
+    },
+    resetInputValue: (state, action: PayloadAction<PropertyPath>) => {
+      const path = action.payload;
+      return { ...state, [path]: initialState[path] };
     },
     setIsEdit: (state, action: PayloadAction<boolean>) => {
       return { ...state, isEdit: action.payload };
@@ -123,7 +137,7 @@ export const UISlice = createSlice({
   },
 });
 
-export const { toggleTheme, toggleDrawer, toggleForm, setValue, setIsEdit } = UISlice.actions;
+export const { toggleTheme, toggleDrawer, toggleForm, setInputValue, resetInputValue, setIsEdit } = UISlice.actions;
 
 export const selectTheme = (state: RootState) => state.ui.isDark;
 export const selectDrawerState = (state: RootState) => state.ui.isDrawerOpen;
@@ -131,6 +145,13 @@ export const selectForm = (state: RootState) => state.ui.isRegistered;
 export const selectAuthErrors = (state: RootState) => state.ui.errors;
 export const selectIsEdit = (state: RootState) => state.ui.isEdit;
 
+export const selectActivityInputs = (state: RootState) => state.ui.activityInputs;
 export const selectAuthenticationInputs = (state: RootState) => state.ui.authenticationInputs;
+export const selectDrugInputs = (state: RootState) => state.ui.drugInputs;
+export const selectFoodInputs = (state: RootState) => state.ui.foodInputs;
+export const selectHydrationInputs = (state: RootState) => state.ui.hydrationInputs;
+export const selectProfilInputs = (state: RootState) => state.ui.profilInputs;
+export const selectSleepInputs = (state: RootState) => state.ui.sleepInputs;
+export const selectSmokeInputs = (state: RootState) => state.ui.smokeInputs;
 
 export default UISlice.reducer;

@@ -10,6 +10,7 @@ export type PropertyPath =
   | 'drugInputs'
   | 'foodInputs'
   | 'hydrationInputs'
+  | 'profilInputs'
   | 'sleepInputs'
   | 'smokeInputs';
 
@@ -17,7 +18,7 @@ export interface ActivityInputs {
   duration: number | '';
   intensity: 1 | 2 | 3 | '';
   type: 'footing' | 'marche' | 'natation' | 'velo' | 'autre' | '';
-  date: string;
+  date: string | null;
 }
 
 export interface AuthenticationInputs {
@@ -31,27 +32,35 @@ export interface AuthenticationInputs {
 export interface DrugInputs {
   name: string;
   unit: string;
+  infos: string;
   quantity: number | '';
-  date: string;
+  date: string | null;
 }
 
 export interface FoodInputs {
   name: string;
-  date: string;
+  category: string | null;
+  date: string | null;
 }
 
 export interface HydrationInputs {
   quantity: number | '';
-  date: string;
+  date: string | null;
+}
+
+export interface ProfilInputs {
+  dateOfBirth: string | null;
+  size: number | '';
+  weight: number | '';
 }
 
 export interface SleepInputs {
   duration: number | '';
   quality: number | '';
-  date: string;
+  date: string | null;
 }
 
 export interface SmokeInputs {
   quantity: number | '';
-  date: string;
+  date: string | null;
 }

@@ -23,16 +23,14 @@ import SleepPage from '../views/SleepPage/SleepPage';
 import HydrationPage from '../views/HydrationPage/HydrationPage';
 import AuthPage from '../views/Authentication/AuthenticationPage';
 import DashboardPage from '../views/DashboardPage/DashboardPage';
-import { selectIsLogged, selectProperties, selectToken, setIsLogged } from '../reducers/user/userSlice';
+import { selectIsLogged, selectToken, setIsLogged } from '../reducers/user/userSlice';
 import { fetchUser } from '../reducers/user/userMiddleware';
-
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
   const isLogged = useAppSelector(selectIsLogged);
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectToken);
-  const properties = useAppSelector(selectProperties)
 
   const routes = [
     { path: '/profil', component: <ProfilePage /> },
@@ -47,10 +45,10 @@ function App(): JSX.Element {
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      dispatch(setIsLogged())
+      dispatch(setIsLogged());
       dispatch(fetchUser(token));
     }
-  }, [token]);
+  }, [dispatch, token]);
 
   return (
     <ThemeProvider theme={isDark ? themeDark : themeLight}>
@@ -69,13 +67,15 @@ function App(): JSX.Element {
           />
           <Route
             path="/authentification"
-            element={isLogged ? <Navigate to='/dashboard' /> : <AuthPage />}
+            element={isLogged ? <Navigate to="/dashboard" /> : <AuthPage />}
           />
           {routes.map((route) => (
             <Route
               key={route.path}
               path={route.path}
-              element={localStorage.getItem('token') || isLogged ? route.component : <Navigate to="/authentification" />}
+              element={
+                localStorage.getItem('token') || isLogged ? route.component : <Navigate to="/authentification" />
+              }
             />
           ))}
           <Route

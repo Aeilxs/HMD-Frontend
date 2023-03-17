@@ -1,33 +1,30 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
-import { calcDate } from '../../../utils/math';
-import { removeHydration, setHydration, updateHydration } from '../../user/userSlice';
-import { resetHydrationInputs } from './hydrationSlice';
+import { resetInputValue, setIsEdit } from '../../UI/uiSlice';
+import { HydrationApiResponse } from '../../../Interfaces/API_Interfaces';
+import { setHydrations } from './hydrationSlice';
 
 export const postHydration = createAsyncThunk(
   'hydration/postHydration',
   async (_, { getState, dispatch, rejectWithValue }) => {
     try {
-      const { date, quantity } = (getState() as RootState).hydration;
+      const { date, quantity } = (getState() as RootState).ui.hydrationInputs;
       const token = (getState() as RootState).user.token;
-      const response = await axios.post(
-        'http://localhost:8000/api/users/hydrations',
+      const response = await axios.post<HydrationApiResponse>(
+        'https://localhost:8000/api/hydrations',
         {
-          quantity: quantity,
+          quantity: Number(quantity),
           date: date,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      dispatch(setHydration(response.data));
-      dispatch(resetHydrationInputs());
-      return {
-        severity: 'info',
-        message: `Votre consommation d'eau du ${calcDate(response.data.date)} a bien été ajoutée`,
-      };
+      dispatch(resetInputValue('hydrationInputs'));
+      dispatch(setHydrations(response.data.hydrations));
+      return response.data.message;
     } catch (error) {
       if (!axios.isAxiosError(error)) throw error;
-      return rejectWithValue({ severity: 'error', message: "Echec de l'ajout" });
+      return rejectWithValue(error.response?.data.message);
     }
   }
 );
@@ -35,28 +32,24 @@ export const postHydration = createAsyncThunk(
 export const editHydration = createAsyncThunk(
   'hydration/editHydration',
   async (_, { getState, dispatch, rejectWithValue }) => {
-    const { date, quantity, id } = (getState() as RootState).hydration;
+    dispatch(setIsEdit(false));
+    const { date, quantity, id } = (getState() as RootState).ui.hydrationInputs;
     const token = (getState() as RootState).user.token;
     try {
-      const response = await axios.patch(
-        `http://localhost:8000/api/users/hydrations/${id}`,
+      const response = await axios.patch<HydrationApiResponse>(
+        `https://localhost:8000/api/hydrations/${id}`,
         {
-          quantity: quantity,
+          quantity: Number(quantity),
           date: date,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      dispatch(updateHydration(response.data));
-      dispatch(resetHydrationInputs());
-      return {
-        severity: 'info',
-        message: `Votre consommation d'eau du ${calcDate(
-          response.data.date
-        )} a bien été mise à jour`,
-      };
+      dispatch(resetInputValue('hydrationInputs'));
+      dispatch(setHydrations(response.data.hydrations));
+      return response.data.message;
     } catch (error: any) {
       if (!axios.isAxiosError(error)) throw error;
-      return rejectWithValue({ severity: 'error', message: 'Echec de la modification' });
+      return rejectWithValue(error.response?.data.message);
     }
   }
 );
@@ -64,20 +57,17 @@ export const editHydration = createAsyncThunk(
 export const deleteHydration = createAsyncThunk(
   'hydration/editHydration',
   async (id: number, { getState, dispatch, rejectWithValue }) => {
+    dispatch(setIsEdit(false));
     try {
       const token = (getState() as RootState).user.token;
-      const response = await axios.delete(`http://localhost:8000/api/users/hydrations/${id}`, {
+      const response = await axios.delete<HydrationApiResponse>(`https://localhost:8000/api/hydrations/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      dispatch(removeHydration(id));
-      dispatch(resetHydrationInputs());
-      return {
-        severity: 'info',
-        message: `Votre consommation a bien été supprimée`,
-      };
+      dispatch(setHydrations(response.data.hydrations));
+      return response.data.message;
     } catch (error) {
       if (!axios.isAxiosError(error)) throw error;
-      return rejectWithValue({ severity: 'error', message: 'Echec de la suppression' });
+      return rejectWithValue(error.response?.data.message);
     }
   }
 );

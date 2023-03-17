@@ -1,10 +1,5 @@
-import { store } from '../store/store';
 import { ConsommedFood, Food } from '../reducers/dashboard/food/foodSlice';
-import { dataSleepApi } from '../reducers/dashboard/sleep/sleepSlice';
-import { dataHydrationApi } from '../reducers/dashboard/hydration/hydrationSlice';
-import { dataSmokeApi } from '../reducers/dashboard/smoke/smokeSlice';
-import { dataSportApi } from '../reducers/dashboard/sport/sportSlice';
-import { dataDrugApi } from '../reducers/dashboard/drug/drugSlice';
+import { Activity, Drug, Hydration, Sleep, Smoke } from '../Interfaces/API_Interfaces';
 
 export const calcAge = (date: string): number => {
   const diff = Date.now() - new Date(date).getTime();
@@ -33,17 +28,17 @@ export const calcMB = ({ weight, height, age, gender }: MBProps): number | undef
     : Math.ceil(9.74 * weight + 172.9 * height - 4.737 * age + 667.051);
 };
 
-type GenericProps = dataSleepApi | dataDrugApi | dataHydrationApi | dataSmokeApi | dataSportApi;
+type GenericProps = Sleep | Drug | Hydration | Smoke | Activity;
 
 export const sortByDate = (array: GenericProps[]): GenericProps[] => {
   return array.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 };
 
-export const getFoodNameById = (): string => {
-  const foods = store.getState().user.caloricAlimentations;
-  const id = store.getState().food.id;
-  return foods.find((food) => food.id === id)?.name || 'Aliment inconnu';
-};
+// export const getFoodNameById = (): string => {
+//   const foods = store.getState().user.foods;
+//   const id = store.getState().food.id;
+//   return foods.find((food) => food.id === id)?.name || 'Aliment inconnu';
+// };
 
 /**
  * Retourne un tableau d'aliments unique en fonction du nom

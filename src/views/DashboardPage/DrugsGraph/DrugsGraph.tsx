@@ -17,13 +17,12 @@ export default function DrugsGraph({ rows }: DrugsGraphProps): JSX.Element {
   return (
     <TableContainer
       elevation={elevation}
-      sx={{ p: 2, height: '100%', minHeight: '250px' }}
+      sx={{ p: 2, height: '100%', minHeight: '250px', maxHeight: '400px' }}
       component={Paper}
       onMouseEnter={() => setElevation(8)}
       onMouseLeave={() => setElevation(2)}
     >
       <Table
-        sx={{ minWidth: 650 }}
         size="small"
         aria-label="a dense table"
       >

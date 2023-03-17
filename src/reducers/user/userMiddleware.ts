@@ -1,18 +1,20 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-import { setProfilInputs } from '../dashboard/profil/profilSlice';
-interface ResponseData {
-  token: string;
-}
+import { LoginResponse } from '../../Interfaces/API_Interfaces';
+import { setSleeps } from '../dashboard/sleep/sleepSlice';
+import { setActivities } from '../dashboard/sport/sportSlice';
+import { setSmokes } from '../dashboard/smoke/smokeSlice';
+import { setDrugs } from '../dashboard/drug/drugSlice';
+import { setHydrations } from '../dashboard/hydration/hydrationSlice';
 
 export const registerLoginUser = createAsyncThunk(
   'ui/registerLoginUser',
   async (_, { getState, dispatch, rejectWithValue }) => {
+    const { email, password } = (getState() as RootState).ui.authenticationInputs;
     try {
-      const { email, password } = (getState() as RootState).ui.user;
-      const response = await axios.post<ResponseData>('http://localhost:8000/api/login', {
-        username: email,
+      const response = await axios.post<LoginResponse>('https://localhost:8000/api/login', {
+        email: email,
         password: password,
       });
       dispatch(fetchUser(response.data.token));
@@ -34,33 +36,39 @@ export const registerLoginUser = createAsyncThunk(
   }
 );
 
-export const registerUser = createAsyncThunk(
-  'user/registerUser',
-  async (_, { getState, rejectWithValue }) => {
-    const { firstname, lastname, email, password, gender } = (getState() as RootState).ui.user;
-    try {
-      const response = await axios.post('http://localhost:8000/api/users', {
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        password: password,
-        gender: gender,
-      });
-      return response.data;
-    } catch (error) {
-      if (!axios.isAxiosError(error)) throw error;
-      switch (error.response?.status) {
-        case 500:
-          return rejectWithValue('Tous les champs doivent être remplis');
-      }
-    }
+export const registerUser = createAsyncThunk('user/registerUser', async (_, { getState, rejectWithValue }) => {
+  const { firstname, lastname, email, password, gender } = (getState() as RootState).ui.authenticationInputs;
+  try {
+    const response = await axios.post('https://localhost:8000/api/users', {
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      password: password,
+      gender: gender,
+    });
+    return response.data;
+  } catch (error) {
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue('Tous les champs doivent être remplis');
   }
-);
+});
 
-export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string, { dispatch }) => {
-  const response = await axios.get(`http://localhost:8000/api/users/user`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  dispatch(setProfilInputs(response.data.properties[0]));
-  return response.data;
+export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string, { dispatch, rejectWithValue }) => {
+  try {
+    const response = await axios.get(`https://localhost:8000/api/users`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    dispatch(setActivities(response.data.user.activities));
+    dispatch(setSleeps(response.data.user.sleeps));
+    dispatch(setSmokes(response.data.user.smokes));
+    dispatch(setDrugs(response.data.user.drugs));
+    dispatch(setHydrations(response.data.user.hydrations));
+    return response.data.user;
+  } catch (error) {
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue({
+      severity: 'error',
+      message: "Nous n'avons pas pu récupérer vos données, réessayez plus tard.",
+    });
+  }
 });

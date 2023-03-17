@@ -1,32 +1,21 @@
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import {
-  selectDateOfBirth,
-  setDateOfBirth,
-  selectHeight,
-  selectWeight,
-  setHeight,
-  setWeight,
-  selectProfilMessage,
-} from '../../reducers/dashboard/profil/profilSlice';
-
 import MessageBox from '../../shared/MessageBox/MessageBox';
-import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 
 import { Box } from '@mui/system';
-import { Alert, AlertTitle, Button, Container, TextField, Typography } from '@mui/material';
-import { editProfil, postProfil } from '../../reducers/dashboard/profil/profilMiddleware';
-import { selectProperties } from '../../reducers/user/userSlice';
+import { Button, Container, TextField, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectProfilInputs, setInputValue } from '../../reducers/UI/uiSlice';
+import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 
 export default function ProfilePage(): JSX.Element {
+  const { dateOfBirth, size, weight } = useAppSelector(selectProfilInputs);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const dateOfBirth = useAppSelector(selectDateOfBirth);
-  const weight = useAppSelector(selectWeight);
-  const height = useAppSelector(selectHeight);
-  const properties = useAppSelector(selectProperties);
-  const message = useAppSelector(selectProfilMessage);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setInputValue({ path: 'profilInputs', name: event.target.name, value: event.target.value }));
+  };
 
   return (
     <Container sx={{ mt: 2, position: 'relative' }}>
@@ -38,16 +27,6 @@ export default function ProfilePage(): JSX.Element {
       >
         dashboard
       </Button>
-
-      {properties.length === 0 && (
-        <Alert
-          severity="info"
-          sx={{ mb: 2 }}
-        >
-          <AlertTitle>Informations manquantes</AlertTitle>
-          Veuillez compléter vos informations pour accéder à la page alimentation.
-        </Alert>
-      )}
 
       <Typography
         sx={{ mt: 2, mb: 2 }}
@@ -65,26 +44,28 @@ export default function ProfilePage(): JSX.Element {
         component="form"
         onSubmit={(event) => {
           event.preventDefault();
-          properties.length > 0 ? dispatch(editProfil(properties[0].id)) : dispatch(postProfil());
         }}
       >
-        {message.message && <Alert severity={message.severity}>{message.message}</Alert>}
         <CustomDatePicker
           label="Date de naissance"
           value={dateOfBirth}
-          actionCreator={setDateOfBirth}
+          name="dateOfBirth"
+          path="profilInputs"
+          actionCreator={setInputValue}
         />
         <TextField
-          onChange={(event) => dispatch(setWeight(Number(event.target.value)))}
+          onChange={handleChange}
           value={weight}
+          name="weight"
           label="Poids (kg)"
           type="number"
           variant="outlined"
           sx={{ mb: 1, mt: 1 }}
         />
         <TextField
-          onChange={(event) => dispatch(setHeight(Number(event.target.value)))}
-          value={height}
+          onChange={handleChange}
+          value={size}
+          name="size"
           label="Taille (cm)"
           type="number"
           variant="outlined"

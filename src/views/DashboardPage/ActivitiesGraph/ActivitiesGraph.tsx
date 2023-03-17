@@ -13,7 +13,6 @@ export default function ActivitiesGraph({ labels, percentages }: ActivitiesGraph
   const [elevation, setElevation] = useState(2);
   const vwValue = useResize();
   ChartJS.register(ArcElement, Tooltip, Legend);
-
   const options = {
     responsive: true,
     plugins: {

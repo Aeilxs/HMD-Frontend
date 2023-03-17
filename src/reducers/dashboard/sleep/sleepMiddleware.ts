@@ -1,82 +1,68 @@
+import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
-import axios from 'axios';
-import { removeSleeps, setSleeps, updateSleeps } from '../../user/userSlice';
-import { calcDate } from '../../../utils/math';
-import { resetSleepInputs } from './sleepSlice';
+import { resetInputValue, setIsEdit } from '../../UI/uiSlice';
+import { SleepApiResponse } from '../../../Interfaces/API_Interfaces';
+import { setSleeps } from './sleepSlice';
 
-export const postSleep = createAsyncThunk(
-  'sleep/postSleep',
-  async (_, { getState, dispatch, rejectWithValue }) => {
-    try {
-      const { date, quantity, quality } = (getState() as RootState).sleep;
-      const token = (getState() as RootState).user.token;
-      const response = await axios.post(
-        'http://localhost:8000/api/users/sleeps',
-        {
-          time: quantity,
-          quality: quality,
-          date: date,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      dispatch(setSleeps(response.data));
-      dispatch(resetSleepInputs());
-      return {
-        severity: 'info',
-        message: `Votre nuit de sommeil du ${calcDate(response.data.date)} a bien été enregistrée`,
-      };
-    } catch (error) {
-      if (!axios.isAxiosError(error)) throw error;
-      return rejectWithValue({ severity: 'error', message: "Echec de l'ajout" });
-    }
+export const postSleep = createAsyncThunk('sleep/postSleep', async (_, { getState, dispatch, rejectWithValue }) => {
+  try {
+    const { date, duration, quality } = (getState() as RootState).ui.sleepInputs;
+    const token = (getState() as RootState).user.token;
+    const response = await axios.post<SleepApiResponse>(
+      'https://localhost:8000/api/sleeps',
+      {
+        date: date,
+        duration: Number(duration),
+        quality: quality,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    dispatch(resetInputValue('sleepInputs'));
+    dispatch(setSleeps(response.data.sleeps));
+    return response.data.message;
+  } catch (error) {
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue(error.response?.data.message);
   }
-);
+});
 
-export const editSleep = createAsyncThunk(
-  'sleep/editSleep',
-  async (_, { getState, dispatch, rejectWithValue }) => {
-    try {
-      const { date, quantity, quality, id } = (getState() as RootState).sleep;
-      const token = (getState() as RootState).user.token;
-      const response = await axios.patch(
-        `http://localhost:8000/api/users/sleeps/${id}`,
-        {
-          time: quantity,
-          quality: quality,
-          date: date,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      dispatch(updateSleeps(response.data));
-      dispatch(resetSleepInputs());
-      return {
-        severity: 'info',
-        message: `Votre nuit de sommeil du ${calcDate(response.data.date)} a bien été modifiée`,
-      };
-    } catch (error) {
-      if (!axios.isAxiosError(error)) throw error;
-      return rejectWithValue({ severity: 'error', message: 'Echec de la modification' });
-    }
+export const editSleep = createAsyncThunk('sleep/editSleep', async (_, { getState, dispatch, rejectWithValue }) => {
+  dispatch(setIsEdit(false));
+  try {
+    const { date, duration, quality, id } = (getState() as RootState).ui.sleepInputs;
+    const token = (getState() as RootState).user.token;
+    const response = await axios.patch<SleepApiResponse>(
+      `https://localhost:8000/api/sleeps/${id}`,
+      {
+        duration: Number(duration),
+        quality: quality,
+        date: date,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    dispatch(resetInputValue('sleepInputs'));
+    dispatch(setSleeps(response.data.sleeps));
+    return response.data.message;
+  } catch (error) {
+    if (!axios.isAxiosError(error)) throw error;
+    return rejectWithValue(error.response?.data.message);
   }
-);
+});
 
 export const deleteSleep = createAsyncThunk(
   'sleep/deleteSleep',
   async (id: number, { getState, dispatch, rejectWithValue }) => {
+    const token = (getState() as RootState).user.token;
     try {
-      const token = (getState() as RootState).user.token;
-      const response = await axios.delete(`http://localhost:8000/api/users/sleeps/${id}`, {
+      const response = await axios.delete<SleepApiResponse>(`https://localhost:8000/api/sleeps/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      dispatch(removeSleeps(id));
-      return {
-        severity: 'info',
-        message: `Votre nuit de sommeil a bien été supprimée`,
-      };
+      dispatch(setSleeps(response.data.sleeps));
+      return response.data.message;
     } catch (error) {
       if (!axios.isAxiosError(error)) throw error;
-      return rejectWithValue({ severity: 'error', message: 'Echec de la suppression' });
+      return rejectWithValue(error.response?.data.message);
     }
   }
 );

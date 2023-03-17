@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { useResize } from '../../../hooks/useResize';
-import { Box, Button, Paper } from '@mui/material';
+
+import { Box, Paper } from '@mui/material';
 
 interface HydrationsGraphProps {
   dates: string[];
@@ -33,7 +34,7 @@ export default function HydrationsGraph({ dates, amounts }: HydrationsGraphProps
     labels,
     datasets: [
       {
-        label: "Quantité d'eau (cl)",
+        label: "Quantité d'eau (litres)",
         data: amounts,
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },

@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { selectUser, setValue } from '../../../reducers/UI/uiSlice';
+import { selectAuthenticationInputs, setInputValue } from '../../../reducers/UI/uiSlice';
 import { registerLoginUser } from '../../../reducers/user/userMiddleware';
 
 import { Alert, Box, Button, FormControl, FormGroup, TextField, Typography } from '@mui/material';
@@ -11,10 +11,9 @@ interface LoginFormProps {
 
 function LoginForm({ error }: LoginFormProps) {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser);
+  const inputValue = useAppSelector(selectAuthenticationInputs);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    dispatch(setValue({ name, value }));
+    dispatch(setInputValue({ path: 'authenticationInputs', name: event.target.name, value: event.target.value }));
   };
 
   return (
@@ -57,7 +56,7 @@ function LoginForm({ error }: LoginFormProps) {
             placeholder="Entrez votre email"
             variant="standard"
             type="email"
-            value={user.email}
+            value={inputValue.email}
             onChange={handleChange}
           />
           <TextField
@@ -68,7 +67,7 @@ function LoginForm({ error }: LoginFormProps) {
             placeholder="Entrez votre mot de passe"
             variant="standard"
             type="password"
-            value={user.password}
+            value={inputValue.password}
             onChange={handleChange}
           />
         </FormGroup>

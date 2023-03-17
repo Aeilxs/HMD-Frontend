@@ -1,25 +1,12 @@
 import { Alert, Button, TextField, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
-import {
-  selectHydrationDate,
-  setDate,
-  setQuantity,
-  selectHydrationQuantity,
-  setSelectedHydration,
-  resetHydrationInputs,
-  selectHydrationMessage,
-} from '../../reducers/dashboard/hydration/hydrationSlice';
+import { selectHydrationMessage, selectHydrations } from '../../reducers/dashboard/hydration/hydrationSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';
-import {
-  deleteHydration,
-  editHydration,
-  postHydration,
-} from '../../reducers/dashboard/hydration/hydrationMiddleware';
+import { deleteHydration, editHydration, postHydration } from '../../reducers/dashboard/hydration/hydrationMiddleware';
 import CustomTable from '../../shared/CustomTable/CustomTable';
-import { selectHydrations } from '../../reducers/user/userSlice';
-import { selectIsEdit } from '../../reducers/UI/uiSlice';
+import { selectHydrationInputs, selectIsEdit, setInputValue } from '../../reducers/UI/uiSlice';
 import { useRef } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
@@ -27,12 +14,15 @@ import { useNavigate } from 'react-router-dom';
 export default function HydrationPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const date = useAppSelector(selectHydrationDate);
-  const quantity = useAppSelector(selectHydrationQuantity);
   const hydrations = useAppSelector(selectHydrations);
   const isEdit = useAppSelector(selectIsEdit);
   const { message, severity } = useAppSelector(selectHydrationMessage);
   const formRef = useRef(null);
+  const { date, quantity } = useAppSelector(selectHydrationInputs);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setInputValue({ path: 'hydrationInputs', name: event.target.name, value: event.target.value }));
+  };
 
   return (
     <Container sx={{ mt: 2, position: 'relative' }}>
@@ -58,9 +48,8 @@ export default function HydrationPage(): JSX.Element {
       {hydrations.length > 0 && (
         <CustomTable
           array={hydrations}
-          onSelect={setSelectedHydration}
+          path="hydrationInputs"
           onDelete={deleteHydration}
-          resetInput={resetHydrationInputs}
           formRef={formRef}
         />
       )}
@@ -75,7 +64,8 @@ export default function HydrationPage(): JSX.Element {
       >
         {message && <Alert severity={severity}>{message}</Alert>}
         <TextField
-          onChange={(event) => dispatch(setQuantity(Number(event.target.value)))}
+          onChange={handleChange}
+          name="quantity"
           value={quantity}
           label="Quantité (litre(s))"
           type="number"
@@ -83,15 +73,17 @@ export default function HydrationPage(): JSX.Element {
           sx={{ mb: 1, mt: 1 }}
         />
         <CustomDatePicker
+          path="hydrationInputs"
+          name="date"
           value={date}
-          actionCreator={setDate}
+          actionCreator={setInputValue}
         />
         <Button
           sx={{ m: 'auto', my: 1 }}
           variant="contained"
           type="submit"
         >
-          Valider
+          {isEdit ? 'Editer' : 'Ajouter'}
         </Button>
       </Box>
     </Container>

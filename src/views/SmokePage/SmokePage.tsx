@@ -1,22 +1,12 @@
 import { Alert, Box, Button, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import MessageBox from '../../shared/MessageBox/MessageBox';
-import 'dayjs/locale/fr';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import {
-  resetSmokeInputs,
-  selectSmokeDate,
-  selectSmokeMessage,
-  selectSmokeQuantity,
-  setSelectedSmoke,
-  setSmokeDate,
-  setSmokeQuantity,
-} from '../../reducers/dashboard/smoke/smokeSlice';
+import { selectSmokeMessage, selectSmokes } from '../../reducers/dashboard/smoke/smokeSlice';
 import { deleteSmoke, editSmoke, postSmoke } from '../../reducers/dashboard/smoke/smokeMiddleware';
-import { selectSmokes } from '../../reducers/user/userSlice';
 import CustomTable from '../../shared/CustomTable/CustomTable';
-import { selectIsEdit } from '../../reducers/UI/uiSlice';
+import { selectIsEdit, selectSmokeInputs, setInputValue } from '../../reducers/UI/uiSlice';
 import { useRef } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
@@ -24,12 +14,16 @@ import { useNavigate } from 'react-router-dom';
 export default function SmokePage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const smokeInputAmount = useAppSelector(selectSmokeQuantity);
-  const smokeDate = useAppSelector(selectSmokeDate);
   const smokes = useAppSelector(selectSmokes);
   const isEdit = useAppSelector(selectIsEdit);
+  const { date, quantity } = useAppSelector(selectSmokeInputs);
   const { message, severity } = useAppSelector(selectSmokeMessage);
   const formRef = useRef(null);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setInputValue({ path: 'smokeInputs', name: event.target.name, value: event.target.value }));
+  };
+
   return (
     <Container sx={{ mt: 2, position: 'relative' }}>
       <Button
@@ -53,9 +47,8 @@ export default function SmokePage(): JSX.Element {
       {smokes.length > 0 && (
         <CustomTable
           array={smokes}
-          onSelect={setSelectedSmoke}
+          path="smokeInputs"
           onDelete={deleteSmoke}
-          resetInput={resetSmokeInputs}
           formRef={formRef}
         />
       )}
@@ -64,7 +57,6 @@ export default function SmokePage(): JSX.Element {
         ref={formRef}
         onSubmit={(event) => {
           event.preventDefault();
-          console.log('smoke submit');
           isEdit ? dispatch(editSmoke()) : dispatch(postSmoke());
         }}
         sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}
@@ -78,23 +70,26 @@ export default function SmokePage(): JSX.Element {
           </Alert>
         )}
         <TextField
-          onChange={(event) => dispatch(setSmokeQuantity(Number(event.target.value)))}
-          value={smokeInputAmount}
+          onChange={handleChange}
+          value={quantity}
+          name="quantity"
           label="Quantité de cigarettes"
           type="number"
           variant="outlined"
           sx={{ mb: 1, mt: 1 }}
         />
         <CustomDatePicker
-          value={smokeDate}
-          actionCreator={setSmokeDate}
+          value={date}
+          path="smokeInputs"
+          name="date"
+          actionCreator={setInputValue}
         />
         <Button
           sx={{ mx: 'auto', my: 2 }}
           variant="contained"
           type="submit"
         >
-          Valider
+          {isEdit ? 'Editer' : 'Ajouter'}
         </Button>
       </Box>
     </Container>

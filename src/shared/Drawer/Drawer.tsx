@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { SwipeableDrawer } from '@mui/material';
 import { selectDrawerState, toggleDrawer } from '../../reducers/UI/uiSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';

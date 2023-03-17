@@ -1,6 +1,7 @@
 import { Container } from '@mui/material';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useResize } from '../../hooks/useResize';
+
 interface CustomScrollBarProps {
   children: ReactNode;
 }
@@ -9,9 +10,22 @@ function CustomScrollBar({ children }: CustomScrollBarProps): JSX.Element {
   const vwValue = useResize();
   const containerRef = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
+
   useEffect(() => {
     const container = containerRef.current;
-    if (container) setHasOverflow(container.scrollHeight > container.clientHeight);
+    if (container) {
+      setHasOverflow(container.scrollHeight > container.clientHeight);
+
+      const observer = new MutationObserver(() => {
+        setHasOverflow(container.scrollHeight > container.clientHeight);
+      });
+
+      // Commencer à observer les mutations
+      observer.observe(container, { childList: true, subtree: true });
+
+      // Arrêter l'observation lorsque le composant est démonté
+      return () => observer.disconnect();
+    }
   }, [vwValue, children]);
 
   const scrollbar = {

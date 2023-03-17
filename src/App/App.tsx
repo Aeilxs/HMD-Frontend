@@ -54,38 +54,40 @@ function App(): JSX.Element {
     <ThemeProvider theme={isDark ? themeDark : themeLight}>
       <CssBaseline />
       <Nav />
-      {/* <CustomScrollBar> */}
-      {isLogged && <Drawer />}
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Container>
-              <Home />
-            </Container>
-          }
-        />
-        <Route
-          path="/authentification"
-          element={isLogged ? <Navigate to="/dashboard" /> : <AuthPage />}
-        />
-        {routes.map((route) => (
+      <CustomScrollBar>
+        {isLogged && <Drawer />}
+        <Routes>
           <Route
-            key={route.path}
-            path={route.path}
-            element={localStorage.getItem('token') || isLogged ? route.component : <Navigate to="/authentification" />}
+            path="/"
+            element={
+              <Container>
+                <Home />
+              </Container>
+            }
           />
-        ))}
-        <Route
-          path="*"
-          element={
-            <Container>
-              <NotFound />
-            </Container>
-          }
-        />
-      </Routes>
-      {/* </CustomScrollBar> */}
+          <Route
+            path="/authentification"
+            element={isLogged ? <Navigate to="/dashboard" /> : <AuthPage />}
+          />
+          {routes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={
+                localStorage.getItem('token') || isLogged ? route.component : <Navigate to="/authentification" />
+              }
+            />
+          ))}
+          <Route
+            path="*"
+            element={
+              <Container>
+                <NotFound />
+              </Container>
+            }
+          />
+        </Routes>
+      </CustomScrollBar>
       <Footer />
     </ThemeProvider>
   );

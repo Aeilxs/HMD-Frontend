@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useNavigate } from 'react-router-dom';
-import { getFoodNameById, getUniqueFoods } from '../../utils/math';
+// import { getFoodNameById, getUniqueFoods } from '../../utils/math';
 
 import {
   resetFoodInputs,
@@ -21,7 +21,6 @@ import CategorySelector from './CategorySelector/CategorySelector';
 import QuantitySelector from './QuantitySelector/QuantitySelector';
 
 import { Box, Container, Button, Typography, CircularProgress, Alert } from '@mui/material';
-import { selectFoods } from '../../reducers/user/userSlice';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function FoodPage(): JSX.Element {
@@ -31,8 +30,7 @@ export default function FoodPage(): JSX.Element {
   const foodsList = useAppSelector(selectFoodsList);
   const selectedFood = useAppSelector(selectSelectedFood);
   const { date, category } = useAppSelector(selectFoodInputs);
-  const uniqueFoods = getUniqueFoods(foodsList);
-  const foods = useAppSelector(selectFoods);
+  // const uniqueFoods = getUniqueFoods(foodsList);
   const message = useAppSelector(selectFoodMessage);
   const navigate = useNavigate();
 
@@ -72,7 +70,7 @@ export default function FoodPage(): JSX.Element {
         title="Saviez-vous que l'alimentation peut influencer votre humeur ?"
         content="Les aliments que nous consommons peuvent affecter notre état d'esprit et notre humeur. Des études ont montré que certains aliments peuvent stimuler la production de neurotransmetteurs tels que la sérotonine, qui peuvent améliorer notre bien-être émotionnel. Cependant, d'autres aliments peuvent avoir l'effet inverse et causer de l'anxiété, de la fatigue ou de l'irritabilité. Il est donc important de faire des choix alimentaires sains pour maintenir une humeur positive."
       />
-      {foods.length > 0 && <FoodTable />}
+      {/* {foods.length > 0 && <FoodTable />} */}
       <Box
         component="form"
         sx={{
@@ -96,7 +94,7 @@ export default function FoodPage(): JSX.Element {
             variant="h5"
             sx={{ marginBottom: '1em' }}
           >
-            Modification de l'aliment "{getFoodNameById()}"
+            {/* Modification de l'aliment "{getFoodNameById()}" */}
           </Typography>
         ) : (
           <Typography
@@ -108,7 +106,7 @@ export default function FoodPage(): JSX.Element {
         )}
         <CategorySelector aliments={aliments} />
         {isLoading && <CircularProgress sx={{ m: 'auto', my: 1 }} />}
-        {!isLoading && foodsList.length > 0 && <FoodSelector foods={uniqueFoods} />}
+        {/* {!isLoading && foodsList.length > 0 && <FoodSelector foods={uniqueFoods} />} */}
         {selectedFood && <QuantitySelector />}
         <CustomDatePicker
           name="date"

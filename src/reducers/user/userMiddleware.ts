@@ -1,16 +1,19 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-interface ResponseData {
-  token: string;
-}
+import { LoginResponse } from '../../Interfaces/API_Interfaces';
+import { setSleeps } from '../dashboard/sleep/sleepSlice';
+import { setActivities } from '../dashboard/sport/sportSlice';
+import { setSmokes } from '../dashboard/smoke/smokeSlice';
+import { setDrugs } from '../dashboard/drug/drugSlice';
+import { setHydrations } from '../dashboard/hydration/hydrationSlice';
 
 export const registerLoginUser = createAsyncThunk(
   'ui/registerLoginUser',
   async (_, { getState, dispatch, rejectWithValue }) => {
     const { email, password } = (getState() as RootState).ui.authenticationInputs;
     try {
-      const response = await axios.post<ResponseData>('https://localhost:8000/api/login', {
+      const response = await axios.post<LoginResponse>('https://localhost:8000/api/login', {
         email: email,
         password: password,
       });
@@ -18,7 +21,6 @@ export const registerLoginUser = createAsyncThunk(
       localStorage.setItem('token', response.data.token);
       return response.data.token;
     } catch (error: any) {
-      console.log(error);
       if (!axios.isAxiosError(error)) throw error;
       switch (error.response?.status) {
         case 401:
@@ -56,6 +58,11 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string
     const response = await axios.get(`https://localhost:8000/api/users`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    dispatch(setActivities(response.data.user.activities));
+    dispatch(setSleeps(response.data.user.sleeps));
+    dispatch(setSmokes(response.data.user.smokes));
+    dispatch(setDrugs(response.data.user.drugs));
+    dispatch(setHydrations(response.data.user.hydrations));
     return response.data.user;
   } catch (error) {
     if (!axios.isAxiosError(error)) throw error;

@@ -1,6 +1,6 @@
 export interface InputPayload {
   path: PropertyPath;
-  name: string; // TODO faire un type
+  name: string;
   value: string;
 }
 
@@ -15,6 +15,7 @@ export type PropertyPath =
   | 'smokeInputs';
 
 export interface ActivityInputs {
+  id: number | null;
   duration: number | '';
   intensity: 1 | 2 | 3 | '';
   type: 'footing' | 'marche' | 'natation' | 'velo' | 'autre' | '';
@@ -30,6 +31,7 @@ export interface AuthenticationInputs {
 }
 
 export interface DrugInputs {
+  id: null;
   name: string;
   unit: string;
   infos: string;
@@ -42,8 +44,8 @@ export interface FoodInputs {
   category: string | null;
   date: string | null;
 }
-
 export interface HydrationInputs {
+  id: number | null;
   quantity: number | '';
   date: string | null;
 }
@@ -55,12 +57,14 @@ export interface ProfilInputs {
 }
 
 export interface SleepInputs {
+  id: number | null;
   duration: number | '';
   quality: number | '';
   date: string | null;
 }
 
 export interface SmokeInputs {
+  id: number | null;
   quantity: number | '';
   date: string | null;
 }

@@ -8,29 +8,23 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, IconButton } from '@mui/material';
 import { Edit, Delete, Add } from '@mui/icons-material/';
-import { setIsEdit } from '../../reducers/UI/uiSlice';
+import { resetInputValue, setInputValue, setIsEdit } from '../../reducers/UI/uiSlice';
 import { RefObject } from 'react';
 import { themeLight } from '../../theme/theme';
 import { calcDate } from '../../utils/math';
-import {
-  ActivityResponse,
-  DrugResponse,
-  HydrationResponse,
-  SleepResponse,
-  SmokeResponse,
-} from '../../Interfaces/API_Interfaces';
+import { Activity, Drug, Hydration, Sleep, Smoke } from '../../Interfaces/API_Interfaces';
+import { PropertyPath } from '../../Interfaces/inputs';
 
-type GenericProps = SleepResponse | DrugResponse | HydrationResponse | SmokeResponse | ActivityResponse;
+type GenericProps = Sleep | Drug | Hydration | Smoke | Activity;
 
-type TableProps<GenericProps> = {
+type CustomTableProps<GenericProps> = {
   array: GenericProps[];
-  onSelect: Function;
   onDelete: Function;
-  resetInput: Function;
+  path: PropertyPath;
   formRef: RefObject<HTMLFormElement>;
 };
 
-export default function CustomTable({ array, onSelect, onDelete, resetInput, formRef }: TableProps<GenericProps>) {
+export default function CustomTable({ array, onDelete, formRef, path }: CustomTableProps<GenericProps>) {
   const dispatch = useAppDispatch();
 
   return (
@@ -44,7 +38,7 @@ export default function CustomTable({ array, onSelect, onDelete, resetInput, for
         sx={{ position: 'absolute', right: 0 }}
         onClick={() => {
           dispatch(setIsEdit(false));
-          dispatch(resetInput());
+          dispatch(resetInputValue('sleepInputs'));
           formRef.current?.scrollIntoView({ behavior: 'smooth' });
         }}
       >
@@ -83,21 +77,23 @@ export default function CustomTable({ array, onSelect, onDelete, resetInput, for
                     backgroundColor: themeLight.palette.warning.light,
                     '&:hover': { backgroundColor: themeLight.palette.warning.main },
                   }}
-                  onClick={() => {
+                  onClick={(event) => {
                     dispatch(setIsEdit(true));
-                    dispatch(onSelect(element as GenericProps));
+                    for (const [key, value] of Object.entries(element)) {
+                      dispatch(setInputValue({ path: path, name: key, value: value }));
+                    }
                     formRef.current?.scrollIntoView({ behavior: 'smooth' });
                   }}
                 >
                   <Edit />
                 </IconButton>
                 <IconButton
+                  onClick={() => dispatch(onDelete(Number(element.id)))}
                   aria-label="delete"
                   sx={{
                     backgroundColor: themeLight.palette.error.light,
                     '&:hover': { backgroundColor: themeLight.palette.error.dark },
                   }}
-                  onClick={() => dispatch(onDelete(element.id))}
                 >
                   <Delete />
                 </IconButton>

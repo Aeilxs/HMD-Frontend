@@ -1,16 +1,10 @@
-import { Alert, Button, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Alert, Button, TextField, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
-import {
-  setQuality,
-  setSelectedSleep,
-  resetSleepInputs,
-  selectSleepMessage,
-} from '../../reducers/dashboard/sleep/sleepSlice';
+import { selectSleepMessage, selectSleeps } from '../../reducers/dashboard/sleep/sleepSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';
 import { deleteSleep, editSleep, postSleep } from '../../reducers/dashboard/sleep/sleepMiddleware';
-import { selectSleeps } from '../../reducers/user/userSlice';
 import { selectIsEdit, selectSleepInputs, setInputValue } from '../../reducers/UI/uiSlice';
 import CustomTable from '../../shared/CustomTable/CustomTable';
 import { useRef } from 'react';
@@ -23,10 +17,9 @@ export default function SleepPage(): JSX.Element {
   const navigate = useNavigate();
   const { duration, quality, date } = useAppSelector(selectSleepInputs);
   const isEdit = useAppSelector(selectIsEdit);
-  const sleeps = useAppSelector(selectSleeps);
   const { message, severity } = useAppSelector(selectSleepMessage);
   const formRef = useRef(null);
-
+  const sleeps = useAppSelector(selectSleeps);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setInputValue({ path: 'sleepInputs', name: event.target.name, value: event.target.value }));
   };
@@ -53,10 +46,9 @@ export default function SleepPage(): JSX.Element {
       />
       {sleeps.length > 0 && (
         <CustomTable
-          array={sleeps}
-          onSelect={setSelectedSleep}
+          path="sleepInputs"
           onDelete={deleteSleep}
-          resetInput={resetSleepInputs}
+          array={sleeps}
           formRef={formRef}
         />
       )}
@@ -101,7 +93,7 @@ export default function SleepPage(): JSX.Element {
           variant="contained"
           type="submit"
         >
-          Envoyer
+          {isEdit ? 'Editer' : 'Envoyer'}
         </Button>
       </Box>
     </Container>

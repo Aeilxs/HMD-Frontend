@@ -70,7 +70,7 @@ export default function Nav(): JSX.Element {
                   // dispatch(resetHydrationInputs());
                   // dispatch(resetFoodInputs());
                   // dispatch(resetSportInputs());
-                  dispatch(onLogout(false));
+                  dispatch(onLogout());
                 }}
                 sx={{ mr: 2 }}
                 size="small"

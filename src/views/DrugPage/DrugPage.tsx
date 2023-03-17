@@ -10,14 +10,13 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { selectDrugMessage, setSelectedDrug } from '../../reducers/dashboard/drug/drugSlice';
+import { selectDrugMessage, selectDrugs } from '../../reducers/dashboard/drug/drugSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';
-import { deleteDrug, editDrug, postDrug } from '../../reducers/dashboard/drug/drugMiddleware';
+import { editDrug, postDrug, deleteDrug } from '../../reducers/dashboard/drug/drugMiddleware';
 import { selectDrugInputs, selectIsEdit, setInputValue } from '../../reducers/UI/uiSlice';
 import CustomTable from '../../shared/CustomTable/CustomTable';
-import { selectDrugs } from '../../reducers/user/userSlice';
 import { useRef } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
@@ -25,9 +24,9 @@ import { useNavigate } from 'react-router-dom';
 export default function DrugPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const drugs = useAppSelector(selectDrugs);
   const { date, name, unit, infos, quantity } = useAppSelector(selectDrugInputs);
   const isEdit = useAppSelector(selectIsEdit);
-  const drugs = useAppSelector(selectDrugs);
   const { message, severity } = useAppSelector(selectDrugMessage);
   const formRef = useRef(null);
 
@@ -55,15 +54,14 @@ export default function DrugPage(): JSX.Element {
         title="L'importance de suivre ses traitements médicaux"
         content="Lorsqu'un professionnel de la santé prescrit un traitement médical, il est important de suivre attentivement les instructions pour maximiser les chances de guérison ou d'amélioration de votre santé. Cela peut inclure la prise régulière de médicaments, le suivi d'un régime alimentaire spécifique ou la participation à des séances de thérapie ou de réadaptation. Le non-respect de ces instructions peut entraîner des complications et des conséquences négatives sur la santé, y compris des effets secondaires indésirables ou une aggravation de l'état de santé. Si vous avez des préoccupations ou des questions concernant votre traitement, n'hésitez pas à en discuter avec votre médecin ou votre professionnel de la santé. Ensemble, vous pouvez travailler pour trouver un traitement efficace et adapté à votre situation individuelle."
       />
-      {/* {drugs.length > 0 && (
+      {drugs.length > 0 && (
         <CustomTable
           array={drugs}
-          onSelect={setSelectedDrug}
+          path="drugInputs"
           onDelete={deleteDrug}
-          resetInput={resetDrugsInputs}
           formRef={formRef}
         />
-      )} */}
+      )}
       <Box
         component="form"
         ref={formRef}

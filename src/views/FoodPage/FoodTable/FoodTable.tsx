@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { setIsEdit } from '../../../reducers/UI/uiSlice';
-import { selectFoods } from '../../../reducers/user/userSlice';
+// import { selectFoods } from '../../../reducers/user/userSlice';
 import { deleteFood } from '../../../reducers/dashboard/food/foodMiddleware';
 import { resetFoodInputs, setId } from '../../../reducers/dashboard/food/foodSlice';
 import { themeLight } from '../../../theme/theme';
@@ -19,7 +19,7 @@ import { Add, Delete, Edit } from '@mui/icons-material';
 
 export default function FoodTable(): JSX.Element {
   const dispatch = useAppDispatch();
-  const foods = useAppSelector(selectFoods);
+  // const foods = useAppSelector(selectFoods);
 
   return (
     <TableContainer
@@ -46,7 +46,7 @@ export default function FoodTable(): JSX.Element {
           </TableRow>
         </TableHead>
         <TableBody>
-          {foods.map((food) => (
+          {/* {foods.map((food) => (
             <TableRow key={food.id}>
               <TableCell sx={{ textAlign: 'center' }}>{food.name}</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>{food.caloricIntake}</TableCell>
@@ -77,7 +77,7 @@ export default function FoodTable(): JSX.Element {
                 </IconButton>
               </TableCell>
             </TableRow>
-          ))}
+          ))} */}
         </TableBody>
       </Table>
     </TableContainer>

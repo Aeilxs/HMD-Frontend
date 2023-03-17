@@ -43,6 +43,7 @@ const initialState: UIState = {
   isDrawerOpen: false,
   isEdit: false,
   activityInputs: {
+    id: null,
     date: null,
     duration: '',
     intensity: '',
@@ -56,6 +57,7 @@ const initialState: UIState = {
     gender: 'femme',
   },
   drugInputs: {
+    id: null,
     date: null,
     name: '',
     infos: '',
@@ -68,6 +70,7 @@ const initialState: UIState = {
     name: '',
   },
   hydrationInputs: {
+    id: null,
     date: null,
     quantity: '',
   },
@@ -77,11 +80,13 @@ const initialState: UIState = {
     weight: '',
   },
   sleepInputs: {
+    id: null,
     date: null,
     duration: '',
     quality: '',
   },
   smokeInputs: {
+    id: null,
     date: null,
     quantity: '',
   },
@@ -102,7 +107,8 @@ export const UISlice = createSlice({
       return { ...state, isDrawerOpen: !state.isDrawerOpen };
     },
     setInputValue: (state, action: PayloadAction<InputPayload>) => {
-      console.log(action.payload);
+      console.clear();
+      console.table(action.payload);
       const { path, name, value } = action.payload;
       return {
         ...state,

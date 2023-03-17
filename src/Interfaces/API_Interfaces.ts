@@ -1,4 +1,45 @@
-export interface DrugResponse {
+import { AlertColor } from '@mui/material';
+
+export interface AlertMessage {
+  severity: AlertColor;
+  message: string;
+}
+
+export interface LoginResponse {
+  token: string;
+}
+
+export interface ActivitiesApiResponse {
+  message: AlertMessage;
+  activity: Activity;
+  activities: Activity[];
+}
+
+export interface DrugApiResponse {
+  message: AlertMessage;
+  drug: Drug;
+  drugs: Drug[];
+}
+
+export interface HydrationApiResponse {
+  message: AlertMessage;
+  hydration: Hydration;
+  hydrations: Hydration[];
+}
+
+export interface SmokeApiResponse {
+  message: AlertMessage;
+  smoke: Smoke;
+  smokes: Smoke[];
+}
+
+export interface SleepApiResponse {
+  message: AlertMessage;
+  sleep: Sleep;
+  sleeps: Sleep[];
+}
+
+export interface Drug {
   id: number;
   date: string;
   name: string;
@@ -6,7 +47,7 @@ export interface DrugResponse {
   quantity: number;
 }
 
-export interface FoodResponse {
+export interface Food {
   id: number;
   date: string;
   name: string;
@@ -14,28 +55,28 @@ export interface FoodResponse {
   caloricIntake: number;
 }
 
-export interface HydrationResponse {
+export interface Hydration {
   id: number;
   date: string;
   quantity: number;
 }
 
-export interface ActivityResponse {
+export interface Activity {
   id: number;
   date: string;
   type: string;
-  time: number;
+  duration: number;
   intensity: number;
 }
 
-export interface SleepResponse {
+export interface Sleep {
   id: number;
-  time: number;
+  duration: number;
   quality: number;
   date: string;
 }
 
-export interface SmokeResponse {
+export interface Smoke {
   id: number;
   quantity: number;
   date: string;

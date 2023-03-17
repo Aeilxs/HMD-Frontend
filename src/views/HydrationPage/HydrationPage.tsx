@@ -1,16 +1,11 @@
 import { Alert, Button, TextField, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
-import {
-  setSelectedHydration,
-  resetHydrationInputs,
-  selectHydrationMessage,
-} from '../../reducers/dashboard/hydration/hydrationSlice';
+import { selectHydrationMessage, selectHydrations } from '../../reducers/dashboard/hydration/hydrationSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import MessageBox from '../../shared/MessageBox/MessageBox';
 import { deleteHydration, editHydration, postHydration } from '../../reducers/dashboard/hydration/hydrationMiddleware';
 import CustomTable from '../../shared/CustomTable/CustomTable';
-import { selectHydrations } from '../../reducers/user/userSlice';
 import { selectHydrationInputs, selectIsEdit, setInputValue } from '../../reducers/UI/uiSlice';
 import { useRef } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -53,9 +48,8 @@ export default function HydrationPage(): JSX.Element {
       {hydrations.length > 0 && (
         <CustomTable
           array={hydrations}
-          onSelect={setSelectedHydration}
+          path="hydrationInputs"
           onDelete={deleteHydration}
-          resetInput={resetHydrationInputs}
           formRef={formRef}
         />
       )}
@@ -89,7 +83,7 @@ export default function HydrationPage(): JSX.Element {
           variant="contained"
           type="submit"
         >
-          Valider
+          {isEdit ? 'Editer' : 'Ajouter'}
         </Button>
       </Box>
     </Container>

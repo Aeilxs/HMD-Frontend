@@ -1,12 +1,5 @@
-import { store } from '../store/store';
 import { ConsommedFood, Food } from '../reducers/dashboard/food/foodSlice';
-import {
-  ActivityResponse,
-  DrugResponse,
-  HydrationResponse,
-  SleepResponse,
-  SmokeResponse,
-} from '../Interfaces/API_Interfaces';
+import { Activity, Drug, Hydration, Sleep, Smoke } from '../Interfaces/API_Interfaces';
 
 export const calcAge = (date: string): number => {
   const diff = Date.now() - new Date(date).getTime();
@@ -35,17 +28,17 @@ export const calcMB = ({ weight, height, age, gender }: MBProps): number | undef
     : Math.ceil(9.74 * weight + 172.9 * height - 4.737 * age + 667.051);
 };
 
-type GenericProps = SleepResponse | DrugResponse | HydrationResponse | SmokeResponse | ActivityResponse;
+type GenericProps = Sleep | Drug | Hydration | Smoke | Activity;
 
 export const sortByDate = (array: GenericProps[]): GenericProps[] => {
   return array.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 };
 
-export const getFoodNameById = (): string => {
-  const foods = store.getState().user.foods;
-  const id = store.getState().food.id;
-  return foods.find((food) => food.id === id)?.name || 'Aliment inconnu';
-};
+// export const getFoodNameById = (): string => {
+//   const foods = store.getState().user.foods;
+//   const id = store.getState().food.id;
+//   return foods.find((food) => food.id === id)?.name || 'Aliment inconnu';
+// };
 
 /**
  * Retourne un tableau d'aliments unique en fonction du nom

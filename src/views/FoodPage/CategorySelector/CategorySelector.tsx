@@ -19,7 +19,6 @@ export default function CategorySelector({ aliments }: CategoryProps): JSX.Eleme
       // Propriété "getOptionLabel" pour extraire la valeur de chaque option et l'afficher dans la liste déroulante
       getOptionLabel={(option) => option}
       onChange={(event, value) => {
-        console.log();
         if (value) {
           dispatch(setInputValue({ path: 'foodInputs', name: 'category', value: value }));
           dispatch(fetchProducts(value));

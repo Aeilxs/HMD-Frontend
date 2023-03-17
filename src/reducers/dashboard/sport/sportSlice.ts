@@ -1,48 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AlertMessage } from '../../../Interfaces/AlertMessage';
-import { ActivityResponse } from '../../../Interfaces/API_Interfaces';
+import { Activity, AlertMessage } from '../../../Interfaces/API_Interfaces';
 import { RootState } from '../../../store/store';
 import { deleteSport, editSport, postSport } from './sportMiddleware';
 
-export interface sportState {
+export interface ActivityState {
   id: number | null;
   message: AlertMessage;
-  date: string | null;
-  type: string;
-  time: number | '';
-  intensity: '' | number;
+  activities: Activity[];
 }
 
-const initialState: sportState = {
+const initialState: ActivityState = {
   id: null,
   message: { severity: 'info', message: '' },
-  date: null,
-  type: 'course',
-  time: '',
-  intensity: '',
+  activities: [],
 };
 
-export const sportSlice = createSlice({
-  name: 'sport',
+export const activitySlice = createSlice({
+  name: 'activity',
   initialState,
   reducers: {
-    setType: (state, action: PayloadAction<'course' | 'marche' | 'natation' | 'velo' | 'exercices'>) => {
-      return { ...state, type: action.payload };
-    },
-    setDuration: (state, action: PayloadAction<number>) => {
-      return { ...state, time: action.payload };
-    },
-    setIntensity: (state, action: PayloadAction<number>) => {
-      return { ...state, intensity: action.payload };
-    },
-    setDate: (state, action: PayloadAction<string>) => {
-      return { ...state, date: action.payload };
-    },
-    setSelectedSport: (state, action: PayloadAction<ActivityResponse>) => {
-      return { ...state, ...action.payload };
-    },
-    resetSportInputs: (state) => {
-      return { ...initialState };
+    setActivities: (state, action: PayloadAction<Activity[]>) => {
+      return { ...state, activities: action.payload };
     },
   },
   extraReducers: (builder) => {
@@ -74,12 +52,9 @@ export const sportSlice = createSlice({
   },
 });
 
-export const { setType, setDuration, setIntensity, setDate, setSelectedSport, resetSportInputs } = sportSlice.actions;
+export const { setActivities } = activitySlice.actions;
 
-export const selectDate = (state: RootState) => state.sport.date;
-export const selectType = (state: RootState) => state.sport.type;
-export const selectDuration = (state: RootState) => state.sport.time;
-export const selectIntensity = (state: RootState) => state.sport.intensity;
-export const selectSportMessage = (state: RootState) => state.sport.message;
+export const selectActivities = (state: RootState) => state.activity.activities;
+export const selectActivityMessage = (state: RootState) => state.activity.message;
 
-export default sportSlice.reducer;
+export default activitySlice.reducer;

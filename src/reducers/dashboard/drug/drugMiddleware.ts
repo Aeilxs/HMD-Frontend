@@ -1,74 +1,69 @@
+import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
-import axios from 'axios';
-import { removeDrug, setDrug, updateDrug } from '../../user/userSlice';
-import { calcDate } from '../../../utils/math';
 import { resetInputValue } from '../../UI/uiSlice';
+import { setDrugs } from './drugSlice';
+import { DrugApiResponse } from '../../../Interfaces/API_Interfaces';
 
 export const postDrug = createAsyncThunk('drug/postDrug', async (_, { getState, dispatch, rejectWithValue }) => {
-  const { quantity, name, date, unit } = (getState() as RootState).drug;
+  const { quantity, name, date, unit } = (getState() as RootState).ui.drugInputs;
   const token = (getState() as RootState).user.token;
   try {
-    const response = await axios.post(
-      'http://localhost:8000/api/users/drugs',
+    const response = await axios.post<DrugApiResponse>(
+      'https://localhost:8000/api/drugs',
       {
-        quantity: quantity,
+        quantity: Number(quantity),
         name: name,
         unit: unit,
         date: date,
       },
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    dispatch(setDrug(response.data));
     dispatch(resetInputValue('drugInputs'));
-    return {
-      severity: 'info',
-      message: `Ajout du traitement médical en date du ${calcDate(response.data.date)}`,
-    };
+    dispatch(setDrugs(response.data.drugs));
+    return response.data.message;
   } catch (error) {
     if (!axios.isAxiosError(error)) throw error;
-    return rejectWithValue({ severity: 'error', message: "Echec de l'ajout" });
+    return rejectWithValue(error.response?.data.message);
   }
 });
 
 export const editDrug = createAsyncThunk('drug/editDrug', async (_, { getState, dispatch, rejectWithValue }) => {
   try {
-    const { quantity, name, unit, date, id } = (getState() as RootState).drug;
+    const { quantity, name, unit, date, id } = (getState() as RootState).ui.drugInputs;
     const token = (getState() as RootState).user.token;
-    const response = await axios.patch(
-      `http://localhost:8000/api/users/drugs/${id}`,
+    const response = await axios.patch<DrugApiResponse>(
+      `https://localhost:8000/api/drugs/${id}`,
       {
-        quantity: quantity,
+        quantity: Number(quantity),
         name: name,
         unit: unit,
         date: date,
       },
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    dispatch(updateDrug(response.data));
-    return {
-      severity: 'info',
-      message: `Modification du traitement médical en date du ${calcDate(response.data.date)}`,
-    };
+    dispatch(setDrugs(response.data.drugs));
+    return response.data.message;
   } catch (error) {
     if (!axios.isAxiosError(error)) throw error;
-    return rejectWithValue({ severity: 'error', message: 'Echec de la modification' });
+    return rejectWithValue(error.response?.data.message);
   }
 });
 
 export const deleteDrug = createAsyncThunk(
-  'sleep/deleteDrug',
+  'drug/deleteDrug',
   async (id: number, { getState, dispatch, rejectWithValue }) => {
     try {
       const token = (getState() as RootState).user.token;
-      const response = await axios.delete(`http://localhost:8000/api/users/drugs/${id}`, {
+      const response = await axios.delete<DrugApiResponse>(`https://localhost:8000/api/drugs/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      dispatch(removeDrug(id));
-      return { severity: 'info', message: `Votre traitement médical a bien été supprimé` };
+      dispatch(resetInputValue('drugInputs'));
+      dispatch(setDrugs(response.data.drugs));
+      return response.data.message;
     } catch (error) {
       if (!axios.isAxiosError(error)) throw error;
-      return rejectWithValue({ severity: 'error', message: 'Echec de la suppression' });
+      return rejectWithValue(error.response?.data.message);
     }
   }
 );

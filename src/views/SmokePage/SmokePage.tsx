@@ -3,9 +3,8 @@ import { Container } from '@mui/system';
 import MessageBox from '../../shared/MessageBox/MessageBox';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { resetSmokeInputs, selectSmokeMessage, setSelectedSmoke } from '../../reducers/dashboard/smoke/smokeSlice';
+import { selectSmokeMessage, selectSmokes } from '../../reducers/dashboard/smoke/smokeSlice';
 import { deleteSmoke, editSmoke, postSmoke } from '../../reducers/dashboard/smoke/smokeMiddleware';
-import { selectSmokes } from '../../reducers/user/userSlice';
 import CustomTable from '../../shared/CustomTable/CustomTable';
 import { selectIsEdit, selectSmokeInputs, setInputValue } from '../../reducers/UI/uiSlice';
 import { useRef } from 'react';
@@ -48,9 +47,8 @@ export default function SmokePage(): JSX.Element {
       {smokes.length > 0 && (
         <CustomTable
           array={smokes}
-          onSelect={setSelectedSmoke}
+          path="smokeInputs"
           onDelete={deleteSmoke}
-          resetInput={resetSmokeInputs}
           formRef={formRef}
         />
       )}
@@ -59,7 +57,6 @@ export default function SmokePage(): JSX.Element {
         ref={formRef}
         onSubmit={(event) => {
           event.preventDefault();
-          console.log('smoke submit');
           isEdit ? dispatch(editSmoke()) : dispatch(postSmoke());
         }}
         sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}
@@ -92,7 +89,7 @@ export default function SmokePage(): JSX.Element {
           variant="contained"
           type="submit"
         >
-          Valider
+          {isEdit ? 'Editer' : 'Ajouter'}
         </Button>
       </Box>
     </Container>

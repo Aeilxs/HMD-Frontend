@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AlertMessage } from '../../../Interfaces/AlertMessage';
+import { AlertMessage } from '../../../Interfaces/API_Interfaces';
 import { RootState } from '../../../store/store';
 import { deleteFood, editFood, fetchProducts, postFood } from './foodMiddleware';
 
@@ -94,32 +94,26 @@ export const FoodSlice = createSlice({
         state.foods = action.payload;
       })
       .addCase(postFood.fulfilled, (state, action) => {
-        console.log(action.payload);
         const { severity, message } = action.payload as AlertMessage;
         return { ...state, selectedFood: action.payload.data, message: { severity, message } };
       })
       .addCase(postFood.rejected, (state, action) => {
-        console.log(action.payload);
         const { severity, message } = action.payload as AlertMessage;
         return { ...state, message: { severity, message } };
       })
       .addCase(editFood.fulfilled, (state, action) => {
-        console.log(action.payload);
         const { severity, message } = action.payload as AlertMessage;
         return { ...state, selectedFood: action.payload.data, message: { severity, message } };
       })
       .addCase(editFood.rejected, (state, action) => {
-        console.log(action.payload);
         const { severity, message } = action.payload as AlertMessage;
         return { ...state, message: { severity, message } };
       })
       .addCase(deleteFood.fulfilled, (state, action) => {
-        console.log(action.payload);
         const { severity, message } = action.payload as AlertMessage;
         return { ...state, message: { severity, message } };
       })
       .addCase(deleteFood.rejected, (state, action) => {
-        console.log(action.payload);
         const { severity, message } = action.payload as AlertMessage;
         return { ...state, message: { severity, message } };
       });

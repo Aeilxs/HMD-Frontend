@@ -1,9 +1,8 @@
+import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
-import axios from 'axios';
 import { ApiProps, Food, setIsLoading } from './foodSlice';
-import { calcCalories, calcMB } from '../../../utils/math';
-import { removeFood, setFood, updateFood } from '../../user/userSlice';
+import { calcCalories } from '../../../utils/math';
 
 export const fetchProducts = createAsyncThunk('food/fetchProducts', async (categoryName: string, { dispatch }) => {
   const category = categoryName.toLowerCase().replace(/\s+/g, '-');
@@ -36,7 +35,6 @@ export const postFood = createAsyncThunk(
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      dispatch(setFood(response.data));
       return {
         data: response.data,
         severity: 'info',
@@ -64,7 +62,6 @@ export const editFood = createAsyncThunk(
 
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      dispatch(updateFood(response.data));
       return {
         data: response.data,
         severity: 'info',
@@ -85,7 +82,6 @@ export const deleteFood = createAsyncThunk(
       const response = await axios.delete(`http://localhost:8000/api/users/alimentations/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      dispatch(removeFood(id));
       return {
         severity: 'info',
         message: `Votre aliment a bien été supprimé`,

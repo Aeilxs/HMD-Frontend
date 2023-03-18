@@ -43,12 +43,12 @@ function App(): JSX.Element {
     { path: '/dashboard', component: <DashboardPage /> },
   ];
 
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      dispatch(setIsLogged());
-      dispatch(fetchUser(token));
-    }
-  }, [dispatch, token]);
+  // useEffect(() => {
+  //   if (localStorage.getItem('token')) {
+  //     dispatch(setIsLogged());
+  //     dispatch(fetchUser(token));
+  //   }
+  // }, [dispatch, token]);
 
   return (
     <ThemeProvider theme={isDark ? themeDark : themeLight}>

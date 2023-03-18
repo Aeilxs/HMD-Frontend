@@ -7,6 +7,7 @@ export interface AlertMessage {
 
 export interface LoginResponse {
   token: string;
+  id: number;
 }
 
 export interface ActivitiesApiResponse {

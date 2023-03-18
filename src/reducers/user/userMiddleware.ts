@@ -7,6 +7,7 @@ import { setActivities } from '../dashboard/sport/sportSlice';
 import { setSmokes } from '../dashboard/smoke/smokeSlice';
 import { setDrugs } from '../dashboard/drug/drugSlice';
 import { setHydrations } from '../dashboard/hydration/hydrationSlice';
+import { onSuccesAuthentication, setIsLogged } from './userSlice';
 
 export const registerLoginUser = createAsyncThunk(
   'ui/registerLoginUser',
@@ -17,21 +18,15 @@ export const registerLoginUser = createAsyncThunk(
         email: email,
         password: password,
       });
-      dispatch(fetchUser(response.data.token));
+      dispatch(onSuccesAuthentication({ token: response.data.token, id: response.data.id }));
+      dispatch(fetchUser());
+      dispatch(setIsLogged());
       localStorage.setItem('token', response.data.token);
       return response.data.token;
     } catch (error: any) {
+      console.log(error);
       if (!axios.isAxiosError(error)) throw error;
-      switch (error.response?.status) {
-        case 401:
-          return rejectWithValue('Identifiants incorrect');
-        case 404:
-          return rejectWithValue('Erreur 404');
-        case 500:
-          return rejectWithValue('Tous les champs doivent être remplis');
-        default:
-          throw error;
-      }
+      return;
     }
   }
 );
@@ -53,17 +48,19 @@ export const registerUser = createAsyncThunk('user/registerUser', async (_, { ge
   }
 });
 
-export const fetchUser = createAsyncThunk('user/fetchUser', async (token: string, { dispatch, rejectWithValue }) => {
+export const fetchUser = createAsyncThunk('user/fetchUser', async (_, { getState, dispatch, rejectWithValue }) => {
+  const { token, id } = (getState() as RootState).user;
   try {
-    const response = await axios.get(`https://localhost:8000/api/users`, {
+    const response = await axios.get(`https://localhost:8000/api/users/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    console.log(response.data);
     dispatch(setActivities(response.data.user.activities));
     dispatch(setSleeps(response.data.user.sleeps));
     dispatch(setSmokes(response.data.user.smokes));
     dispatch(setDrugs(response.data.user.drugs));
     dispatch(setHydrations(response.data.user.hydrations));
-    return response.data.user;
+    return response.data.message;
   } catch (error) {
     if (!axios.isAxiosError(error)) throw error;
     return rejectWithValue({

@@ -2,8 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchUser, registerLoginUser } from './userMiddleware';
 import { RootState } from '../../store/store';
 import { calcAge } from '../../utils/math';
+import { LoginResponse } from '../../Interfaces/API_Interfaces';
 
 export interface UserState {
+  id: number;
   isLogged: boolean;
   token: string;
   firstname: string;
@@ -13,8 +15,9 @@ export interface UserState {
 }
 
 const initialState: UserState = {
+  id: 0,
   isLogged: false,
-  token: localStorage.getItem('token') || '',
+  token: '',
   firstname: '',
   lastname: '',
   gender: '',
@@ -32,7 +35,10 @@ export const userSlice = createSlice({
         age: calcAge(action.payload),
       };
     },
-
+    onSuccesAuthentication: (state, action: PayloadAction<LoginResponse>) => {
+      const { token, id } = action.payload;
+      return { ...state, token: token, id: id };
+    },
     setIsLogged: (state) => {
       return { ...state, isLogged: true };
     },
@@ -43,12 +49,12 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(registerLoginUser.pending, (state) => {
-        // todo
-      })
-      .addCase(registerLoginUser.fulfilled, (state, action) => {
-        return { ...state, isLogged: true, token: action.payload };
-      })
+      // .addCase(registerLoginUser.pending, (state) => {
+      //   // todo
+      // })
+      // .addCase(registerLoginUser.fulfilled, (state, action) => {
+      //   return { ...state, isLogged: true, token: action.payload };
+      // })
       .addCase(registerLoginUser.rejected, (state) => {
         return { ...state, isLogged: false };
       })
@@ -56,7 +62,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { onLogout, setIsLogged } = userSlice.actions;
+export const { onLogout, setIsLogged, onSuccesAuthentication } = userSlice.actions;
 
 export const selectToken = (state: RootState) => state.user.token;
 export const selectFirstName = (state: RootState) => state.user.firstname;

@@ -41,9 +41,13 @@ export interface DrugInputs {
 
 export interface FoodInputs {
   name: string;
+  search: string;
+  categories: string[];
+  page: number;
   category: string | null;
   date: string | null;
 }
+
 export interface HydrationInputs {
   id: number | null;
   quantity: number | '';

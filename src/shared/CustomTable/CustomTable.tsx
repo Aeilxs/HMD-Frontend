@@ -11,7 +11,7 @@ import { Edit, Delete, Add } from '@mui/icons-material/';
 import { resetInputValue, setInputValue, setIsEdit } from '../../reducers/UI/uiSlice';
 import { RefObject } from 'react';
 import { themeLight } from '../../theme/theme';
-import { calcDate } from '../../utils/math';
+import { calcDate } from '../../utils/stringFormat';
 import { Activity, Drug, Hydration, Sleep, Smoke } from '../../Interfaces/API_Interfaces';
 import { PropertyPath } from '../../Interfaces/inputs';
 

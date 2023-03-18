@@ -26,11 +26,13 @@ export interface Food {
 
 interface FoodState {
   message: AlertMessage;
+  displayedFoods: [];
   foods: Food[];
 }
 
 const initialState: FoodState = {
   message: { severity: 'info', message: '' },
+  displayedFoods: [],
   foods: [],
 };
 

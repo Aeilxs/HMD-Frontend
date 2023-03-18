@@ -9,7 +9,7 @@ export interface LoginResponse {
   token: string;
 }
 
-export interface ActivitiesApiResponse {
+export interface ActivityApiResponse {
   message: AlertMessage;
   activity: Activity;
   activities: Activity[];

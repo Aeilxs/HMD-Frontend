@@ -1,5 +1,5 @@
 import { Activity, Drug, Food, Hydration, Sleep, Smoke } from '../Interfaces/API_Interfaces';
-import { calcDate } from './math';
+import { calcDate } from './stringFormat';
 
 export const sleepChartData = (sleeps: Sleep[]) => {
   const dates: string[] = [];

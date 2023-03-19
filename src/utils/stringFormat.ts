@@ -4,15 +4,17 @@ export const calcDate = (oldDate: string): string => {
 };
 
 /**
- * return input :
- *  - toLowerCase()
- *  - replace spaces with: -
- *  - remove french accents
+ * Returns a formatted category string:
+ *  - converts to lowercase
+ *  - replaces spaces with hyphens (-)
+ *  - removes French accents
+ *  - replaces apostrophes with hyphens (-)
  */
 export function formatCategory(input: string): string {
   return input
     .toLowerCase()
     .replace(/\s+/g, '-')
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/'/g, '-');
 }

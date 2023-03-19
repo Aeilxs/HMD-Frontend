@@ -42,9 +42,9 @@ export interface DrugInputs {
 export interface FoodInputs {
   name: string;
   search: string;
-  categories: string[];
+  categories: string;
   page: number;
-  category: string | null;
+  category: string;
   date: string | null;
 }
 

@@ -66,10 +66,10 @@ const initialState: UIState = {
   },
   foodInputs: {
     date: null,
-    categories: [],
+    categories: '',
     search: '',
     page: 1,
-    category: null,
+    category: '',
     name: '',
   },
   hydrationInputs: {
@@ -111,6 +111,7 @@ export const UISlice = createSlice({
     },
     setInputValue: (state, action: PayloadAction<InputPayload>) => {
       const { path, name, value } = action.payload;
+      console.log(action.payload);
       return {
         ...state,
         [path]: { ...state[path], [name]: value },

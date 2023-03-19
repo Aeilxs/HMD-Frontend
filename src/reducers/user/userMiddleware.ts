@@ -54,7 +54,6 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async (_, { getState
     const response = await axios.get(`https://localhost:8000/api/users/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(response.data);
     dispatch(setActivities(response.data.user.activities));
     dispatch(setSleeps(response.data.user.sleeps));
     dispatch(setSmokes(response.data.user.smokes));

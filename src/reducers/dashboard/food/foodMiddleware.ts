@@ -44,7 +44,6 @@ export const fetchProducts = createAsyncThunk(
           category
         )}&json=1&page=${page}`
       );
-      console.log(response.data);
       const results: FoodOFFResponse[] = response.data.products
         .filter((product: any) => product.product_name_fr !== '' && product.product_name_fr !== undefined)
         .map((product: any) => ({
@@ -53,9 +52,9 @@ export const fetchProducts = createAsyncThunk(
           infos: product.nutrient_levels,
           name: product.product_name_fr,
           kcal: product.nutriments['energy-kcal'],
-          imgSrc: product.image_small_url || 'https://cdn-icons-png.flaticon.com/512/3875/3875172.png',
+          imgSrc: product.image_url || 'https://cdn-icons-png.flaticon.com/512/3875/3875172.png',
+          url: product.url,
         }));
-      console.log(results);
       dispatch(resetInputValue('foodInputs'));
       dispatch(setDisplayedFoods(results));
     } catch (error) {

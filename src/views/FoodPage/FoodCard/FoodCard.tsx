@@ -1,6 +1,9 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
+import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { FoodOFFResponseInfo } from '../../../Interfaces/API_Interfaces';
+import { setInputValue } from '../../../reducers/UI/uiSlice';
+import { useAppDispatch } from '../../../store/hooks';
+import { formatFoodCardEnum } from '../../../utils/stringFormat';
 
 interface FoodCardProps {
   id: string;
@@ -9,17 +12,26 @@ interface FoodCardProps {
   infos: FoodOFFResponseInfo;
   kcal: number;
   imgSrc: string;
+  url: string;
 }
 
-export default function FoodCard({ id, brands, infos, name, kcal, imgSrc }: FoodCardProps): JSX.Element {
+export default function FoodCard({ id, brands, infos, name, kcal, imgSrc, url }: FoodCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
   return (
-    <Card sx={{ p: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+    <Card sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
       <Box
         component="img"
-        sx={{ height: '200px' }}
+        sx={{ height: '200px', objectFit: 'cover', borderRadius: '10px' }}
         src={imgSrc}
       />
-      <CardContent>
+      <CardContent
+        sx={{
+          display: 'flex',
+          height: '100%',
+          flexDirection: 'column',
+          justifyContent: 'space-around',
+        }}
+      >
         <Typography
           sx={{ fontSize: 14 }}
           color="text.secondary"
@@ -37,11 +49,11 @@ export default function FoodCard({ id, brands, infos, name, kcal, imgSrc }: Food
           sx={{ mb: 1.5 }}
           color="text.secondary"
         >
-          {`graisses: ${infos.fat}`}
+          {`Graisses: ${formatFoodCardEnum(infos.fat)}`}
           <br />
-          {`sel: ${infos.salt}`}
+          {`Sucres:   ${formatFoodCardEnum(infos.sugars)}`}
           <br />
-          {`sucres: ${infos.sugars}`}
+          {`Sel:      ${formatFoodCardEnum(infos.salt)}`}
         </Typography>
         <Typography variant="body2">{kcal}kcal / 100 grammes</Typography>
       </CardContent>
@@ -49,12 +61,17 @@ export default function FoodCard({ id, brands, infos, name, kcal, imgSrc }: Food
         <Button
           size="small"
           sx={{ mx: 'auto' }}
+          onClick={() => {
+            dispatch(setInputValue({ path: 'foodInputs', name: 'name', value: name }));
+            dispatch(setInputValue({ path: 'foodInputs', name: 'kcal_100g', value: kcal.toString() }));
+          }}
         >
           Ajouter
         </Button>
         <Button
           size="small"
           sx={{ mx: 'auto' }}
+          onClick={() => window.open(url)}
         >
           Open Food Facts
         </Button>

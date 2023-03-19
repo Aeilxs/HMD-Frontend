@@ -11,7 +11,6 @@ export interface LoginResponse {
   token: string;
   id: number;
 }
-
 export interface ActivityApiResponse {
   message: AlertMessage;
   activity: Activity;
@@ -65,6 +64,7 @@ export interface FoodOFFResponse {
   infos: FoodOFFResponseInfo;
   kcal: number;
   imgSrc: string;
+  url: string;
 }
 
 export interface FoodOFFResponseInfo {
@@ -74,7 +74,7 @@ export interface FoodOFFResponseInfo {
   sugars: FoodOFFInfoEnum;
 }
 
-type FoodOFFInfoEnum = 'fat' | 'low' | 'moderate';
+export type FoodOFFInfoEnum = 'high' | 'low' | 'moderate';
 
 export interface Hydration {
   id: number;

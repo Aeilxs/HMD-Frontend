@@ -92,19 +92,19 @@ export const FoodSlice = createSlice({
       .addCase(fetchProducts.pending, (state, action) => {
         return {
           ...state,
-          categories: { ...state.categories, categoriesStatus: 'pending' },
+          displayedFoods: { ...state.displayedFoods, foodsStatus: 'pending' },
         };
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         return {
           ...state,
-          categories: { ...state.categories, categoriesStatus: 'fulfilled' },
+          displayedFoods: { ...state.displayedFoods, foodsStatus: 'fulfilled' },
         };
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         return {
           ...state,
-          categories: { ...state.categories, categoriesStatus: 'rejected' },
+          displayedFoods: { ...state.displayedFoods, foodsStatus: 'rejected' },
         };
       });
   },

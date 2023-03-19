@@ -41,8 +41,9 @@ export interface DrugInputs {
 
 export interface FoodInputs {
   name: string;
+  kcal_100g: number | '';
+  quantity: number | '';
   search: string;
-  categories: string;
   page: number;
   category: string;
   date: string | null;

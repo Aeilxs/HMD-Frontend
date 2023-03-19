@@ -66,7 +66,8 @@ const initialState: UIState = {
   },
   foodInputs: {
     date: null,
-    categories: '',
+    kcal_100g: '',
+    quantity: '',
     search: '',
     page: 1,
     category: '',

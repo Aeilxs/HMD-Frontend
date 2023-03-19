@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import { Alert, Autocomplete, Button, CircularProgress, Container, TextField } from '@mui/material';
+import { Alert, Autocomplete, Button, CircularProgress, Container, LinearProgress, TextField } from '@mui/material';
 import { selectFoodInputs, setInputValue } from '../../reducers/UI/uiSlice';
 import MessageBox from '../../shared/MessageBox/MessageBox';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -7,6 +7,7 @@ import { fetchCategories, fetchProducts } from '../../reducers/dashboard/food/fo
 import { selectFoodMessage, selectOFFCategories, selectOFFFoods } from '../../reducers/dashboard/food/foodSlice';
 import FoodGrid from './FoodGrid/FoodGrid';
 import { CATEGORIES_ARRAY_TEMP } from '../../utils/OFFCategories';
+import FoodForm from './FoodForm/FoodForm';
 
 export default function FoodPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -17,13 +18,22 @@ export default function FoodPage(): JSX.Element {
 
   //!\ TEMPORARY //
   const categoriesArray = CATEGORIES_ARRAY_TEMP;
-  const categoriesStatus = 'fulfilled';
   // if (categoriesStatus === 'idle') {
   //   dispatch(fetchCategories());
   // }
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setInputValue({ path: 'foodInputs', name: event.target.name, value: event.target.value }));
   };
+
+  //! pour ajouter en bdd plus tard
+  // const longestCategory = categoriesArray.reduce((acc, cur) => {
+  //   if (cur.length > acc.length) {
+  //     return cur;
+  //   } else {
+  //     return acc;
+  //   }
+  // }, '');
+  // console.log(longestCategory.length);
 
   return (
     <Container sx={{ my: 2 }}>
@@ -33,8 +43,8 @@ export default function FoodPage(): JSX.Element {
       />
       <Box
         onSubmit={(event) => {
-          console.log('SUBMIT: ', search);
           event.preventDefault();
+          if (foodsStatus === 'pending') return;
           dispatch(fetchProducts());
         }}
         component="form"
@@ -70,10 +80,11 @@ export default function FoodPage(): JSX.Element {
               onChange={handleChange}
               label="Recherchez un aliment"
             />
-            <FoodGrid
-              array={foodsArray}
-              status={foodsStatus}
-            />
+            {foodsStatus === 'pending' ? (
+              <LinearProgress sx={{ my: 2, p: 1, borderRadius: '20px' }} />
+            ) : (
+              <FoodGrid array={foodsArray} />
+            )}
             <Button
               sx={{ my: 2, display: 'block', mx: 'auto' }}
               type="submit"
@@ -85,6 +96,7 @@ export default function FoodPage(): JSX.Element {
           </>
         )}
       </Box>
+      <FoodForm />
     </Container>
   );
 }

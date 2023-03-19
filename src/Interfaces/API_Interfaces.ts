@@ -1,5 +1,7 @@
 import { AlertColor } from '@mui/material';
 
+export type RequestStatus = 'idle' | 'pending' | 'rejected' | 'fulfilled';
+
 export interface AlertMessage {
   severity: AlertColor;
   message: string;
@@ -9,8 +11,7 @@ export interface LoginResponse {
   token: string;
   id: number;
 }
-
-export interface ActivitiesApiResponse {
+export interface ActivityApiResponse {
   message: AlertMessage;
   activity: Activity;
   activities: Activity[];
@@ -55,6 +56,25 @@ export interface Food {
   caloricNeed: number;
   caloricIntake: number;
 }
+
+export interface FoodOFFResponse {
+  id: string;
+  name: string;
+  brands: string;
+  infos: FoodOFFResponseInfo;
+  kcal: number;
+  imgSrc: string;
+  url: string;
+}
+
+export interface FoodOFFResponseInfo {
+  fat: FoodOFFInfoEnum;
+  salt: FoodOFFInfoEnum;
+  'satured-fat': FoodOFFInfoEnum;
+  sugars: FoodOFFInfoEnum;
+}
+
+export type FoodOFFInfoEnum = 'high' | 'low' | 'moderate';
 
 export interface Hydration {
   id: number;

@@ -19,11 +19,9 @@ function CustomScrollBar({ children }: CustomScrollBarProps): JSX.Element {
       const observer = new MutationObserver(() => {
         setHasOverflow(container.scrollHeight > container.clientHeight);
       });
-
-      // Commencer à observer les mutations
+      // observe mutations
       observer.observe(container, { childList: true, subtree: true });
-
-      // Arrêter l'observation lorsque le composant est démonté
+      // stop the observe when component unmount
       return () => observer.disconnect();
     }
   }, [vwValue, children]);

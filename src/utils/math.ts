@@ -6,11 +6,6 @@ export const calcAge = (date: string): number => {
   return Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
 };
 
-export const calcDate = (oldDate: string): string => {
-  const date = new Date(oldDate);
-  return ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
-};
-
 export const calcCalories = (food: ConsommedFood): number => Math.ceil((Number(food.calories) / 100) * food.quantity);
 export interface MBProps {
   weight: number | '';
@@ -26,12 +21,6 @@ export const calcMB = ({ weight, height, age, gender }: MBProps): number | undef
   return gender === 'Homme'
     ? Math.ceil(13.707 * weight + 492.3 * height - 6.673 * age + 77.607)
     : Math.ceil(9.74 * weight + 172.9 * height - 4.737 * age + 667.051);
-};
-
-type GenericProps = Sleep | Drug | Hydration | Smoke | Activity;
-
-export const sortByDate = (array: GenericProps[]): GenericProps[] => {
-  return array.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 };
 
 // export const getFoodNameById = (): string => {

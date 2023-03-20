@@ -6,7 +6,7 @@ import DrawerList from './DrawerList/DrawerList';
 export interface DrawerListItemProps {
   label: string;
   link: string;
-  icon: 'food' | 'sleep' | 'exercises' | 'hydration' | 'smoke' | 'drugs' | 'dashboard';
+  icon: 'food' | 'sleep' | 'exercises' | 'hydration' | 'smoke' | 'drugs' | 'dashboard' | 'admin';
 }
 
 export default function Drawer(): JSX.Element {

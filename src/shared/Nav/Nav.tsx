@@ -65,6 +65,7 @@ export default function Nav(): JSX.Element {
             <>
               <Button
                 onClick={() => {
+                  navigate('/');
                   resetAllStates().map((action) => dispatch(action()));
                 }}
                 sx={{ mr: 2 }}

@@ -42,12 +42,6 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // .addCase(registerLoginUser.pending, (state) => {
-      //   // todo
-      // })
-      // .addCase(registerLoginUser.fulfilled, (state, action) => {
-      //   return { ...state, isLogged: true, token: action.payload };
-      // })
       .addCase(registerLoginUser.rejected, (state) => {
         return { ...state, isLogged: false };
       })
@@ -61,5 +55,6 @@ export const selectToken = (state: RootState) => state.user.token;
 export const selectFirstName = (state: RootState) => state.user.firstname;
 export const selectGender = (state: RootState) => state.user.gender;
 export const selectIsLogged = (state: RootState) => state.user.isLogged;
+export const selectRoles = (state: RootState) => state.user.roles;
 
 export default userSlice.reducer;

@@ -23,15 +23,17 @@ import SleepPage from '../views/SleepPage/SleepPage';
 import HydrationPage from '../views/HydrationPage/HydrationPage';
 import AuthPage from '../views/Authentication/AuthenticationPage';
 import DashboardPage from '../views/DashboardPage/DashboardPage';
-import { selectIsLogged, selectToken } from '../reducers/user/userSlice';
+import { selectIsLogged, selectRoles, selectToken } from '../reducers/user/userSlice';
 import AccessDenied from '../errors/AccessDenied';
+import AdminPage from '../views/Admin/AdminPage';
+import { fetchUser } from '../reducers/user/userMiddleware';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
   const isLogged = useAppSelector(selectIsLogged);
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectToken);
-
+  const isAdmin = useAppSelector(selectRoles).includes('ROLE_ADMIN');
   // prettier-ignore
   const notGuardedRoutes = [
     { path: '/',                 component: <Home />          },
@@ -52,15 +54,15 @@ function App(): JSX.Element {
   ];
   // prettier-ignore
   const adminRoutes = [
-    { path: '/admin',            component: <AccessDenied />  },
+    { path: '/admin',            component: <AdminPage />     },
   ];
 
-  // useEffect(() => {
-  //   if (localStorage.getItem('token')) {
-  //     dispatch(setIsLogged());
-  //     dispatch(fetchUser(token));
-  //   }
-  // }, [dispatch, token]);
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      // dispatch(setIsLogged());
+      // dispatch(fetchUser(token));
+    }
+  }, [dispatch, token]);
 
   return (
     <ThemeProvider theme={isDark ? themeDark : themeLight}>
@@ -80,14 +82,14 @@ function App(): JSX.Element {
             <Route
               key={route.path}
               path={route.path}
-              element={isLogged ? route.component : <Navigate to="/acces-interdit" />}
+              element={isLogged ? route.component : <Navigate to="/acces-refuse" />}
             />
           ))}
           {adminRoutes.map((route) => (
             <Route
               key={route.path}
               path={route.path}
-              element={route.component}
+              element={isAdmin ? route.component : <Navigate to="/acces-refuse" />}
             />
           ))}
         </Routes>

@@ -45,8 +45,8 @@ const initialState: FoodState = {
     categoriesArray: [],
   },
   displayedFoods: {
-    foodsArray: [],
     foodsStatus: 'idle',
+    foodsArray: [],
   },
   foods: [],
 };

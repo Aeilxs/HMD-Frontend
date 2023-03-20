@@ -14,26 +14,16 @@ export default function FoodPage(): JSX.Element {
   const { search } = useAppSelector(selectFoodInputs);
   const { severity, message } = useAppSelector(selectFoodMessage);
   const { foodsArray, foodsStatus } = useAppSelector(selectOFFFoods);
-  const { categoriesArray: toto, categoriesStatus: toto2 } = useAppSelector(selectOFFCategories);
+  const { categoriesArray, categoriesStatus } = useAppSelector(selectOFFCategories);
 
   //!\ TEMPORARY //
-  const categoriesArray = CATEGORIES_ARRAY_TEMP;
-  // if (categoriesStatus === 'idle') {
-  //   dispatch(fetchCategories());
-  // }
+  // const categoriesArray = CATEGORIES_ARRAY_TEMP;
+  if (categoriesStatus === 'idle') {
+    dispatch(fetchCategories());
+  }
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setInputValue({ path: 'foodInputs', name: event.target.name, value: event.target.value }));
   };
-
-  //! pour ajouter en bdd plus tard
-  // const longestCategory = categoriesArray.reduce((acc, cur) => {
-  //   if (cur.length > acc.length) {
-  //     return cur;
-  //   } else {
-  //     return acc;
-  //   }
-  // }, '');
-  // console.log(longestCategory.length);
 
   return (
     <Container sx={{ my: 2 }}>
@@ -50,11 +40,11 @@ export default function FoodPage(): JSX.Element {
         component="form"
       >
         {/* TEMPORARY */}
-        {/* {categoriesStatus === 'pending' && (
+        {categoriesStatus === 'pending' && (
           <Box sx={{ textAlign: 'center' }}>
             <CircularProgress />
           </Box>
-        )} */}
+        )}
 
         <Autocomplete
           sx={{ my: 2 }}

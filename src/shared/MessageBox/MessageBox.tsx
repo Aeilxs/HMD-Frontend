@@ -9,7 +9,7 @@ interface MessageProps {
 
 function MessageBox({ title, content }: MessageProps) {
   return (
-    <Accordion sx={{ width: '100%', mb:4 }}>
+    <Accordion sx={{ width: '100%', mb: 4, my: 2 }}>
       <AccordionSummary
         expandIcon={<ExpandMore />}
         aria-controls="panel1a-content"

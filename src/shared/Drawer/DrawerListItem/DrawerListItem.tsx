@@ -12,6 +12,7 @@ import MedicationIcon from '@mui/icons-material/Medication';
 import SmokingRoomsIcon from '@mui/icons-material/SmokingRooms';
 import SportsHandballIcon from '@mui/icons-material/SportsHandball';
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { useAppDispatch } from '../../../store/hooks';
 import { toggleDrawer } from '../../../reducers/UI/uiSlice';
 import { useNavigate } from 'react-router-dom';
@@ -33,6 +34,7 @@ export default function DrawerListItem({ label, icon, link }: DrawerListItemProp
     >
       <ListItemButton>
         <ListItemIcon>
+          {icon === 'admin' && <AdminPanelSettingsIcon />}
           {icon === 'food' && <FastfoodIcon />}
           {icon === 'sleep' && <HotelIcon />}
           {icon === 'exercises' && <SportsHandballIcon />}

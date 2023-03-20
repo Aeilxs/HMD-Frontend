@@ -125,6 +125,7 @@ export const UISlice = createSlice({
     setIsEdit: (state, action: PayloadAction<boolean>) => {
       return { ...state, isEdit: action.payload };
     },
+    resetState: () => initialState,
   },
   extraReducers(builder) {
     builder

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -11,7 +10,8 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectTheme, toggleDrawer, toggleTheme } from '../../reducers/UI/uiSlice';
-import { onLogout, selectFirstName, selectIsLogged } from '../../reducers/user/userSlice';
+import { selectFirstName, selectIsLogged } from '../../reducers/user/userSlice';
+import { resetAllStates } from '../../reducers/rootReducer';
 
 export default function Nav(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
@@ -19,6 +19,7 @@ export default function Nav(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const initial = useAppSelector(selectFirstName).charAt(0).toUpperCase();
+
   return (
     <Box sx={{ display: 'block' }}>
       <AppBar
@@ -64,13 +65,8 @@ export default function Nav(): JSX.Element {
             <>
               <Button
                 onClick={() => {
-                  // dispatch(resetDrugsInputs());
-                  // dispatch(resetSmokeInputs());
-                  // dispatch(resetSleepInputs());
-                  // dispatch(resetHydrationInputs());
-                  // dispatch(resetFoodInputs());
-                  // dispatch(resetSportInputs());
-                  dispatch(onLogout());
+                  navigate('/');
+                  resetAllStates().map((action) => dispatch(action()));
                 }}
                 sx={{ mr: 2 }}
                 size="small"

@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
 
 import { ActivityApiResponse } from '../../../Interfaces/API_Interfaces';
-import { setActivities } from './sportSlice';
+import { setActivities } from './activitySlice';
 import { setIsEdit } from '../../UI/uiSlice';
 
 export const postSport = createAsyncThunk('sport/postSport', async (_, { getState, dispatch, rejectWithValue }) => {

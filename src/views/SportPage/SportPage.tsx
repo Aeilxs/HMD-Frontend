@@ -2,9 +2,9 @@ import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
-import { deleteSport, editSport, postSport } from '../../reducers/dashboard/sport/sportMiddleware';
+import { deleteSport, editSport, postSport } from '../../reducers/dashboard/activity/sportMiddleware';
 import { selectActivityInputs, selectIsEdit, setInputValue } from '../../reducers/UI/uiSlice';
-import { selectActivities, selectActivityMessage } from '../../reducers/dashboard/sport/sportSlice';
+import { selectActivities, selectActivityMessage } from '../../reducers/dashboard/activity/activitySlice';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Alert, Box, Button, Container, TextField, Typography } from '@mui/material';

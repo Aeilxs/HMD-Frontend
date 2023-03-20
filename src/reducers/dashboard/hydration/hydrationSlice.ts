@@ -21,6 +21,7 @@ export const hydrationSlice = createSlice({
     setHydrations: (state, action: PayloadAction<Hydration[]>) => {
       return { ...state, hydrations: action.payload };
     },
+    resetState: () => initialState,
   },
   extraReducers: (builder) => {
     builder

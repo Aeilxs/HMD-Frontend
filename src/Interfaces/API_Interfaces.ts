@@ -11,6 +11,23 @@ export interface LoginResponse {
   token: string;
   id: number;
 }
+
+export interface UserDataResponse {
+  message: AlertMessage;
+  user: {
+    firstname: string;
+    lastname: string;
+    roles: Roles[];
+    activities: Activity[];
+    drugs: Drug[];
+    hydrations: Hydration[];
+    sleeps: Sleep[];
+    smokes: Smoke[];
+  };
+}
+
+export type Roles = 'ROLE_ADMIN' | 'ROLE_USER';
+
 export interface ActivityApiResponse {
   message: AlertMessage;
   activity: Activity;

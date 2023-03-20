@@ -2,36 +2,40 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
 import { resetInputValue } from '../../UI/uiSlice';
-import { setCategories, setDisplayedFoods } from './foodSlice';
+import { setCategories, setDisplayedFoods, setFoods } from './foodSlice';
 import { formatCategory } from '../../../utils/stringFormat';
-import { FoodOFFResponse } from '../../../Interfaces/API_Interfaces';
+import { FoodApiResponse, FoodOFFResponse } from '../../../Interfaces/API_Interfaces';
 
-export const fetchCategories = createAsyncThunk('food/fetchCategories', async (_, { dispatch, rejectWithValue }) => {
-  try {
-    const response = await axios.get(`https://fr.openfoodfacts.org/categories.json`);
-    const results = response.data.tags
-      .filter((category: any) => category.products > 500)
-      .map((category: any) => category.name);
-    if (results.length === 0) {
+export const fetchCategories = createAsyncThunk(
+  'food/fetchCategories',
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.get(`https://fr.openfoodfacts.org/categories.json`);
+      const results = response.data.tags
+        .filter((category: any) => category.products > 500)
+        .map((category: any) => category.name);
+      if (results.length === 0) {
+        return rejectWithValue({
+          severity: 'error',
+          message:
+            "Nous n'avons pas réussi à récupérer les catégories provenant de https://fr.openfoodfacts.org/",
+        });
+      }
+      dispatch(setCategories(results));
+      return {
+        severity: 'success',
+        message: 'Vous pouvez sélectionner une catégorie désormais !',
+      };
+    } catch (error) {
+      if (!axios.isAxiosError(error)) throw error;
       return rejectWithValue({
         severity: 'error',
-        message: "Nous n'avons pas réussi à récupérer les catégories provenant de https://fr.openfoodfacts.org/",
+        message:
+          "Nous n'avons pas réussi à récupérer les données provenant de https://fr.openfoodfacts.org/decouvrir leurs services sont peut être indisponibles ou votre aliment n'était pas rentré dans la base de donnée. Vous pouvez vous rendre sur le site d'Open Food Facts afin de rajouter vous même des aliments !",
       });
     }
-    dispatch(setCategories(results));
-    return {
-      severity: 'success',
-      message: 'Vous pouvez sélectionner une catégorie désormais !',
-    };
-  } catch (error) {
-    if (!axios.isAxiosError(error)) throw error;
-    return rejectWithValue({
-      severity: 'error',
-      message:
-        "Nous n'avons pas réussi à récupérer les données provenant de https://fr.openfoodfacts.org/decouvrir leurs services sont peut être indisponibles ou votre aliment n'était pas rentré dans la base de donnée. Vous pouvez vous rendre sur le site d'Open Food Facts afin de rajouter vous même des aliments !",
-    });
   }
-});
+);
 
 export const fetchProducts = createAsyncThunk(
   'food/fetchProducts',
@@ -45,7 +49,9 @@ export const fetchProducts = createAsyncThunk(
         )}&json=1&page=${page}`
       );
       const results: FoodOFFResponse[] = response.data.products
-        .filter((product: any) => product.product_name_fr !== '' && product.product_name_fr !== undefined)
+        .filter(
+          (product: any) => product.product_name_fr !== '' && product.product_name_fr !== undefined
+        )
         .map((product: any) => ({
           id: product.id,
           brands: product.brands || 'Pas de marque disponible',
@@ -65,6 +71,27 @@ export const fetchProducts = createAsyncThunk(
         message:
           "Nous n'avons pas réussi à récupérer les données provenant de https://fr.openfoodfacts.org/decouvrir leurs services sont peut être indisponibles ou votre aliment n'était pas rentré dans la base de donnée. Vous pouvez vous rendre sur le site d'Open Food Facts afin de rajouter vous même des aliments !",
       });
+    }
+  }
+);
+
+export const deleteFood = createAsyncThunk(
+  'food/deleteFood',
+  async (id: number, { getState, dispatch, rejectWithValue }) => {
+    try {
+      const token = (getState() as RootState).user.token;
+      const response = await axios.delete<FoodApiResponse>(
+        `https://localhost:8000/api/foods/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      dispatch(resetInputValue('foodInputs'));
+      dispatch(setFoods(response.data.foods));
+      return response.data.message;
+    } catch (error) {
+      if (!axios.isAxiosError(error)) throw error;
+      return rejectWithValue(error.response?.data.message);
     }
   }
 );

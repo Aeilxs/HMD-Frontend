@@ -1,13 +1,32 @@
 import { Box } from '@mui/system';
-import { Alert, Autocomplete, Button, CircularProgress, Container, LinearProgress, TextField } from '@mui/material';
+import {
+  Alert,
+  Autocomplete,
+  Button,
+  CircularProgress,
+  Container,
+  LinearProgress,
+  TextField,
+} from '@mui/material';
 import { selectFoodInputs, setInputValue } from '../../reducers/UI/uiSlice';
 import MessageBox from '../../shared/MessageBox/MessageBox';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchCategories, fetchProducts } from '../../reducers/dashboard/food/foodMiddleware';
-import { selectFoodMessage, selectOFFCategories, selectOFFFoods } from '../../reducers/dashboard/food/foodSlice';
+import {
+  deleteFood,
+  fetchCategories,
+  fetchProducts,
+} from '../../reducers/dashboard/food/foodMiddleware';
+import {
+  selectFoodMessage,
+  selectFoods,
+  selectOFFCategories,
+  selectOFFFoods,
+} from '../../reducers/dashboard/food/foodSlice';
 import FoodGrid from './FoodGrid/FoodGrid';
 import { CATEGORIES_ARRAY_TEMP } from '../../utils/OFFCategories';
 import FoodForm from './FoodForm/FoodForm';
+import CustomTable from '../../shared/CustomTable/CustomTable';
+import { useRef } from 'react';
 
 export default function FoodPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -15,6 +34,8 @@ export default function FoodPage(): JSX.Element {
   const { severity, message } = useAppSelector(selectFoodMessage);
   const { foodsArray, foodsStatus } = useAppSelector(selectOFFFoods);
   const { categoriesArray, categoriesStatus } = useAppSelector(selectOFFCategories);
+  const foods = useAppSelector(selectFoods);
+  const formRef = useRef(null);
 
   //!\ TEMPORARY //
   // const categoriesArray = CATEGORIES_ARRAY_TEMP;
@@ -22,7 +43,9 @@ export default function FoodPage(): JSX.Element {
     dispatch(fetchCategories());
   }
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setInputValue({ path: 'foodInputs', name: event.target.name, value: event.target.value }));
+    dispatch(
+      setInputValue({ path: 'foodInputs', name: event.target.name, value: event.target.value })
+    );
   };
 
   return (
@@ -31,7 +54,16 @@ export default function FoodPage(): JSX.Element {
         title="Alimentation"
         content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, esse? Perferendis porro maiores eaque ipsa sit, architecto voluptatibus saepe totam dicta harum, id, possimus asperiores eligendi laudantium odio quo. Omnis."
       />
+      {foods.length > 0 && (
+        <CustomTable
+          array={foods}
+          path="foodInputs"
+          onDelete={deleteFood}
+          formRef={formRef}
+        />
+      )}
       <Box
+        ref={formRef}
         onSubmit={(event) => {
           event.preventDefault();
           if (foodsStatus === 'pending') return;
@@ -45,7 +77,6 @@ export default function FoodPage(): JSX.Element {
             <CircularProgress />
           </Box>
         )}
-
         <Autocomplete
           sx={{ my: 2 }}
           options={categoriesArray}

@@ -1,12 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Drug, AlertMessage } from '../../../Interfaces/API_Interfaces';
+import { DrugState } from '../../../Interfaces/Reducers-Interfaces';
 import { RootState } from '../../../store/store';
 import { deleteDrug, editDrug, postDrug } from './drugMiddleware';
-
-export interface DrugState {
-  message: AlertMessage;
-  drugs: Drug[];
-}
 
 const initialState: DrugState = {
   message: { severity: 'info', message: '' },

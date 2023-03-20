@@ -1,11 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AlertMessage } from '../../Interfaces/API_Interfaces';
+import { AdminState } from '../../Interfaces/Reducers-Interfaces';
 import { RootState } from '../../store/store';
-
-export interface AdminState {
-  message: AlertMessage;
-  categories: string[];
-}
 
 const initialState: AdminState = {
   message: { severity: 'info', message: '' },

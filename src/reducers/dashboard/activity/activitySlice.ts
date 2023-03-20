@@ -1,13 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Activity, AlertMessage } from '../../../Interfaces/API_Interfaces';
+import { ActivityState } from '../../../Interfaces/Reducers-Interfaces';
 import { RootState } from '../../../store/store';
 import { deleteSport, editSport, postSport } from './sportMiddleware';
-
-export interface ActivityState {
-  id: number | null;
-  message: AlertMessage;
-  activities: Activity[];
-}
 
 const initialState: ActivityState = {
   id: null,

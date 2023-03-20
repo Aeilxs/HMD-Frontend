@@ -3,11 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
 import { Hydration, AlertMessage } from '../../../Interfaces/API_Interfaces';
 import { deleteHydration, postHydration } from './hydrationMiddleware';
-
-export interface HydrationState {
-  message: AlertMessage;
-  hydrations: Hydration[];
-}
+import { HydrationState } from '../../../Interfaces/Reducers-Interfaces';
 
 const initialState: HydrationState = {
   message: { severity: 'info', message: '' },

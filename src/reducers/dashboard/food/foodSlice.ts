@@ -1,42 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AlertMessage, FoodOFFResponse, RequestStatus } from '../../../Interfaces/API_Interfaces';
+import {
+  AlertMessage,
+  Food,
+  FoodOFFResponse,
+  RequestStatus,
+} from '../../../Interfaces/API_Interfaces';
+import { FoodState } from '../../../Interfaces/Reducers-Interfaces';
 import { RootState } from '../../../store/store';
 import { fetchCategories, fetchProducts } from './foodMiddleware';
-
-export interface Nutriments {
-  'energy-kcal_100g': number;
-}
-export interface ApiProps {
-  id: string;
-  product_name_fr: string;
-  nutriments: Nutriments;
-}
-
-export interface ConsommedFood {
-  key: string;
-  name: string;
-  calories: number;
-  quantity: number;
-}
-
-export interface Food {
-  key: string;
-  name: string;
-  calories: number;
-}
-
-interface FoodState {
-  message: AlertMessage;
-  displayedFoods: {
-    foodsStatus: RequestStatus;
-    foodsArray: FoodOFFResponse[];
-  };
-  categories: {
-    categoriesStatus: RequestStatus;
-    categoriesArray: string[];
-  };
-  foods: Food[];
-}
 
 const initialState: FoodState = {
   message: { severity: 'info', message: '' },

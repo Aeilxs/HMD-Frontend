@@ -1,12 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Smoke, AlertMessage } from '../../../Interfaces/API_Interfaces';
+import { SmokeState } from '../../../Interfaces/Reducers-Interfaces';
 import { RootState } from '../../../store/store';
 import { deleteSmoke, editSmoke, postSmoke } from './smokeMiddleware';
-
-export interface SmokeState {
-  message: AlertMessage;
-  smokes: Smoke[];
-}
 
 const initialState: SmokeState = {
   message: { severity: 'info', message: '' },

@@ -23,8 +23,8 @@ import SleepPage from '../views/SleepPage/SleepPage';
 import HydrationPage from '../views/HydrationPage/HydrationPage';
 import AuthPage from '../views/Authentication/AuthenticationPage';
 import DashboardPage from '../views/DashboardPage/DashboardPage';
-import { selectIsLogged, selectToken, setIsLogged } from '../reducers/user/userSlice';
-import { fetchUser } from '../reducers/user/userMiddleware';
+import { selectIsLogged, selectToken } from '../reducers/user/userSlice';
+import AccessDenied from '../errors/AccessDenied';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
@@ -32,15 +32,27 @@ function App(): JSX.Element {
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectToken);
 
-  const routes = [
-    { path: '/profil', component: <ProfilePage /> },
-    { path: '/sport', component: <SportPage /> },
-    { path: '/medicaments', component: <DrugPage /> },
-    { path: '/tabagisme', component: <SmokePage /> },
-    { path: '/sommeil', component: <SleepPage /> },
-    { path: '/hydratation', component: <HydrationPage /> },
-    { path: '/alimentation', component: <FoodPage /> },
-    { path: '/dashboard', component: <DashboardPage /> },
+  // prettier-ignore
+  const notGuardedRoutes = [
+    { path: '/',                 component: <Home />          },
+    { path: '*',                 component: <NotFound />      },
+    { path: '/acces-refuse',     component: <AccessDenied />  },
+    { path: '/authentification', component: <AuthPage />      },
+  ];
+  // prettier-ignore
+  const userRoutes = [
+    { path: '/alimentation',     component: <FoodPage />      },
+    { path: '/dashboard',        component: <DashboardPage /> },
+    { path: '/hydratation',      component: <HydrationPage /> },
+    { path: '/medicaments',      component: <DrugPage />      },
+    { path: '/profil',           component: <ProfilePage />   },
+    { path: '/sommeil',          component: <SleepPage />     },
+    { path: '/sport',            component: <SportPage />     },
+    { path: '/tabagisme',        component: <SmokePage />     },
+  ];
+  // prettier-ignore
+  const adminRoutes = [
+    { path: '/admin',            component: <AccessDenied />  },
   ];
 
   // useEffect(() => {
@@ -57,35 +69,27 @@ function App(): JSX.Element {
       <CustomScrollBar>
         {isLogged && <Drawer />}
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Container>
-                <Home />
-              </Container>
-            }
-          />
-          <Route
-            path="/authentification"
-            element={isLogged ? <Navigate to="/dashboard" /> : <AuthPage />}
-          />
-          {routes.map((route) => (
+          {notGuardedRoutes.map((route) => (
             <Route
               key={route.path}
               path={route.path}
-              element={
-                localStorage.getItem('token') || isLogged ? route.component : <Navigate to="/authentification" />
-              }
+              element={route.component}
             />
           ))}
-          <Route
-            path="*"
-            element={
-              <Container>
-                <NotFound />
-              </Container>
-            }
-          />
+          {userRoutes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={isLogged ? route.component : <Navigate to="/acces-interdit" />}
+            />
+          ))}
+          {adminRoutes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={route.component}
+            />
+          ))}
         </Routes>
       </CustomScrollBar>
       <Footer />

@@ -23,6 +23,7 @@ export const sleepSlice = createSlice({
     setSleeps: (state, action: PayloadAction<Sleep[]>) => {
       return { ...state, sleeps: action.payload };
     },
+    resetState: () => initialState,
   },
   extraReducers: (builder) => {
     builder

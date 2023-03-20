@@ -20,6 +20,7 @@ export const smokeSlice = createSlice({
     setSmokes: (state, action: PayloadAction<Smoke[]>) => {
       return { ...state, smokes: action.payload };
     },
+    resetState: () => initialState,
   },
   extraReducers: (builder) => {
     builder

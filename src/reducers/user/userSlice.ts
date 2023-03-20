@@ -1,51 +1,44 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchUser, registerLoginUser } from './userMiddleware';
 import { RootState } from '../../store/store';
-import { calcAge } from '../../utils/math';
-import { LoginResponse } from '../../Interfaces/API_Interfaces';
+import { LoginResponse, Roles, UserDataResponse } from '../../Interfaces/API_Interfaces';
 
 export interface UserState {
   id: number;
+  roles: Roles[];
   isLogged: boolean;
   token: string;
   firstname: string;
   lastname: string;
-  dateOfBirth: string;
-  gender: 'Femme' | 'Homme' | '';
+  gender: 'femme' | 'homme' | null;
 }
 
 const initialState: UserState = {
   id: 0,
+  roles: [],
   isLogged: false,
   token: '',
   firstname: '',
   lastname: '',
-  gender: '',
-  dateOfBirth: '',
+  gender: null,
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setDateOfBirth: (state, action: PayloadAction<string>) => {
-      return {
-        ...state,
-        dateOfBirth: action.payload,
-        age: calcAge(action.payload),
-      };
-    },
     onSuccesAuthentication: (state, action: PayloadAction<LoginResponse>) => {
       const { token, id } = action.payload;
-      return { ...state, token: token, id: id };
+      return { ...state, token, id };
+    },
+    setUserData: (state, action: PayloadAction<UserDataResponse>) => {
+      const { user } = action.payload;
+      return { ...state, roles: user.roles, firstname: user.firstname, lastname: user.lastname };
     },
     setIsLogged: (state) => {
       return { ...state, isLogged: true };
     },
-    onLogout: (state) => {
-      localStorage.clear();
-      return { ...state, initialState };
-    },
+    resetState: () => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -62,7 +55,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { onLogout, setIsLogged, onSuccesAuthentication } = userSlice.actions;
+export const { setIsLogged, onSuccesAuthentication, setUserData } = userSlice.actions;
 
 export const selectToken = (state: RootState) => state.user.token;
 export const selectFirstName = (state: RootState) => state.user.firstname;

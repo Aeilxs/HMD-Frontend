@@ -64,6 +64,7 @@ export const FoodSlice = createSlice({
     setCategories: (state, action) => {
       return { ...state, categories: { ...state.categories, categoriesArray: action.payload } };
     },
+    resetState: () => initialState,
   },
   extraReducers: (builder) => {
     builder

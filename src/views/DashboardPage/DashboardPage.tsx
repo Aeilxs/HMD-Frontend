@@ -18,7 +18,7 @@ import {
 import IndicatorsPage from './IndicatorBoxes/IndicatorBoxes';
 import WelcomeMessage from './WelcomeMessage/WelcomeMessage';
 import { selectSleeps } from '../../reducers/dashboard/sleep/sleepSlice';
-import { selectActivities } from '../../reducers/dashboard/sport/sportSlice';
+import { selectActivities } from '../../reducers/dashboard/activity/activitySlice';
 import { selectSmokes } from '../../reducers/dashboard/smoke/smokeSlice';
 import { selectDrugs } from '../../reducers/dashboard/drug/drugSlice';
 import { selectHydrations } from '../../reducers/dashboard/hydration/hydrationSlice';

@@ -1,24 +1,8 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import uiReducer from '../reducers/UI/uiSlice';
-import userReducer from '../reducers/user/userSlice';
-import drugReducer from '../reducers/dashboard/drug/drugSlice';
-import foodReducer from '../reducers/dashboard/food/foodSlice';
-import hydrationReducer from '../reducers/dashboard/hydration/hydrationSlice';
-import sleepReducer from '../reducers/dashboard/sleep/sleepSlice';
-import smokeReducer from '../reducers/dashboard/smoke/smokeSlice';
-import activityReducer from '../reducers/dashboard/sport/sportSlice';
+import rootReducer from '../reducers/rootReducer';
 
 export const store = configureStore({
-  reducer: {
-    ui: uiReducer,
-    user: userReducer,
-    drug: drugReducer,
-    food: foodReducer,
-    hydration: hydrationReducer,
-    sleep: sleepReducer,
-    smoke: smokeReducer,
-    activity: activityReducer,
-  },
+  reducer: rootReducer,
 });
 
 export type AppDispatch = typeof store.dispatch;

@@ -2,7 +2,7 @@ import { Button, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 
-export default function NotFound(): JSX.Element {
+export default function AccessDenied(): JSX.Element {
   const navigate = useNavigate();
   return (
     <Box
@@ -13,19 +13,26 @@ export default function NotFound(): JSX.Element {
           sx={{ fontWeight: 'bold' }}
           variant="h2"
         >
-          404 NOT FOUND
+          403 ACCES DENIED
         </Typography>
         <Typography
           sx={{ m: 2 }}
           variant="body1"
         >
-          Nous n'avons aucune ressource à cette adresse.
+          Vous n'avez pas la permission d'accéder à cette page. Veuillez vous connecter au préalable.
         </Typography>
         <Button
+          sx={{ mr: 1 }}
           onClick={() => navigate('/')}
           variant="contained"
         >
           Accueil
+        </Button>
+        <Button
+          onClick={() => navigate('/authentification')}
+          variant="contained"
+        >
+          Connexion
         </Button>
       </Paper>
     </Box>

@@ -3,12 +3,12 @@ import { Drug, AlertMessage } from '../../../Interfaces/API_Interfaces';
 import { RootState } from '../../../store/store';
 import { deleteDrug, editDrug, postDrug } from './drugMiddleware';
 
-export interface drugState {
+export interface DrugState {
   message: AlertMessage;
   drugs: Drug[];
 }
 
-const initialState: drugState = {
+const initialState: DrugState = {
   message: { severity: 'info', message: '' },
   drugs: [],
 };
@@ -20,6 +20,7 @@ export const drugSlice = createSlice({
     setDrugs: (state, action: PayloadAction<Drug[]>) => {
       return { ...state, drugs: action.payload };
     },
+    resetState: () => initialState,
   },
   extraReducers: (builder) => {
     builder

@@ -4,25 +4,14 @@ import { RootState } from '../../../store/store';
 import { resetInputValue } from '../../UI/uiSlice';
 import { setCategories, setDisplayedFoods } from './foodSlice';
 import { formatCategory } from '../../../utils/stringFormat';
-import { FoodOFFResponse } from '../../../Interfaces/API_Interfaces';
+import { FoodCategoryApiResponse, FoodOFFResponse } from '../../../Interfaces/API_Interfaces';
 
 export const fetchCategories = createAsyncThunk('food/fetchCategories', async (_, { dispatch, rejectWithValue }) => {
   try {
-    const response = await axios.get(`https://fr.openfoodfacts.org/categories.json`);
-    const results = response.data.tags
-      .filter((category: any) => category.products > 500)
-      .map((category: any) => category.name);
-    if (results.length === 0) {
-      return rejectWithValue({
-        severity: 'error',
-        message: "Nous n'avons pas réussi à récupérer les catégories provenant de https://fr.openfoodfacts.org/",
-      });
-    }
+    const response = await axios.get<FoodCategoryApiResponse>(`https://localhost:8000/api/foods-categories`);
+    const results = response.data.categories.map((category) => category.title);
     dispatch(setCategories(results));
-    return {
-      severity: 'success',
-      message: 'Vous pouvez sélectionner une catégorie désormais !',
-    };
+    return response.data.message;
   } catch (error) {
     if (!axios.isAxiosError(error)) throw error;
     return rejectWithValue({

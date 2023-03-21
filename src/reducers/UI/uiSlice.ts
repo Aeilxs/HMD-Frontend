@@ -65,6 +65,7 @@ const initialState: UIState = {
     unit: '',
   },
   foodInputs: {
+    id: null,
     date: null,
     kcal_100g: '',
     quantity: '',
@@ -147,7 +148,8 @@ export const UISlice = createSlice({
   },
 });
 
-export const { toggleTheme, toggleDrawer, toggleForm, setInputValue, resetInputValue, setIsEdit } = UISlice.actions;
+export const { toggleTheme, toggleDrawer, toggleForm, setInputValue, resetInputValue, setIsEdit } =
+  UISlice.actions;
 
 export const selectTheme = (state: RootState) => state.ui.isDark;
 export const selectDrawerState = (state: RootState) => state.ui.isDrawerOpen;

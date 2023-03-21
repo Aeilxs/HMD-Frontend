@@ -6,7 +6,7 @@ import AuthFormToggle from './AuthFormToggle/AuthFormToggle';
 
 import { Box, Paper } from '@mui/material';
 import { selectAuthErrors } from '../../reducers/UI/uiSlice';
-import { selectIsLogged } from '../../reducers/user/userSlice';
+import { selectIsLogged, selectRoles } from '../../reducers/user/userSlice';
 import { Navigate } from 'react-router-dom';
 
 function AuthPage() {
@@ -14,10 +14,10 @@ function AuthPage() {
   const errors = useAppSelector(selectAuthErrors);
   const { login: loginError, registration: registrationError } = errors;
   const isLogged = useAppSelector(selectIsLogged);
-
+  const isAdmin = useAppSelector(selectRoles).includes('ROLE_ADMIN');
   return (
     <>
-      {isLogged && <Navigate to="/dashboard" />}
+      {isLogged && <Navigate to={isAdmin ? '/admin' : '/dashboard'} />}
       <Box
         sx={{
           display: 'flex',

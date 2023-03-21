@@ -5,6 +5,10 @@ import {
   FoodOFFResponse,
   RequestStatus,
 } from '../../../Interfaces/API_Interfaces';
+import { FoodState } from '../../../Interfaces/Reducers-Interfaces';
+import { RootState } from '../../../store/store';
+import { fetchCategories, fetchProducts } from './foodMiddleware';
+
 import { RootState } from '../../../store/store';
 import { fetchCategories, fetchProducts } from './foodMiddleware';
 

@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AlertMessage, RequestStatus } from '../../Interfaces/API_Interfaces';
+
 import { RootState } from '../../store/store';
 import { admin_fetchCategories, admin_postCategories } from './adminMiddleware';
 
+=======
 export interface AdminState {
   categories: {
     isUpdated: boolean;

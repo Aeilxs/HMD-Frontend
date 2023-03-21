@@ -3,12 +3,7 @@ import { RootState } from '../../../store/store';
 
 import { deleteSleep, editSleep, postSleep } from './sleepMiddleware';
 import { Sleep, AlertMessage } from '../../../Interfaces/API_Interfaces';
-
-export interface SleepState {
-  id: number | null;
-  message: AlertMessage;
-  sleeps: Sleep[];
-}
+import { SleepState } from '../../../Interfaces/Reducers-Interfaces';
 
 const initialState: SleepState = {
   id: null,

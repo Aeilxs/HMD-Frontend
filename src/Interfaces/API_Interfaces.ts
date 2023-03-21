@@ -23,6 +23,7 @@ export interface UserDataResponse {
     hydrations: Hydration[];
     sleeps: Sleep[];
     smokes: Smoke[];
+    foods: Food[];
   };
 }
 
@@ -58,6 +59,11 @@ export interface SleepApiResponse {
   sleeps: Sleep[];
 }
 
+export interface FoodApiResponse {
+  message: AlertMessage;
+  food: Food;
+  foods: Food[];
+}
 export interface Drug {
   id: number;
   date: string;
@@ -66,12 +72,22 @@ export interface Drug {
   quantity: number;
 }
 
+export interface FoodCategoryApiResponse {
+  message: AlertMessage;
+  categories: FoodCategory[];
+}
+
 export interface Food {
   id: number;
   date: string;
   name: string;
   caloricNeed: number;
   caloricIntake: number;
+}
+
+export interface FoodCategory {
+  id: number;
+  title: string;
 }
 
 export interface FoodOFFResponse {

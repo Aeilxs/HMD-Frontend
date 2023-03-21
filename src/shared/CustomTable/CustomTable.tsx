@@ -12,10 +12,10 @@ import { resetInputValue, setInputValue, setIsEdit } from '../../reducers/UI/uiS
 import { RefObject } from 'react';
 import { themeLight } from '../../theme/theme';
 import { calcDate } from '../../utils/stringFormat';
-import { Activity, Drug, Hydration, Sleep, Smoke } from '../../Interfaces/API_Interfaces';
+import { Activity, Drug, Food, Hydration, Sleep, Smoke } from '../../Interfaces/API_Interfaces';
 import { PropertyPath } from '../../Interfaces/inputs';
 
-type GenericProps = Sleep | Drug | Hydration | Smoke | Activity;
+type GenericProps = Sleep | Drug | Hydration | Smoke | Activity | Food;
 
 type CustomTableProps<GenericProps> = {
   array: GenericProps[];
@@ -24,7 +24,12 @@ type CustomTableProps<GenericProps> = {
   formRef: RefObject<HTMLFormElement>;
 };
 
-export default function CustomTable({ array, onDelete, formRef, path }: CustomTableProps<GenericProps>) {
+export default function CustomTable({
+  array,
+  onDelete,
+  formRef,
+  path,
+}: CustomTableProps<GenericProps>) {
   const dispatch = useAppDispatch();
 
   return (

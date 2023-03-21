@@ -57,12 +57,12 @@ function App(): JSX.Element {
     { path: '/admin',            component: <AdminPage />     },
   ];
 
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      // dispatch(setIsLogged());
-      // dispatch(fetchUser(token));
-    }
-  }, [dispatch, token]);
+  // useEffect(() => {
+  //   if (localStorage.getItem('token')) {
+  // dispatch(setIsLogged());
+  // dispatch(fetchUser(token));
+  //   }
+  // }, [dispatch, token]);
 
   return (
     <ThemeProvider theme={isDark ? themeDark : themeLight}>

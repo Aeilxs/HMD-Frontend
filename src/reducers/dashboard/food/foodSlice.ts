@@ -9,6 +9,22 @@ import { FoodState } from '../../../Interfaces/Reducers-Interfaces';
 import { RootState } from '../../../store/store';
 import { fetchCategories, fetchProducts } from './foodMiddleware';
 
+import { RootState } from '../../../store/store';
+import { fetchCategories, fetchProducts } from './foodMiddleware';
+
+interface FoodState {
+  message: AlertMessage;
+  displayedFoods: {
+    foodsStatus: RequestStatus;
+    foodsArray: FoodOFFResponse[];
+  };
+  categories: {
+    categoriesStatus: RequestStatus;
+    categoriesArray: string[];
+  };
+  foods: Food[];
+}
+
 const initialState: FoodState = {
   message: { severity: 'info', message: '' },
   categories: {
@@ -82,11 +98,12 @@ export const FoodSlice = createSlice({
   },
 });
 
-export const { setCategories, setDisplayedFoods } = FoodSlice.actions;
+export const { setCategories, setDisplayedFoods, setFoods } = FoodSlice.actions;
 
 export const selectFoodsList = (state: RootState) => state.food.foods;
 export const selectFoodMessage = (state: RootState) => state.food.message;
 export const selectOFFCategories = (state: RootState) => state.food.categories;
 export const selectOFFFoods = (state: RootState) => state.food.displayedFoods;
+export const selectFoods = (state: RootState) => state.food.foods;
 
 export default FoodSlice.reducer;

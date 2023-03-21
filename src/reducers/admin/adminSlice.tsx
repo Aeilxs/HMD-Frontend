@@ -1,24 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AlertMessage, RequestStatus } from '../../Interfaces/API_Interfaces';
+import { AdminState } from '../../Interfaces/Reducers-Interfaces';
 
 import { RootState } from '../../store/store';
 import { admin_fetchCategories, admin_postCategories } from './adminMiddleware';
-
-=======
-export interface AdminState {
-  categories: {
-    isUpdated: boolean;
-    message: AlertMessage;
-    categoriesArray: string[];
-    categoriesStatus: RequestStatus;
-    tries: number;
-  };
-
-  postCategories: {
-    message: AlertMessage;
-    progress: number;
-    categoriesPostStatus: RequestStatus;
-  };
-}
 
 const initialState: AdminState = {
   categories: {

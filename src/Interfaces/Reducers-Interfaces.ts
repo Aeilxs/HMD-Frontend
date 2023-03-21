@@ -11,8 +11,19 @@ import {
 } from './API_Interfaces';
 
 export interface AdminState {
-  message: AlertMessage;
-  categories: string[];
+  categories: {
+    isUpdated: boolean;
+    message: AlertMessage;
+    categoriesArray: string[];
+    categoriesStatus: RequestStatus;
+    tries: number;
+  };
+
+  postCategories: {
+    message: AlertMessage;
+    progress: number;
+    categoriesPostStatus: RequestStatus;
+  };
 }
 
 export interface ActivityState {

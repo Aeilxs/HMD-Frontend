@@ -4,7 +4,7 @@ import { RootState } from '../../../store/store';
 import { resetInputValue } from '../../UI/uiSlice';
 import { setCategories, setDisplayedFoods, setFoods } from './foodSlice';
 import { formatCategory } from '../../../utils/stringFormat';
-import { FoodCategoryApiResponse, FoodOFFResponse } from '../../../Interfaces/API_Interfaces';
+import { FoodApiResponse, FoodCategoryApiResponse, FoodOFFResponse } from '../../../Interfaces/API_Interfaces';
 
 export const fetchCategories = createAsyncThunk('food/fetchCategories', async (_, { dispatch, rejectWithValue }) => {
   try {
@@ -20,7 +20,7 @@ export const fetchCategories = createAsyncThunk('food/fetchCategories', async (_
         "Nous n'avons pas réussi à récupérer les données provenant de https://fr.openfoodfacts.org/decouvrir leurs services sont peut être indisponibles ou votre aliment n'était pas rentré dans la base de donnée. Vous pouvez vous rendre sur le site d'Open Food Facts afin de rajouter vous même des aliments !",
     });
   }
-);
+});
 
 export const fetchProducts = createAsyncThunk(
   'food/fetchProducts',
@@ -34,9 +34,7 @@ export const fetchProducts = createAsyncThunk(
         )}&json=1&page=${page}`
       );
       const results: FoodOFFResponse[] = response.data.products
-        .filter(
-          (product: any) => product.product_name_fr !== '' && product.product_name_fr !== undefined
-        )
+        .filter((product: any) => product.product_name_fr !== '' && product.product_name_fr !== undefined)
         .map((product: any) => ({
           id: product.id,
           brands: product.brands || 'Pas de marque disponible',
@@ -65,12 +63,9 @@ export const deleteFood = createAsyncThunk(
   async (id: number, { getState, dispatch, rejectWithValue }) => {
     try {
       const token = (getState() as RootState).user.token;
-      const response = await axios.delete<FoodApiResponse>(
-        `https://localhost:8000/api/foods/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await axios.delete<FoodApiResponse>(`https://localhost:8000/api/foods/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       dispatch(resetInputValue('foodInputs'));
       dispatch(setFoods(response.data.foods));
       return response.data.message;

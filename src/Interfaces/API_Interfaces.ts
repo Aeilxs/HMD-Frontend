@@ -81,6 +81,8 @@ export interface Food {
   id: number;
   date: string;
   name: string;
+  kcal_100g: number;
+  quantity: number;
   caloricNeed: number;
   caloricIntake: number;
 }

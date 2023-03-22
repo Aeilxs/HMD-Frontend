@@ -40,6 +40,7 @@ export interface DrugInputs {
 }
 
 export interface FoodInputs {
+  id: number | null;
   name: string;
   kcal_100g: number | '';
   quantity: number | '';

@@ -1,19 +1,27 @@
 import { Button, TextField } from '@mui/material';
 import { Box } from '@mui/system';
-import { selectFoodInputs, setInputValue } from '../../../reducers/UI/uiSlice';
+import { editFood, postFood } from '../../../reducers/dashboard/food/foodMiddleware';
+import { selectFoodInputs, selectIsEdit, setInputValue } from '../../../reducers/UI/uiSlice';
 import CustomDatePicker from '../../../shared/CustomDatePicker/CustomDatePicker';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 export default function FoodForm(): JSX.Element {
   const { kcal_100g, name, quantity, date } = useAppSelector(selectFoodInputs);
   const dispatch = useAppDispatch();
+  const isEdit = useAppSelector(selectIsEdit);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setInputValue({ path: 'foodInputs', name: event.target.name, value: event.target.value }));
+    dispatch(
+      setInputValue({ path: 'foodInputs', name: event.target.name, value: event.target.value })
+    );
   };
   return (
     <Box
       component="form"
       sx={{ display: 'flex', flexDirection: 'column' }}
+      onSubmit={(event) => {
+        event.preventDefault();
+        isEdit ? dispatch(editFood()) : dispatch(postFood());
+      }}
     >
       <TextField
         sx={{ my: 2 }}

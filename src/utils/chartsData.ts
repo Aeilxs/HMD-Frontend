@@ -94,15 +94,21 @@ export const drugsChartData = (drugs: Drug[]) => {
 
 interface foodChartProps {
   foods: Food[];
-  user: UserDataResponse;
+  caloricNeed: number | null;
 }
-export const foodChartData = ({ foods, user }: foodChartProps) => {
+export const foodChartData = ({ foods, caloricNeed }: foodChartProps) => {
   const dates: string[] = [];
   const caloricIntakes: number[] = [];
   const caloricNeeds: number[] = [];
   foods.forEach((food) => {
-    caloricIntakes.push(food.caloricIntake);
-    caloricNeeds.push(user.user.caloricNeed);
+    console.log(caloricNeed);
+    caloricIntakes.push(food.caloric_intake);
+    if (caloricNeed) {
+      for (let i = 0; i < foods.length; i++) {
+        console.log(caloricNeed);
+        caloricNeeds.push(caloricNeed);
+      }
+    }
     dates.push(calcDate(food.date));
   });
   return {

@@ -67,5 +67,6 @@ export const selectRoles = (state: RootState) => state.user.roles;
 export const selectSize = (state: RootState) => state.user.size;
 export const selectWeight = (state: RootState) => state.user.weight;
 export const selectDateOfBirth = (state: RootState) => state.user.dateOfBirth;
+export const selectCaloricNeed = (state: RootState) => state.user.caloricNeed;
 
 export default userSlice.reducer;

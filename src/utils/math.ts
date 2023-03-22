@@ -43,7 +43,7 @@ export const getUniqueFoods = (foodsList: Food[]): Food[] => {
   return foodsList.filter(
     (food, index, array) =>
       food.name &&
-      food.caloricIntake &&
+      food.caloric_intake &&
       array.find((element) => element.name === food.name) === food
   );
 };

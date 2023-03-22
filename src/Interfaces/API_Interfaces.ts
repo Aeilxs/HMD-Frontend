@@ -89,7 +89,7 @@ export interface Food {
   kcal_100g: number;
   quantity: number;
   caloricNeed: number;
-  caloricIntake: number;
+  caloric_intake: number;
 }
 
 export interface FoodCategory {

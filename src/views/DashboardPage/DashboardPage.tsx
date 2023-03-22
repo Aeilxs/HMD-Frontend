@@ -22,6 +22,8 @@ import { selectActivities } from '../../reducers/dashboard/activity/activitySlic
 import { selectSmokes } from '../../reducers/dashboard/smoke/smokeSlice';
 import { selectDrugs } from '../../reducers/dashboard/drug/drugSlice';
 import { selectHydrations } from '../../reducers/dashboard/hydration/hydrationSlice';
+import { selectFoods } from '../../reducers/dashboard/food/foodSlice';
+import { selectCaloricNeed } from '../../reducers/user/userSlice';
 
 export default function DashboardPage(): JSX.Element {
   const { activitiesPercentages, activitiesLabels } = activitiesChartData(
@@ -31,8 +33,10 @@ export default function DashboardPage(): JSX.Element {
   const hydrationData = hydrationsChartData(useAppSelector(selectHydrations));
   const { dates: smokeDates, data: smokeAmounts } = smokeChartData(useAppSelector(selectSmokes));
   const drugData = drugsChartData(useAppSelector(selectDrugs));
-  // const { foodLabels, foodIntakes, foodNeeds } = foodChartData(useAppSelector(selectFoods));
-
+  const { foodLabels, foodIntakes, foodNeeds } = foodChartData({
+    foods: useAppSelector(selectFoods),
+    caloricNeed: useAppSelector(selectCaloricNeed),
+  });
   // const displayMessage =
   //   drugData.length === 0 &&
   //   smokeData.dates.length === 0 &&
@@ -44,13 +48,13 @@ export default function DashboardPage(): JSX.Element {
   return (
     <Grid>
       <IndicatorsPage />
-      {/* {foodLabels.length !== 0 && (
+      {foodLabels.length !== 0 && (
         <FoodGraph
           dates={foodLabels}
           foodIntakes={foodIntakes.data}
           foodNeeds={foodNeeds.data}
         />
-      )} */}
+      )}
       {activitiesPercentages && (
         <ActivitiesGraph
           labels={activitiesLabels}

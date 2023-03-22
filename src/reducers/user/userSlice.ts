@@ -14,6 +14,7 @@ export interface UserState {
   size: number | null;
   weight: number | null;
   dateOfBirth: string;
+  caloricNeed: number | null;
 }
 
 const initialState: UserState = {
@@ -27,6 +28,7 @@ const initialState: UserState = {
   size: null,
   weight: null,
   dateOfBirth: '',
+  caloricNeed: null,
 };
 
 export const userSlice = createSlice({

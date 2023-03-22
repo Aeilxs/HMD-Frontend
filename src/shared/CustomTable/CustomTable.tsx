@@ -35,7 +35,7 @@ export default function CustomTable({
   return (
     <TableContainer
       component={Paper}
-      sx={{ position: 'relative', my: 2 }}
+      sx={{ position: 'relative', my: 2, maxHeight: '500px', overflowY: 'scroll' }}
     >
       <Button
         variant="contained"
@@ -56,6 +56,7 @@ export default function CustomTable({
               <TableCell
                 key={key}
                 sx={{ textAlign: 'center' }}
+                // sx={{ textAlign: 'center', position: 'sticky', top: 0, zIndex: 10 }}
               >
                 {key.toUpperCase()}
               </TableCell>

@@ -1,14 +1,6 @@
 import { Box } from '@mui/system';
-import {
-  Alert,
-  Autocomplete,
-  Button,
-  CircularProgress,
-  Container,
-  LinearProgress,
-  TextField,
-} from '@mui/material';
-import { selectFoodInputs, setInputValue } from '../../reducers/UI/uiSlice';
+import { Autocomplete, CircularProgress, Container, TextField } from '@mui/material';
+import { setInputValue } from '../../reducers/UI/uiSlice';
 import MessageBox from '../../shared/MessageBox/MessageBox';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -17,22 +9,20 @@ import {
   fetchProducts,
 } from '../../reducers/dashboard/food/foodMiddleware';
 import {
-  selectFoodMessage,
   selectFoods,
   selectOFFCategories,
   selectOFFFoods,
 } from '../../reducers/dashboard/food/foodSlice';
-import FoodGrid from './FoodGrid/FoodGrid';
-import { CATEGORIES_ARRAY_TEMP } from '../../utils/OFFCategories';
+
 import FoodForm from './FoodForm/FoodForm';
 import CustomTable from '../../shared/CustomTable/CustomTable';
 import { useRef } from 'react';
+import SearchFoodForm from './SearchFoodForm/SearchFoodForm';
 
 export default function FoodPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { search } = useAppSelector(selectFoodInputs);
-  const { severity, message } = useAppSelector(selectFoodMessage);
-  const { foodsArray, foodsStatus } = useAppSelector(selectOFFFoods);
+
+  const { foodsStatus } = useAppSelector(selectOFFFoods);
   const { categoriesArray, categoriesStatus } = useAppSelector(selectOFFCategories);
   const foods = useAppSelector(selectFoods);
   const formRef = useRef(null);
@@ -92,30 +82,7 @@ export default function FoodPage(): JSX.Element {
             />
           )}
         />
-        {categoriesArray.length > 0 && (
-          <>
-            <TextField
-              name="search"
-              fullWidth
-              value={search}
-              onChange={handleChange}
-              label="Recherchez un aliment"
-            />
-            {foodsStatus === 'pending' ? (
-              <LinearProgress sx={{ my: 2, p: 1, borderRadius: '20px' }} />
-            ) : (
-              <FoodGrid array={foodsArray} />
-            )}
-            <Button
-              sx={{ my: 2, display: 'block', mx: 'auto' }}
-              type="submit"
-              disabled={foodsStatus === 'pending' ? true : false}
-              variant="contained"
-            >
-              recherchez
-            </Button>
-          </>
-        )}
+        {categoriesArray.length > 0 && <SearchFoodForm />}
       </Box>
       <FoodForm />
     </Container>

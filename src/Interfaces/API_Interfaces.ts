@@ -18,6 +18,7 @@ export interface UserDataResponse {
     firstname: string;
     lastname: string;
     dateOfBirth: string;
+    caloricNeed: number;
     gender: 'homme' | 'femme';
     size: number;
     weight: number;

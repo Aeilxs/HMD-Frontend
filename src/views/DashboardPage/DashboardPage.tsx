@@ -24,7 +24,9 @@ import { selectDrugs } from '../../reducers/dashboard/drug/drugSlice';
 import { selectHydrations } from '../../reducers/dashboard/hydration/hydrationSlice';
 
 export default function DashboardPage(): JSX.Element {
-  const { activitiesPercentages, activitiesLabels } = activitiesChartData(useAppSelector(selectActivities));
+  const { activitiesPercentages, activitiesLabels } = activitiesChartData(
+    useAppSelector(selectActivities)
+  );
   const { sleepDates, sleepQualities, sleepAmounts } = sleepChartData(useAppSelector(selectSleeps));
   const hydrationData = hydrationsChartData(useAppSelector(selectHydrations));
   const { dates: smokeDates, data: smokeAmounts } = smokeChartData(useAppSelector(selectSmokes));

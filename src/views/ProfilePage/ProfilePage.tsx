@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectProfilInputs, setInputValue } from '../../reducers/UI/uiSlice';
 import CustomDatePicker from '../../shared/CustomDatePicker/CustomDatePicker';
+import { editProfil } from '../../reducers/user/userMiddleware';
 
 export default function ProfilePage(): JSX.Element {
   const { dateOfBirth, size, weight } = useAppSelector(selectProfilInputs);
@@ -14,7 +15,9 @@ export default function ProfilePage(): JSX.Element {
   const navigate = useNavigate();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setInputValue({ path: 'profilInputs', name: event.target.name, value: event.target.value }));
+    dispatch(
+      setInputValue({ path: 'profilInputs', name: event.target.name, value: event.target.value })
+    );
   };
 
   return (
@@ -44,6 +47,7 @@ export default function ProfilePage(): JSX.Element {
         component="form"
         onSubmit={(event) => {
           event.preventDefault();
+          dispatch(editProfil());
         }}
       >
         <CustomDatePicker

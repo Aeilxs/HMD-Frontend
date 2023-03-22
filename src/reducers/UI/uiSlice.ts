@@ -79,7 +79,7 @@ const initialState: UIState = {
     quantity: '',
   },
   profilInputs: {
-    dateOfBirth: null,
+    dateOfBirth: '',
     size: '',
     weight: '',
   },
@@ -147,7 +147,8 @@ export const UISlice = createSlice({
   },
 });
 
-export const { toggleTheme, toggleDrawer, toggleForm, setInputValue, resetInputValue, setIsEdit } = UISlice.actions;
+export const { toggleTheme, toggleDrawer, toggleForm, setInputValue, resetInputValue, setIsEdit } =
+  UISlice.actions;
 
 export const selectTheme = (state: RootState) => state.ui.isDark;
 export const selectDrawerState = (state: RootState) => state.ui.isDrawerOpen;

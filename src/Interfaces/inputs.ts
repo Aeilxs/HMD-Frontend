@@ -57,7 +57,7 @@ export interface HydrationInputs {
 }
 
 export interface ProfilInputs {
-  dateOfBirth: string | null;
+  dateOfBirth: string | '';
   size: number | '';
   weight: number | '';
 }

@@ -17,6 +17,10 @@ export interface UserDataResponse {
   user: {
     firstname: string;
     lastname: string;
+    dateOfBirth: string;
+    gender: 'homme' | 'femme';
+    size: number;
+    weight: number;
     roles: Roles[];
     activities: Activity[];
     drugs: Drug[];

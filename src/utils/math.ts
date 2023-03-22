@@ -12,18 +12,19 @@ export const calcCalories = ({ kcal, quantity }: caloriesProps): number =>
   Math.ceil((kcal / 100) * quantity);
 export interface MBProps {
   weight: number | '';
-  height: number | '';
+  size: number | '';
   age: number | null;
-  gender: 'Femme' | 'Homme' | '';
+  gender: 'femme' | 'homme' | null;
 }
 
-export const calcMB = ({ weight, height, age, gender }: MBProps): number | undefined => {
-  if (weight === '' || height === '' || age === null || gender === '') {
+export const calcMB = ({ weight, size, age, gender }: MBProps): number | undefined => {
+  if (weight === '' || size === '' || age === null || gender === null) {
     return;
   }
-  return gender === 'Homme'
-    ? Math.ceil(13.707 * weight + 492.3 * height - 6.673 * age + 77.607)
-    : Math.ceil(9.74 * weight + 172.9 * height - 4.737 * age + 667.051);
+  console.log(weight, size, age, gender);
+  return gender === 'homme'
+    ? Math.ceil(13.707 * weight + 492.3 * (size / 100) - 6.673 * age + 77.607)
+    : Math.ceil(9.74 * weight + 172.9 * (size / 100) - 4.737 * age + 667.051);
 };
 
 // export const getFoodNameById = (): string => {

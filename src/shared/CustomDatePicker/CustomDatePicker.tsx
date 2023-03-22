@@ -29,7 +29,19 @@ export default function CustomDatePicker({
       <DatePicker
         label={label ?? 'Date'}
         value={value}
-        onChange={(event) => dispatch(actionCreator({ path: path, name: name, value: event?.toString() }))}
+        onChange={(event) => {
+          const selectedDate = event ? new Date(event) : null;
+          if (selectedDate) {
+            selectedDate.setDate(selectedDate.getDate() + 1);
+            dispatch(
+              actionCreator({
+                path: path,
+                name: name,
+                value: selectedDate.toISOString().split('T')[0],
+              })
+            );
+          }
+        }}
         renderInput={(params) => <TextField {...params} />}
       />
     </LocalizationProvider>

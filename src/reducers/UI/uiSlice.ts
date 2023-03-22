@@ -80,7 +80,7 @@ const initialState: UIState = {
     quantity: '',
   },
   profilInputs: {
-    dateOfBirth: null,
+    dateOfBirth: '',
     size: '',
     weight: '',
   },

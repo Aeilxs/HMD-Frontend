@@ -11,6 +11,9 @@ export interface UserState {
   firstname: string;
   lastname: string;
   gender: 'femme' | 'homme' | null;
+  size: number | null;
+  weight: number | null;
+  dateOfBirth: string;
 }
 
 const initialState: UserState = {
@@ -21,6 +24,9 @@ const initialState: UserState = {
   firstname: '',
   lastname: '',
   gender: null,
+  size: null,
+  weight: null,
+  dateOfBirth: '',
 };
 
 export const userSlice = createSlice({
@@ -33,7 +39,7 @@ export const userSlice = createSlice({
     },
     setUserData: (state, action: PayloadAction<UserDataResponse>) => {
       const { user } = action.payload;
-      return { ...state, roles: user.roles, firstname: user.firstname, lastname: user.lastname };
+      return { ...state, ...user };
     },
     setIsLogged: (state) => {
       return { ...state, isLogged: true };
@@ -56,5 +62,8 @@ export const selectFirstName = (state: RootState) => state.user.firstname;
 export const selectGender = (state: RootState) => state.user.gender;
 export const selectIsLogged = (state: RootState) => state.user.isLogged;
 export const selectRoles = (state: RootState) => state.user.roles;
+export const selectSize = (state: RootState) => state.user.size;
+export const selectWeight = (state: RootState) => state.user.weight;
+export const selectDateOfBirth = (state: RootState) => state.user.dateOfBirth;
 
 export default userSlice.reducer;

@@ -14,16 +14,14 @@ export default function Drawer(): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
-    <>
-      <SwipeableDrawer
-        sx={{ position: 'relative' }}
-        open={isDrawerOpen}
-        anchor="left"
-        onClose={() => dispatch(toggleDrawer())}
-        onOpen={() => dispatch(toggleDrawer())}
-      >
-        <DrawerList />
-      </SwipeableDrawer>
-    </>
+    <SwipeableDrawer
+      sx={{ position: 'relative' }}
+      open={isDrawerOpen}
+      anchor="left"
+      onClose={() => dispatch(toggleDrawer())}
+      onOpen={() => dispatch(toggleDrawer())}
+    >
+      <DrawerList />
+    </SwipeableDrawer>
   );
 }

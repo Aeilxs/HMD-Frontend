@@ -1,12 +1,4 @@
-import {
-  Activity,
-  Drug,
-  Food,
-  Hydration,
-  Sleep,
-  Smoke,
-  UserDataResponse,
-} from '../Interfaces/API_Interfaces';
+import { Activity, Drug, Food, Hydration, Sleep, Smoke } from '../Interfaces/API_Interfaces';
 import { calcDate } from './stringFormat';
 
 export const sleepChartData = (sleeps: Sleep[]) => {
@@ -67,9 +59,7 @@ export const activitiesChartData = (activities: Activity[]) => {
 
   const percentages = labels.map((label) => {
     const time = data[label.toLowerCase()];
-    const percentage = Math.round(
-      (time / activities.reduce((acc, cur) => acc + cur.duration, 0)) * 100
-    );
+    const percentage = Math.round((time / activities.reduce((acc, cur) => acc + cur.duration, 0)) * 100);
     return percentage;
   });
   return { activitiesLabels: labels, activitiesPercentages: percentages };
@@ -92,24 +82,14 @@ export const drugsChartData = (drugs: Drug[]) => {
   return rows;
 };
 
-interface foodChartProps {
-  foods: Food[];
-  user: UserDataResponse;
-}
-export const foodChartData = ({ foods, user }: foodChartProps) => {
+export const foodChartData = (foods: Food[]) => {
   const dates: string[] = [];
   const caloricIntakes: number[] = [];
-  const caloricNeeds: number[] = [];
   foods.forEach((food) => {
-    caloricIntakes.push(food.caloricIntake);
-    caloricNeeds.push(user.user.caloricNeed);
+    caloricIntakes.push(food.caloric_intake);
     dates.push(calcDate(food.date));
   });
-  return {
-    foodLabels: dates,
-    foodIntakes: mergeData(dates, caloricIntakes),
-    foodNeeds: mergeData(dates, caloricNeeds),
-  };
+  return mergeData(dates, caloricIntakes);
 };
 
 const mergeData = (dates: string[], data: number[]) => {

@@ -1,12 +1,4 @@
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { useResize } from '../../../hooks/useResize';
 import { Paper } from '@mui/material';
@@ -16,13 +8,13 @@ import { Box } from '@mui/system';
 interface FoodGraphProps {
   dates: string[];
   foodIntakes: number[];
-  foodNeeds: number[];
 }
 
-export default function FoodGraphs({ dates, foodIntakes, foodNeeds }: FoodGraphProps): JSX.Element {
+export default function FoodGraphs({ dates, foodIntakes }: FoodGraphProps): JSX.Element {
   const vwValue = useResize();
   const [elevation, setElevation] = useState(2);
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+  console.log(foodIntakes);
 
   const options = {
     plugins: {
@@ -44,11 +36,6 @@ export default function FoodGraphs({ dates, foodIntakes, foodNeeds }: FoodGraphP
         label: 'Calories consommées',
         data: foodIntakes,
         backgroundColor: '#f79829',
-      },
-      {
-        label: 'Apport journalier recommandé',
-        data: foodNeeds,
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
     ],
   };

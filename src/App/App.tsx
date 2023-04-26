@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
-import { Container, CssBaseline } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { themeDark, themeLight } from '../theme/theme';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
@@ -30,9 +29,9 @@ import { fetchUser } from '../reducers/user/userMiddleware';
 
 function App(): JSX.Element {
   const isDark = useAppSelector(selectTheme);
-  const isLogged = useAppSelector(selectIsLogged);
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectToken);
+  const isLogged = useAppSelector(selectIsLogged);
   const isAdmin = useAppSelector(selectRoles).includes('ROLE_ADMIN');
   // prettier-ignore
   const notGuardedRoutes = [

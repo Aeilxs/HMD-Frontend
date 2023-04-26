@@ -113,7 +113,6 @@ export const UISlice = createSlice({
     },
     setInputValue: (state, action: PayloadAction<InputPayload>) => {
       const { path, name, value } = action.payload;
-      console.log(action.payload);
       return {
         ...state,
         [path]: { ...state[path], [name]: value },
@@ -148,8 +147,7 @@ export const UISlice = createSlice({
   },
 });
 
-export const { toggleTheme, toggleDrawer, toggleForm, setInputValue, resetInputValue, setIsEdit } =
-  UISlice.actions;
+export const { toggleTheme, toggleDrawer, toggleForm, setInputValue, resetInputValue, setIsEdit } = UISlice.actions;
 
 export const selectTheme = (state: RootState) => state.ui.isDark;
 export const selectDrawerState = (state: RootState) => state.ui.isDrawerOpen;

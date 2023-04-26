@@ -14,7 +14,6 @@ import {
   drugsChartData,
   foodChartData,
 } from '../../utils/chartsData';
-// import { selectDrugs, selectFoods, selectHydrations, selectSmokes } from '../../reducers/user/userSlice';
 import IndicatorsPage from './IndicatorBoxes/IndicatorBoxes';
 import WelcomeMessage from './WelcomeMessage/WelcomeMessage';
 import { selectSleeps } from '../../reducers/dashboard/sleep/sleepSlice';
@@ -22,35 +21,32 @@ import { selectActivities } from '../../reducers/dashboard/activity/activitySlic
 import { selectSmokes } from '../../reducers/dashboard/smoke/smokeSlice';
 import { selectDrugs } from '../../reducers/dashboard/drug/drugSlice';
 import { selectHydrations } from '../../reducers/dashboard/hydration/hydrationSlice';
+import { selectFoods } from '../../reducers/dashboard/food/foodSlice';
 
 export default function DashboardPage(): JSX.Element {
-  const { activitiesPercentages, activitiesLabels } = activitiesChartData(
-    useAppSelector(selectActivities)
-  );
+  const { activitiesPercentages, activitiesLabels } = activitiesChartData(useAppSelector(selectActivities));
   const { sleepDates, sleepQualities, sleepAmounts } = sleepChartData(useAppSelector(selectSleeps));
   const hydrationData = hydrationsChartData(useAppSelector(selectHydrations));
   const { dates: smokeDates, data: smokeAmounts } = smokeChartData(useAppSelector(selectSmokes));
   const drugData = drugsChartData(useAppSelector(selectDrugs));
-  // const { foodLabels, foodIntakes, foodNeeds } = foodChartData(useAppSelector(selectFoods));
-
-  // const displayMessage =
-  //   drugData.length === 0 &&
-  //   smokeData.dates.length === 0 &&
-  //   foodLabels.length === 0 &&
-  //   !activitiesLabels &&
-  //   hydrationData.dates.length === 0 &&
-  //   sleepDates.length === 0;
+  const { dates: foodDates, data: foodData } = foodChartData(useAppSelector(selectFoods));
+  const displayMessage =
+    drugData.length === 0 &&
+    smokeDates.length === 0 &&
+    foodDates.length === 0 &&
+    !activitiesLabels &&
+    hydrationData.dates.length === 0 &&
+    sleepDates.length === 0;
 
   return (
     <Grid>
       <IndicatorsPage />
-      {/* {foodLabels.length !== 0 && (
+      {foodDates.length !== 0 && (
         <FoodGraph
-          dates={foodLabels}
-          foodIntakes={foodIntakes.data}
-          foodNeeds={foodNeeds.data}
+          dates={foodDates}
+          foodIntakes={foodData}
         />
-      )} */}
+      )}
       {activitiesPercentages && (
         <ActivitiesGraph
           labels={activitiesLabels}
@@ -78,7 +74,7 @@ export default function DashboardPage(): JSX.Element {
       )}
       {drugData.length !== 0 && <DrugsGraph rows={drugData} />}
 
-      {/* // {displayMessage && <WelcomeMessage />} */}
+      {displayMessage && <WelcomeMessage />}
     </Grid>
   );
 }
